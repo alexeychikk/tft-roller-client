@@ -1,0 +1,8 @@
+.tft__table {
+  position: absolute;
+  bottom: 33%;
+  left: 20%;
+  height: 40%;
+  width: 55%;
+  border: 2px solid rgb(255, 119, 0);
+}

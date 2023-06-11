@@ -1,10 +1,11 @@
 import React from 'react';
-import { useContext } from 'react';
+
+import './Desk.styles.css';
 
 export type DeskProps = {};
 
 const DeskBase: React.FC<DeskProps> = (props) => {
-  return <div>Desk</div>;
+  return <div className="tft__desk">Desk</div>;
 };
 
 export const Desk = React.memo(DeskBase);
