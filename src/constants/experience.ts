@@ -12,6 +12,7 @@ export const EXPERIENCE_PER_LEVEL: Record<number, number> = {
 };
 
 const ALL_LEVELS = Object.keys(EXPERIENCE_PER_LEVEL);
+export const MIN_LEVEL = +ALL_LEVELS[0];
 export const MAX_LEVEL = +ALL_LEVELS[ALL_LEVELS.length - 1];
 
 export const GOLD_PER_EXPERIENCE = 1;

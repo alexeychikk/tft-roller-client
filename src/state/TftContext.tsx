@@ -1,10 +1,12 @@
 import { noop } from 'lodash-es';
 import React, { useCallback, useContext, useMemo, useState } from 'react';
 import {
-  EXPERIENCE_PER_LEVEL,
-  MAX_LEVEL,
   EXPERIENCE_PER_BUY,
+  EXPERIENCE_PER_LEVEL,
   GOLD_PER_EXPERIENCE_BUY,
+  MAX_LEVEL,
+  MIN_LEVEL,
+  REROLL_CHANCES,
 } from '../constants';
 
 export type TftContextType = {
@@ -12,6 +14,7 @@ export type TftContextType = {
   experience: number;
   level: number;
   levelAbove?: number;
+  rerollChances: number[];
   isEnoughGoldToBuyExperience: boolean;
   isMaxLevelReached: boolean;
   buyExperience: () => void;
@@ -21,6 +24,7 @@ export const TftContext = React.createContext<TftContextType>({
   gold: 0,
   experience: 0,
   level: 0,
+  rerollChances: [],
   isEnoughGoldToBuyExperience: false,
   isMaxLevelReached: false,
   buyExperience: noop,
@@ -32,7 +36,7 @@ export type TftProviderProps = {
 
 export const TftProvider: React.FC<TftProviderProps> = (props) => {
   const [gold, setGold] = useState(256);
-  const [experience, setExperience] = useState(16);
+  const [experience, setExperience] = useState(2);
   const isEnoughGoldToBuyExperience = gold >= GOLD_PER_EXPERIENCE_BUY;
   const isMaxLevelReached = experience >= EXPERIENCE_PER_LEVEL[MAX_LEVEL];
 
@@ -41,7 +45,11 @@ export const TftProvider: React.FC<TftProviderProps> = (props) => {
     return experience < exp;
   });
   const levelAbove = levelAboveName ? +levelAboveName : undefined;
-  const level = levelAbove !== undefined ? levelAbove - 1 : MAX_LEVEL;
+  const level = Math.max(
+    levelAbove !== undefined ? levelAbove - 1 : MAX_LEVEL,
+    MIN_LEVEL,
+  );
+  const rerollChances = REROLL_CHANCES[level];
 
   const buyExperience = useCallback(() => {
     if (!isEnoughGoldToBuyExperience) return;
@@ -56,6 +64,7 @@ export const TftProvider: React.FC<TftProviderProps> = (props) => {
       experience,
       level,
       levelAbove,
+      rerollChances,
       isEnoughGoldToBuyExperience,
       isMaxLevelReached,
       buyExperience,
