@@ -1,4 +1,13 @@
 .tft__shop__gold-view {
   flex: 1;
+  display: flex;
   border: 2px solid lightblue;
+  font-weight: 700;
+  font-size: 24px;
+  justify-content: center;
+  align-items: center;
+}
+
+.tft__icon-coin {
+  padding-right: 0.3em;
 }

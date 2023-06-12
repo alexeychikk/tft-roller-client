@@ -6,3 +6,8 @@ html, body, #root {
 #root {
   position: relative;
 }
+
+svg {
+  width: 24px;
+  height: 24px;
+}
