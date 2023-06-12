@@ -1,4 +1,9 @@
 .tft__shop__level-view {
   flex: 1;
   border: 2px solid lightblue;
+  display: flex;
+}
+
+.tft__shop__level-indicator {
+  flex: 1;
 }

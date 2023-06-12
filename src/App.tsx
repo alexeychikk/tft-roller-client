@@ -8,7 +8,7 @@ import { TftContext } from './state';
 
 export function App() {
   return (
-    <TftContext.Provider value={{ experience: 0, gold: 0 }}>
+    <TftContext.Provider value={{ experience: 14, gold: 35 }}>
       <Table />
       <Desk />
       <Shop />
