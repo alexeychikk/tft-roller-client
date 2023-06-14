@@ -1,3 +1,3 @@
-export * from './Champion';
-export * from './ChampionsGrid';
+export * from './Unit';
+export * from './UnitsGrid';
 export * from './TftContext';

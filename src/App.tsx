@@ -1,6 +1,6 @@
 import './App.css';
 import { Table } from './components/Table';
-import { Desk } from './components/Desk';
+import { Bench } from './components/Bench';
 import { Shop } from './components/Shop';
 import { Comps } from './components/Comps';
 
@@ -10,7 +10,7 @@ export function App() {
   return (
     <TftProvider>
       <Table />
-      <Desk />
+      <Bench />
       <Shop />
       <Comps />
     </TftProvider>

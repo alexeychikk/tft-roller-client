@@ -4,11 +4,11 @@ export const EXPERIENCE_PER_LEVEL: Record<number, number> = {
   3: 4,
   4: 10,
   5: 20,
-  6: 40,
-  7: 76,
-  8: 132,
-  9: 212,
-  // 10: 312,
+  6: 44,
+  7: 84,
+  8: 144,
+  9: 228,
+  // 10: 328,
 };
 
 const ALL_LEVELS = Object.keys(EXPERIENCE_PER_LEVEL);

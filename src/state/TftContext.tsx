@@ -7,27 +7,32 @@ import {
   MAX_LEVEL,
   MIN_LEVEL,
   REROLL_CHANCES,
+  CHAMPIONS,
 } from '../constants';
 
 export type TftContextType = {
   gold: number;
   experience: number;
+  shopChampionNames: (string | undefined)[];
   level: number;
   levelAbove?: number;
   rerollChances: number[];
   isEnoughGoldToBuyExperience: boolean;
   isMaxLevelReached: boolean;
   buyExperience: () => void;
+  buyChampion: (index: number) => void;
 };
 
 export const TftContext = React.createContext<TftContextType>({
   gold: 0,
   experience: 0,
+  shopChampionNames: [],
   level: 0,
   rerollChances: [],
   isEnoughGoldToBuyExperience: false,
   isMaxLevelReached: false,
   buyExperience: noop,
+  buyChampion: noop,
 });
 
 export type TftProviderProps = {
@@ -37,6 +42,13 @@ export type TftProviderProps = {
 export const TftProvider: React.FC<TftProviderProps> = (props) => {
   const [gold, setGold] = useState(256);
   const [experience, setExperience] = useState(2);
+  const [shopChampionNames, setShopChampionNames] = useState([
+    'Viego',
+    'Poppy',
+    'Viego',
+    undefined,
+    'Sona',
+  ]);
   const isEnoughGoldToBuyExperience = gold >= GOLD_PER_EXPERIENCE_BUY;
   const isMaxLevelReached = experience >= EXPERIENCE_PER_LEVEL[MAX_LEVEL];
 
@@ -58,18 +70,38 @@ export const TftProvider: React.FC<TftProviderProps> = (props) => {
     setGold((g) => g - GOLD_PER_EXPERIENCE_BUY);
   }, [gold, experience]);
 
+  const buyChampion = useCallback(
+    (index: number) => {
+      const championName = shopChampionNames[index];
+      if (championName === undefined) return;
+
+      const champion = CHAMPIONS.find((champ) => champ.name === championName)!;
+      if (gold < champion.tier) return;
+
+      setGold((g) => g - champion.tier);
+      setShopChampionNames((champNames) => {
+        const res = [...champNames];
+        res[index] = undefined;
+        return res;
+      });
+    },
+    [shopChampionNames, gold],
+  );
+
   const value = useMemo(
-    () => ({
+    (): TftContextType => ({
       gold,
       experience,
+      shopChampionNames,
       level,
       levelAbove,
       rerollChances,
       isEnoughGoldToBuyExperience,
       isMaxLevelReached,
       buyExperience,
+      buyChampion,
     }),
-    [gold, experience, buyExperience],
+    [gold, experience, shopChampionNames],
   );
 
   return (
