@@ -1,6 +1,9 @@
 import React from 'react';
 import { capitalize } from 'lodash-es';
+import clsx from 'clsx';
+
 import { useTftState } from '../../../state';
+import { CHAMPIONS_MAP } from '../../../constants';
 
 import './ShopChampions.styles.css';
 
@@ -15,12 +18,18 @@ const ShopChampionsBase: React.FC<ShopChampionsProps> = (props) => {
           ? capitalize(name.replace(/[^a-zA-Z]/gim, ''))
           : undefined;
         return (
-          <div key={index} className="tft__shop__champion-slot">
+          <div
+            key={index}
+            className={clsx(
+              'tft__shop__champion-slot',
+              name && `tft__shop__champion-tier_${CHAMPIONS_MAP[name].tier}`,
+            )}
+          >
             {name && (
               <button
                 className="tft__shop__champion-button"
                 style={{
-                  backgroundImage: `url("https://ddragon.leagueoflegends.com/cdn/13.12.1/img/champion/${championUrlName}.png")`,
+                  backgroundImage: `url("https://cdn.lolchess.gg/images/lol/champion-splash-modified/${championUrlName}.jpg")`,
                 }}
                 onClick={() => buyChampion(index)}
               >

@@ -6,8 +6,13 @@ import { useTftState } from '../../../state';
 export type ShopActionsProps = {};
 
 const ShopActionsBase: React.FC<ShopActionsProps> = (props) => {
-  const { isEnoughGoldToBuyExperience, isMaxLevelReached, buyExperience } =
-    useTftState();
+  const {
+    isEnoughGoldToBuyExperience,
+    isEnoughGoldToReroll,
+    isMaxLevelReached,
+    buyExperience,
+    reroll,
+  } = useTftState();
 
   return (
     <div className="tft__shop__actions">
@@ -17,7 +22,9 @@ const ShopActionsBase: React.FC<ShopActionsProps> = (props) => {
       >
         Level Up
       </button>
-      <button>Reroll</button>
+      <button onClick={reroll} disabled={!isEnoughGoldToReroll}>
+        Reroll
+      </button>
     </div>
   );
 };

@@ -361,3 +361,21 @@ export const CHAMPIONS: Champion[] = [
     classTraits: ['Gunner'],
   },
 ];
+
+export const CHAMPIONS_MAP = CHAMPIONS.reduce((result, champ) => {
+  result[champ.name] = champ;
+  return result;
+}, {} as Record<string, Champion>);
+
+export const TIERS_POOL_SIZE: Record<number, number> = {
+  1: 29,
+  2: 22,
+  3: 18,
+  4: 12,
+  5: 10,
+};
+
+export const CHAMPIONS_POOL = CHAMPIONS.reduce((result, champ) => {
+  result[champ.name] = TIERS_POOL_SIZE[champ.tier];
+  return result;
+}, {} as Record<string, number>);

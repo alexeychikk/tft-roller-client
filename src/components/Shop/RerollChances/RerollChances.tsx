@@ -19,7 +19,7 @@ const RerollChancesBase: React.FC<RerollChancesProps> = (props) => {
             `tft__shop__reroll-tier_${index + 1}`,
           )}
         >
-          {percent}%
+          {Math.round(percent * 100)}%
         </span>
       ))}
     </div>
