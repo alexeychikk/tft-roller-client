@@ -9,7 +9,7 @@ import './Bench.styles.css';
 export type BenchProps = {};
 
 const BenchBase: React.FC<BenchProps> = (props) => {
-  const { bench } = useTftState();
+  const { bench, sellChampion } = useTftState();
 
   return (
     <div className="tft__bench">
@@ -20,7 +20,12 @@ const BenchBase: React.FC<BenchProps> = (props) => {
               const unit = bench.getUnit({ x, y });
               return (
                 <div key={x} className="tft__bench-col">
-                  {unit && <ChampionAvatar name={unit.name} />}
+                  {unit && (
+                    <ChampionAvatar
+                      name={unit.name}
+                      onClick={() => sellChampion({ x, y })}
+                    />
+                  )}
                 </div>
               );
             })}

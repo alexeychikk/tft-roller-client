@@ -21,7 +21,7 @@ import {
 } from '@src/constants';
 import { weightedRandom } from '@src/utils';
 import { Unit } from './Unit';
-import { UnitsGrid } from './UnitsGrid';
+import { Coords, UnitsGrid } from './UnitsGrid';
 
 export type TftContextType = {
   gold: number;
@@ -37,6 +37,7 @@ export type TftContextType = {
   isMaxLevelReached: boolean;
   buyExperience: () => void;
   buyChampion: (index: number) => void;
+  sellChampion: (coords: Coords) => void;
   reroll: () => void;
 };
 
@@ -53,6 +54,7 @@ export const TftContext = React.createContext<TftContextType>({
   isMaxLevelReached: false,
   buyExperience: noop,
   buyChampion: noop,
+  sellChampion: noop,
   reroll: noop,
 });
 
@@ -64,11 +66,6 @@ export const TftProvider: React.FC<TftProviderProps> = (props) => {
   const [gold, setGold] = useState(300);
   const [experience, setExperience] = useState(20);
   const [bench, setBench] = useState(new UnitsGrid({ height: 1, width: 9 }));
-
-  useEffect(() => {
-    bench.setUnit({ x: 0, y: 0 }, new Unit({ name: 'Aatrox', stars: 2 }));
-    bench.setUnit({ x: 8, y: 0 }, new Unit({ name: 'Kled', stars: 1 }));
-  }, []);
 
   const isEnoughGoldToBuyExperience = gold >= GOLD_PER_EXPERIENCE_BUY;
   const isEnoughGoldToReroll = gold >= GOLD_PER_REROLL;
@@ -167,6 +164,11 @@ export const TftProvider: React.FC<TftProviderProps> = (props) => {
       const champion = CHAMPIONS_MAP[championName];
       if (gold < champion.tier) return;
 
+      const emptySlot = bench.getFirstEmptySlot();
+      if (!emptySlot) return;
+
+      bench.setUnit(emptySlot, new Unit({ name: championName, stars: 1 }));
+
       setGold((g) => g - champion.tier);
       setShopChampionNames((champNames) => {
         const res = [...champNames];
@@ -175,6 +177,22 @@ export const TftProvider: React.FC<TftProviderProps> = (props) => {
       });
     },
     [shopChampionNames, gold],
+  );
+
+  const sellChampion = useCallback(
+    (coords: Coords) => {
+      const unit = bench.getUnit(coords);
+      if (!unit) return;
+      const champion = CHAMPIONS_MAP[unit.name];
+      setBench((b) => b.setUnit(coords, undefined));
+      setShopChampionPool((p) => ({ ...p, [unit.name]: p[unit.name] + 1 }));
+      setGold((g) => {
+        const newGold = g + champion.tier * Math.pow(3, unit.stars - 1);
+        if (champion.tier === 1 || unit.stars === 1) return newGold;
+        return newGold - 1;
+      });
+    },
+    [bench],
   );
 
   const reroll = useCallback(() => {
@@ -214,9 +232,10 @@ export const TftProvider: React.FC<TftProviderProps> = (props) => {
       isMaxLevelReached,
       buyExperience,
       buyChampion,
+      sellChampion,
       reroll,
     }),
-    [gold, experience, shopChampionNames, shopChampionPool],
+    [gold, experience, shopChampionNames, shopChampionPool, bench],
   );
 
   return (
