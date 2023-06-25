@@ -1,7 +1,7 @@
 import React from 'react';
 import clsx from 'clsx';
 
-import { useTftState } from '../../../state';
+import { useTftState } from '@src/state';
 
 import './RerollChances.styles.css';
 

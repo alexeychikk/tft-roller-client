@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { useTftState } from '../../../state';
-import { EXPERIENCE_PER_LEVEL } from '../../../constants';
+import { useTftState } from '@src/state';
+import { EXPERIENCE_PER_LEVEL } from '@src/constants';
 
 import './LevelView.styles.css';
 

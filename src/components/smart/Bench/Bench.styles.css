@@ -1,0 +1,21 @@
+.tft__bench {
+  position: absolute;
+  bottom: 21%;
+  left: 20%;
+  height: 10%;
+  width: 55%;
+  border: 2px solid red;
+  display: flex;
+  flex-direction: column;
+}
+
+.tft__bench-row {
+  display: flex;
+  flex: 1;
+}
+
+.tft__bench-col {
+  position: relative;
+  border: 2px solid purple;
+  flex: 1;
+}

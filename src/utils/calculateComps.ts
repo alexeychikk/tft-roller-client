@@ -1,6 +1,6 @@
 import { sumBy } from 'lodash-es';
-import { ALL_TRAITS_MAP, CHAMPIONS, REROLL_CHANCES } from '../constants';
-import { traverseUniqueCombinations } from '../utils';
+import { ALL_TRAITS_MAP, CHAMPIONS, REROLL_CHANCES } from '@src/constants';
+import { traverseUniqueCombinations } from '@src/utils';
 
 export function calculateComps(
   level: number,

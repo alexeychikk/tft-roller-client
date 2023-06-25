@@ -1,7 +1,7 @@
 import React from 'react';
 
 import './ShopActions.styles.css';
-import { useTftState } from '../../../state';
+import { useTftState } from '@src/state';
 
 export type ShopActionsProps = {};
 

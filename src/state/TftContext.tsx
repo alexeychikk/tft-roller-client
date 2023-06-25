@@ -18,14 +18,17 @@ import {
   CHAMPIONS_POOL,
   GOLD_PER_REROLL,
   SHOP_SIZE,
-} from '../constants';
-import { weightedRandom } from '../utils';
+} from '@src/constants';
+import { weightedRandom } from '@src/utils';
+import { Unit } from './Unit';
+import { UnitsGrid } from './UnitsGrid';
 
 export type TftContextType = {
   gold: number;
   experience: number;
   shopChampionNames: (string | undefined)[];
   shopChampionPool: Record<string, number>;
+  bench: UnitsGrid;
   level: number;
   levelAbove?: number;
   rerollChances: number[];
@@ -42,6 +45,7 @@ export const TftContext = React.createContext<TftContextType>({
   experience: 0,
   shopChampionNames: [],
   shopChampionPool: {},
+  bench: new UnitsGrid({ height: 0, width: 0 }),
   level: 0,
   rerollChances: [],
   isEnoughGoldToBuyExperience: false,
@@ -59,6 +63,12 @@ export type TftProviderProps = {
 export const TftProvider: React.FC<TftProviderProps> = (props) => {
   const [gold, setGold] = useState(300);
   const [experience, setExperience] = useState(20);
+  const [bench, setBench] = useState(new UnitsGrid({ height: 1, width: 9 }));
+
+  useEffect(() => {
+    bench.setUnit({ x: 0, y: 0 }, new Unit({ name: 'Aatrox', stars: 2 }));
+    bench.setUnit({ x: 8, y: 0 }, new Unit({ name: 'Kled', stars: 1 }));
+  }, []);
 
   const isEnoughGoldToBuyExperience = gold >= GOLD_PER_EXPERIENCE_BUY;
   const isEnoughGoldToReroll = gold >= GOLD_PER_REROLL;
@@ -195,6 +205,7 @@ export const TftProvider: React.FC<TftProviderProps> = (props) => {
       experience,
       shopChampionNames,
       shopChampionPool,
+      bench,
       level,
       levelAbove,
       rerollChances,

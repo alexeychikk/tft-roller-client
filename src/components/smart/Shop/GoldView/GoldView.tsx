@@ -1,6 +1,6 @@
 import React from 'react';
-import { ReactComponent as IconCoin } from '../../../assets/icons/coin.svg';
-import { useTftState } from '../../../state';
+import { ReactComponent as IconCoin } from '@src/assets/icons/coin.svg';
+import { useTftState } from '@src/state';
 
 import './GoldView.styles.css';
 
