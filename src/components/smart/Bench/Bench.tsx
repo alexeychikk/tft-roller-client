@@ -1,7 +1,9 @@
 import React from 'react';
-import { capitalize, times } from 'lodash-es';
+import { times } from 'lodash-es';
 
 import { useTftState } from '@src/state';
+import { ChampionAvatar } from '@src/components/dumb/ChampionAvatar';
+
 import './Bench.styles.css';
 
 export type BenchProps = {};
@@ -16,20 +18,9 @@ const BenchBase: React.FC<BenchProps> = (props) => {
           <div key={y} className="tft__bench-row">
             {times(bench.width, (x) => {
               const unit = bench.getUnit({ x, y });
-              const championUrlName = unit
-                ? capitalize(unit.name.replace(/[^a-zA-Z]/gim, ''))
-                : undefined;
               return (
                 <div key={x} className="tft__bench-col">
-                  {unit && (
-                    <div
-                      className="tft__champion-avatar"
-                      style={{
-                        backgroundImage: `url("https://cdn.lolchess.gg/images/lol/champion-splash-modified/${championUrlName}.jpg")`,
-                      }}
-                    ></div>
-                  )}
-                  <div>{unit?.name}</div>
+                  {unit && <ChampionAvatar name={unit.name} />}
                 </div>
               );
             })}
