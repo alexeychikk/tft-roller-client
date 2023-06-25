@@ -29,8 +29,8 @@ export function traverseUniqueCombinations<T>(
 
   while (true) {
     const comb: T[] = indexes.map((i) => arr[i]);
-    cb(comb, iteration);
     iteration++;
+    cb(comb, iteration);
 
     let i = k - 1;
     while (i >= 0 && indexes[i] === i + n - k) {

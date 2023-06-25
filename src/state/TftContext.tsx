@@ -89,9 +89,26 @@ export const TftProvider: React.FC<TftProviderProps> = (props) => {
   ) {
     let newChampionPool = { ...shopChampionPoolLocal };
     times(shopChampionNamesLocal.length, (index) => {
+      const poolByTier: Record<
+        number,
+        { pool: Record<string, number>; total: number }
+      > = {};
+
       const tierSpec = rerollChancesLocal.reduce(
         (result, probability, index) => {
-          result[index + 1] = probability;
+          if (probability <= 0) return result;
+
+          const tier = index + 1;
+          const pool = pickBy(
+            newChampionPool,
+            (_, name) => CHAMPIONS_MAP[name].tier === tier,
+          );
+          const total = sumBy(Object.keys(pool), (name) => pool[name]);
+
+          if (total <= 0) return result;
+
+          poolByTier[tier] = { pool, total };
+          result[tier] = probability;
           return result;
         },
         {} as Record<number, number>,
@@ -99,15 +116,13 @@ export const TftProvider: React.FC<TftProviderProps> = (props) => {
 
       const tier = +weightedRandom(tierSpec);
 
-      const tierPool = pickBy(
-        newChampionPool,
-        (_, name) => CHAMPIONS_MAP[name].tier === tier,
+      const tierPool = poolByTier[tier].pool;
+      const totalTierPoolSize = poolByTier[tier].total;
+
+      const champSpec = mapValues(
+        pickBy(tierPool, (pool) => pool > 0),
+        (size) => size / totalTierPoolSize,
       );
-      const totalTierPoolSize = sumBy(
-        Object.keys(tierPool),
-        (name) => tierPool[name],
-      );
-      const champSpec = mapValues(tierPool, (size) => size / totalTierPoolSize);
       const championName = weightedRandom(champSpec);
 
       newChampionPool = {
