@@ -23,6 +23,7 @@ const BenchBase: React.FC<BenchProps> = (props) => {
                   {unit && (
                     <ChampionAvatar
                       name={unit.name}
+                      stars={unit.stars}
                       onClick={() => sellChampion({ x, y })}
                     />
                   )}

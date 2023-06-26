@@ -49,8 +49,9 @@ export class UnitsGrid {
     const grid = new UnitsGrid({
       height: this.height,
       width: this.width,
-      units: this.units,
+      units: this.units.slice(),
     });
+    grid.units[coords.y] = grid.units[coords.y].slice();
     grid.units[coords.y][coords.x] = unit;
     return grid;
   }
@@ -66,5 +67,45 @@ export class UnitsGrid {
       return newGrid.setUnit(from, toUnit);
     }
     return newGrid.setUnit(from, undefined);
+  }
+
+  upgradeUnit(coords: Coords): UnitsGrid {
+    const unit = this.getUnit(coords);
+    if (!unit) {
+      throw new Error(`Unit at coords ${coords.x},${coords.y} does not exist!`);
+    }
+    return this.setUnit(coords, unit.upgrade());
+  }
+
+  removeUnits(coords: Coords[]): UnitsGrid {
+    let grid: UnitsGrid = this;
+    coords.forEach((c) => {
+      grid = grid.setUnit(c, undefined);
+    });
+    return grid;
+  }
+
+  getCoordsOfUnitsOfStars(
+    name: string,
+    numUnits: number,
+    stars: number,
+  ): Coords[] {
+    let coords: Coords[] = [];
+    for (let y = 0; y < this.height; y++) {
+      for (let x = 0; x < this.width; x++) {
+        if (
+          this.units[y][x]?.name !== name ||
+          this.units[y][x]?.stars !== stars
+        ) {
+          continue;
+        }
+        coords.push({ x, y });
+        if (coords.length === numUnits) {
+          return coords;
+        }
+      }
+    }
+
+    return coords;
   }
 }

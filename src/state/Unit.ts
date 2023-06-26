@@ -6,4 +6,8 @@ export class Unit {
     this.name = options.name;
     this.stars = options.stars;
   }
+
+  upgrade(): Unit {
+    return new Unit({ name: this.name, stars: this.stars + 1 });
+  }
 }

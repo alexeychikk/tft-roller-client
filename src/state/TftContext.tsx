@@ -145,8 +145,35 @@ export const TftProvider: React.FC<TftProviderProps> = (props) => {
     });
   }
 
+  function mergeUnits(
+    localBench: UnitsGrid,
+    championName: string,
+    stars = 1,
+  ): UnitsGrid {
+    const coords = localBench.getCoordsOfUnitsOfStars(championName, 3, stars);
+    if (coords.length !== 3) return localBench;
+    const [firstUnitCoords, ...restCoords] = coords;
+    localBench = localBench.removeUnits(restCoords);
+    localBench = localBench.upgradeUnit(firstUnitCoords);
+    return mergeUnits(localBench, championName, stars + 1);
+  }
+
   useEffect(() => {
-    rerollShop(rerollChances, shopChampionNames, shopChampionPool);
+    setBench((b) =>
+      b
+        .setUnit({ x: 0, y: 0 }, new Unit({ name: 'Cassiopeia', stars: 2 }))
+        .setUnit({ x: 1, y: 0 }, new Unit({ name: 'Cassiopeia', stars: 2 }))
+        .setUnit({ x: 2, y: 0 }, new Unit({ name: 'Cassiopeia', stars: 1 }))
+        .setUnit({ x: 3, y: 0 }, new Unit({ name: 'Cassiopeia', stars: 1 })),
+    );
+    setShopChampionNames(() => [
+      'Cassiopeia',
+      'Poppy',
+      'Aatrox',
+      'Kled',
+      'Taric',
+    ]);
+    //rerollShop(rerollChances, shopChampionNames, shopChampionPool);
   }, []);
 
   const buyExperience = useCallback(() => {
@@ -165,18 +192,23 @@ export const TftProvider: React.FC<TftProviderProps> = (props) => {
       if (gold < champion.tier) return;
 
       const emptySlot = bench.getFirstEmptySlot();
-      if (!emptySlot) return;
+      if (!emptySlot) {
+        // TODO: multi-buy
+        return;
+      }
 
-      bench.setUnit(emptySlot, new Unit({ name: championName, stars: 1 }));
-
+      setBench((b) =>
+        b.setUnit(emptySlot, new Unit({ name: championName, stars: 1 })),
+      );
       setGold((g) => g - champion.tier);
       setShopChampionNames((champNames) => {
         const res = [...champNames];
         res[index] = undefined;
         return res;
       });
+      setBench((b) => mergeUnits(b, championName));
     },
-    [shopChampionNames, gold],
+    [shopChampionNames, gold, bench],
   );
 
   const sellChampion = useCallback(

@@ -16,7 +16,6 @@
 }
 
 .tft__champion-avatar__footer {
-  box-sizing: border-box;
   width: 100%;
   display: flex;
   font-size: 14px;
@@ -28,4 +27,16 @@
 .tft__champion-avatar__name {
 }
 .tft__champion-avatar__cost {
+}
+.tft__champion-avatar__stars {
+  position: absolute;
+  width: 100%;
+  top: 4px;
+  text-align: right;
+  padding-right: 4px;
+}
+.tft__champion-avatar__stars svg {
+  width: 14px;
+  height: 14px;
+  filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.7));
 }
