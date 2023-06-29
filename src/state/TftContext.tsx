@@ -161,17 +161,22 @@ export const TftProvider: React.FC<TftProviderProps> = (props) => {
   useEffect(() => {
     setBench((b) =>
       b
-        .setUnit({ x: 0, y: 0 }, new Unit({ name: 'Cassiopeia', stars: 2 }))
-        .setUnit({ x: 1, y: 0 }, new Unit({ name: 'Cassiopeia', stars: 2 }))
-        .setUnit({ x: 2, y: 0 }, new Unit({ name: 'Cassiopeia', stars: 1 }))
-        .setUnit({ x: 3, y: 0 }, new Unit({ name: 'Cassiopeia', stars: 1 })),
+        .setUnit({ x: 0, y: 0 }, new Unit({ name: 'Cassiopeia', stars: 1 }))
+        .setUnit({ x: 1, y: 0 }, new Unit({ name: 'Cassiopeia', stars: 1 }))
+        .setUnit({ x: 2, y: 0 }, new Unit({ name: 'Zed', stars: 1 }))
+        .setUnit({ x: 3, y: 0 }, new Unit({ name: 'Zed', stars: 1 }))
+        .setUnit({ x: 4, y: 0 }, new Unit({ name: 'Maokai', stars: 1 }))
+        .setUnit({ x: 5, y: 0 }, new Unit({ name: 'Maokai', stars: 1 }))
+        .setUnit({ x: 6, y: 0 }, new Unit({ name: 'Poppy', stars: 1 }))
+        .setUnit({ x: 7, y: 0 }, new Unit({ name: 'Poppy', stars: 1 }))
+        .setUnit({ x: 8, y: 0 }, new Unit({ name: 'Tristana', stars: 1 })),
     );
     setShopChampionNames(() => [
       'Cassiopeia',
-      'Poppy',
-      'Aatrox',
-      'Kled',
-      'Taric',
+      'Tristana',
+      'Tristana',
+      'Maokai',
+      'Maokai',
     ]);
     //rerollShop(rerollChances, shopChampionNames, shopChampionPool);
   }, []);
@@ -193,7 +198,15 @@ export const TftProvider: React.FC<TftProviderProps> = (props) => {
 
       const emptySlot = bench.getFirstEmptySlot();
       if (!emptySlot) {
-        // TODO: multi-buy
+        // 1. Взять массив координат юнитов с таким именем на доске
+        // 2. Если пустой массив - выходим
+        // 3. Посчитать количество чемпиона в магазине amount_in_shop
+        //    amount_to_buy = 3 - amount_on_bench
+        // 4. Если amount_in_shop < amount_to_buy - выход
+        // 5. Если не хватает золота на amount_to_buy - выход
+        // 6. Потратить золота на amount_to_buy юнитов
+        // 7. Апгрейдим первый юнит и удаляем остальные, рекурсия
+        // 8. Удалить amount_to_buy чемпов из магаза
         return;
       }
 
