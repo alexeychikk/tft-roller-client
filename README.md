@@ -1,3 +1,5 @@
+> This project is for teaching my friend some programming. You may pass by :)
+
 ### State:
 
 - gold
