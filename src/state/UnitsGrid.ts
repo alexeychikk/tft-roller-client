@@ -3,6 +3,8 @@ import { Unit } from './Unit';
 
 export type Coords = { x: number; y: number };
 
+export type UnitContext = { grid: UnitsGrid; coords: Coords };
+
 export class UnitsGrid {
   readonly width: number;
   readonly height: number;

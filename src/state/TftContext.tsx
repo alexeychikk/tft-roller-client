@@ -21,7 +21,7 @@ import {
 } from '@src/constants';
 import { weightedRandom } from '@src/utils';
 import { Unit } from './Unit';
-import { Coords, UnitsGrid } from './UnitsGrid';
+import { Coords, UnitContext, UnitsGrid } from './UnitsGrid';
 
 export type TftContextType = {
   gold: number;
@@ -29,6 +29,7 @@ export type TftContextType = {
   shopChampionNames: (string | undefined)[];
   shopChampionPool: Record<string, number>;
   bench: UnitsGrid;
+  table: UnitsGrid;
   level: number;
   levelAbove?: number;
   rerollChances: number[];
@@ -37,7 +38,8 @@ export type TftContextType = {
   isMaxLevelReached: boolean;
   buyExperience: () => void;
   buyChampion: (index: number) => void;
-  sellChampion: (coords: Coords) => void;
+  sellChampion: (grid: UnitsGrid, coords: Coords) => void;
+  moveChampion: (source: UnitContext, dest: UnitContext) => void;
   reroll: () => void;
 };
 
@@ -47,6 +49,7 @@ export const TftContext = React.createContext<TftContextType>({
   shopChampionNames: [],
   shopChampionPool: {},
   bench: new UnitsGrid({ height: 0, width: 0 }),
+  table: new UnitsGrid({ height: 0, width: 0 }),
   level: 0,
   rerollChances: [],
   isEnoughGoldToBuyExperience: false,
@@ -55,6 +58,7 @@ export const TftContext = React.createContext<TftContextType>({
   buyExperience: noop,
   buyChampion: noop,
   sellChampion: noop,
+  moveChampion: noop,
   reroll: noop,
 });
 
@@ -64,8 +68,9 @@ export type TftProviderProps = {
 
 export const TftProvider: React.FC<TftProviderProps> = (props) => {
   const [gold, setGold] = useState(300);
-  const [experience, setExperience] = useState(20);
+  const [experience, setExperience] = useState(2);
   const [bench, setBench] = useState(new UnitsGrid({ height: 1, width: 9 }));
+  const [table, setTable] = useState(new UnitsGrid({ height: 4, width: 7 }));
 
   const isEnoughGoldToBuyExperience = gold >= GOLD_PER_EXPERIENCE_BUY;
   const isEnoughGoldToReroll = gold >= GOLD_PER_REROLL;
@@ -159,26 +164,7 @@ export const TftProvider: React.FC<TftProviderProps> = (props) => {
   }
 
   useEffect(() => {
-    setBench((b) =>
-      b
-        .setUnit({ x: 0, y: 0 }, new Unit({ name: 'Cassiopeia', stars: 1 }))
-        .setUnit({ x: 1, y: 0 }, new Unit({ name: 'Cassiopeia', stars: 1 }))
-        .setUnit({ x: 2, y: 0 }, new Unit({ name: 'Zed', stars: 1 }))
-        .setUnit({ x: 3, y: 0 }, new Unit({ name: 'Zed', stars: 1 }))
-        .setUnit({ x: 4, y: 0 }, new Unit({ name: 'Maokai', stars: 1 }))
-        .setUnit({ x: 5, y: 0 }, new Unit({ name: 'Maokai', stars: 1 }))
-        .setUnit({ x: 6, y: 0 }, new Unit({ name: 'Poppy', stars: 1 }))
-        .setUnit({ x: 7, y: 0 }, new Unit({ name: 'Poppy', stars: 1 }))
-        .setUnit({ x: 8, y: 0 }, new Unit({ name: 'Tristana', stars: 1 })),
-    );
-    setShopChampionNames(() => [
-      'Cassiopeia',
-      'Tristana',
-      'Tristana',
-      'Maokai',
-      'Maokai',
-    ]);
-    //rerollShop(rerollChances, shopChampionNames, shopChampionPool);
+    rerollShop(rerollChances, shopChampionNames, shopChampionPool);
   }, []);
 
   const buyExperience = useCallback(() => {
@@ -224,12 +210,25 @@ export const TftProvider: React.FC<TftProviderProps> = (props) => {
     [shopChampionNames, gold, bench],
   );
 
+  const updateGrid = useCallback(
+    (grid: UnitsGrid, updateFn: (g: UnitsGrid) => UnitsGrid) => {
+      if (grid === bench) {
+        setBench(updateFn);
+      } else if (grid === table) {
+        setTable(updateFn);
+      } else {
+        throw new Error('Grid is not bench nor table');
+      }
+    },
+    [bench, table],
+  );
+
   const sellChampion = useCallback(
-    (coords: Coords) => {
-      const unit = bench.getUnit(coords);
+    (grid: UnitsGrid, coords: Coords) => {
+      const unit = grid.getUnit(coords);
       if (!unit) return;
       const champion = CHAMPIONS_MAP[unit.name];
-      setBench((b) => b.setUnit(coords, undefined));
+      updateGrid(grid, (g) => g.setUnit(coords, undefined));
       setShopChampionPool((p) => ({ ...p, [unit.name]: p[unit.name] + 1 }));
       setGold((g) => {
         const newGold = g + champion.tier * Math.pow(3, unit.stars - 1);
@@ -237,7 +236,18 @@ export const TftProvider: React.FC<TftProviderProps> = (props) => {
         return newGold - 1;
       });
     },
-    [bench],
+    [updateGrid],
+  );
+
+  const moveChampion = useCallback(
+    (source: UnitContext, dest: UnitContext) => {
+      const unitFrom = source.grid.getUnit(source.coords);
+      if (!unitFrom) return;
+      const unitTo = dest.grid.getUnit(dest.coords);
+      updateGrid(source.grid, (g) => g.setUnit(source.coords, unitTo));
+      updateGrid(dest.grid, (g) => g.setUnit(dest.coords, unitFrom));
+    },
+    [updateGrid],
   );
 
   const reroll = useCallback(() => {
@@ -269,6 +279,7 @@ export const TftProvider: React.FC<TftProviderProps> = (props) => {
       shopChampionNames,
       shopChampionPool,
       bench,
+      table,
       level,
       levelAbove,
       rerollChances,
@@ -278,9 +289,10 @@ export const TftProvider: React.FC<TftProviderProps> = (props) => {
       buyExperience,
       buyChampion,
       sellChampion,
+      moveChampion,
       reroll,
     }),
-    [gold, experience, shopChampionNames, shopChampionPool, bench],
+    [gold, experience, shopChampionNames, shopChampionPool, bench, table],
   );
 
   return (

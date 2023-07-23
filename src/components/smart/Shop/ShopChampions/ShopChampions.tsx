@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import clsx from 'clsx';
 
 import { useTftState } from '@src/state';
@@ -16,13 +16,7 @@ const ShopChampionsBase: React.FC<ShopChampionsProps> = (props) => {
     <div className="tft__shop__champions">
       {shopChampionNames.map((name, index) => {
         return (
-          <div
-            key={index}
-            className={clsx(
-              'tft__shop__champion-slot',
-              name && `tft__shop__champion-tier_${CHAMPIONS_MAP[name].tier}`,
-            )}
-          >
+          <div key={index} className="tft__shop__champion-slot">
             {name && (
               <ChampionAvatar name={name} onClick={() => buyChampion(index)} />
             )}

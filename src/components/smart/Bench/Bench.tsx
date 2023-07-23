@@ -2,14 +2,15 @@ import React from 'react';
 import { times } from 'lodash-es';
 
 import { useTftState } from '@src/state';
-import { ChampionAvatar } from '@src/components/dumb/ChampionAvatar';
+import { UnitAvatar } from '@src/components/dumb/UnitAvatar';
+import { UnitSlot } from '@src/components/dumb/UnitSlot';
 
 import './Bench.styles.css';
 
 export type BenchProps = {};
 
 const BenchBase: React.FC<BenchProps> = (props) => {
-  const { bench, sellChampion } = useTftState();
+  const { bench } = useTftState();
 
   return (
     <div className="tft__bench">
@@ -20,13 +21,11 @@ const BenchBase: React.FC<BenchProps> = (props) => {
               const unit = bench.getUnit({ x, y });
               return (
                 <div key={x} className="tft__bench-col">
-                  {unit && (
-                    <ChampionAvatar
-                      name={unit.name}
-                      stars={unit.stars}
-                      onClick={() => sellChampion({ x, y })}
-                    />
-                  )}
+                  <UnitSlot grid={bench} x={x} y={y}>
+                    {unit && (
+                      <UnitAvatar grid={bench} unit={unit} x={x} y={y} />
+                    )}
+                  </UnitSlot>
                 </div>
               );
             })}

@@ -1,44 +1,34 @@
 import React from 'react';
-import { capitalize, times } from 'lodash-es';
 import clsx from 'clsx';
 
 import { CHAMPIONS_MAP } from '@src/constants';
-import { ReactComponent as IconStar } from '@src/assets/icons/star.svg';
+
+import { ChampionSplash } from '../ChampionSplash';
 
 import './ChampionAvatar.styles.css';
 
 export type ChampionAvatarProps = {
   name: string;
-  stars?: number;
 } & Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'name'>;
 
 const ChampionAvatarBase: React.FC<ChampionAvatarProps> = (props) => {
   const { className, name, ...restProps } = props;
-  const championUrlName = capitalize(props.name.replace(/[^a-zA-Z]/gim, ''));
+  const { tier } = CHAMPIONS_MAP[name];
 
   return (
-    <button className={clsx('tft__champion-avatar', className)} {...restProps}>
-      <div
-        className="tft__champion-avatar__image"
-        style={{
-          backgroundImage: `url("https://cdn.lolchess.gg/images/lol/champion-splash-modified/${championUrlName}.jpg")`,
-        }}
-      ></div>
+    <button
+      className={clsx(
+        'tft__champion-avatar',
+        `tft__champion-avatar_tier_${tier}`,
+        className,
+      )}
+      {...restProps}
+    >
+      <ChampionSplash name={name} />
       <div className="tft__champion-avatar__footer">
         <div className="tft__champion-avatar__name">{props.name}</div>
-        {!props.stars && (
-          <div className="tft__champion-avatar__cost">
-            {CHAMPIONS_MAP[props.name].tier}
-          </div>
-        )}
+        <div className="tft__champion-avatar__cost">{tier}</div>
       </div>
-      {!!props.stars && (
-        <div className="tft__champion-avatar__stars">
-          {times(props.stars, (i) => (
-            <IconStar key={i} />
-          ))}
-        </div>
-      )}
     </button>
   );
 };

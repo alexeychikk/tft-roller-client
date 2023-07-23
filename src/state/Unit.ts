@@ -1,6 +1,6 @@
 export class Unit {
-  name: string;
-  stars: number;
+  readonly name: string;
+  readonly stars: number;
 
   constructor(options: { name: string; stars: number }) {
     this.name = options.name;
