@@ -17,17 +17,17 @@ export class UnitsGrid {
    *  [0,0,0,0,0,0,0],
    * ]
    */
-  private units: (Unit | undefined)[][];
+  private slots: (Unit | undefined)[][];
 
   constructor(options: {
     width: number;
     height: number;
-    units?: (Unit | undefined)[][];
+    slots?: (Unit | undefined)[][];
   }) {
     this.width = options.width;
     this.height = options.height;
-    this.units =
-      options.units ??
+    this.slots =
+      options.slots ??
       times(this.height, () => times(this.width, () => undefined));
   }
 
@@ -35,26 +35,36 @@ export class UnitsGrid {
     return !this.getFirstEmptySlot();
   }
 
+  get units(): Unit[] {
+    const res: Unit[] = [];
+    for (let y = 0; y < this.height; y++) {
+      for (let x = 0; x < this.width; x++) {
+        if (this.slots[y][x] !== undefined) res.push(this.slots[y][x]!);
+      }
+    }
+    return res;
+  }
+
   getFirstEmptySlot(): Coords | undefined {
     for (let y = 0; y < this.height; y++) {
       for (let x = 0; x < this.width; x++) {
-        if (this.units[y][x] === undefined) return { x, y };
+        if (this.slots[y][x] === undefined) return { x, y };
       }
     }
   }
 
   getUnit(coords: Coords): Unit | undefined {
-    return this.units[coords.y][coords.x];
+    return this.slots[coords.y][coords.x];
   }
 
   setUnit(coords: Coords, unit: Unit | undefined): UnitsGrid {
     const grid = new UnitsGrid({
       height: this.height,
       width: this.width,
-      units: this.units.slice(),
+      slots: this.slots.slice(),
     });
-    grid.units[coords.y] = grid.units[coords.y].slice();
-    grid.units[coords.y][coords.x] = unit;
+    grid.slots[coords.y] = grid.slots[coords.y].slice();
+    grid.slots[coords.y][coords.x] = unit;
     return grid;
   }
 
@@ -96,8 +106,8 @@ export class UnitsGrid {
     for (let y = 0; y < this.height; y++) {
       for (let x = 0; x < this.width; x++) {
         if (
-          this.units[y][x]?.name !== name ||
-          this.units[y][x]?.stars !== stars
+          this.slots[y][x]?.name !== name ||
+          this.slots[y][x]?.stars !== stars
         ) {
           continue;
         }

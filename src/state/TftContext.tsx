@@ -39,7 +39,8 @@ export type TftContextType = {
   buyExperience: () => void;
   buyChampion: (index: number) => void;
   sellChampion: (grid: UnitsGrid, coords: Coords) => void;
-  moveChampion: (source: UnitContext, dest: UnitContext) => void;
+  canMoveUnit: (source: UnitContext, dest: UnitContext) => boolean;
+  moveUnit: (source: UnitContext, dest: UnitContext) => void;
   reroll: () => void;
 };
 
@@ -58,7 +59,8 @@ export const TftContext = React.createContext<TftContextType>({
   buyExperience: noop,
   buyChampion: noop,
   sellChampion: noop,
-  moveChampion: noop,
+  moveUnit: noop,
+  canMoveUnit: () => false,
   reroll: noop,
 });
 
@@ -239,15 +241,36 @@ export const TftProvider: React.FC<TftProviderProps> = (props) => {
     [updateGrid],
   );
 
-  const moveChampion = useCallback(
-    (source: UnitContext, dest: UnitContext) => {
+  const canMoveUnit = useCallback(
+    (source: UnitContext, dest: UnitContext): boolean => {
       const unitFrom = source.grid.getUnit(source.coords);
-      if (!unitFrom) return;
+      if (!unitFrom) return false;
+
+      const unitTo = dest.grid.getUnit(dest.coords);
+
+      if (
+        source.grid === bench &&
+        dest.grid === table &&
+        !unitTo &&
+        table.units.length >= level
+      ) {
+        return false;
+      }
+
+      return true;
+    },
+    [bench, table, level],
+  );
+
+  const moveUnit = useCallback(
+    (source: UnitContext, dest: UnitContext) => {
+      if (!canMoveUnit(source, dest)) return;
+      const unitFrom = source.grid.getUnit(source.coords);
       const unitTo = dest.grid.getUnit(dest.coords);
       updateGrid(source.grid, (g) => g.setUnit(source.coords, unitTo));
       updateGrid(dest.grid, (g) => g.setUnit(dest.coords, unitFrom));
     },
-    [updateGrid],
+    [updateGrid, canMoveUnit],
   );
 
   const reroll = useCallback(() => {
@@ -289,7 +312,8 @@ export const TftProvider: React.FC<TftProviderProps> = (props) => {
       buyExperience,
       buyChampion,
       sellChampion,
-      moveChampion,
+      canMoveUnit,
+      moveUnit,
       reroll,
     }),
     [gold, experience, shopChampionNames, shopChampionPool, bench, table],
