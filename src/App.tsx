@@ -11,7 +11,7 @@ import { TftProvider } from './state';
 
 export function App() {
   return (
-    <DndProvider backend={HTML5Backend} options={{}}>
+    <DndProvider backend={HTML5Backend}>
       <TftProvider>
         <Table />
         <Bench />

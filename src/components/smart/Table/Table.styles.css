@@ -14,7 +14,7 @@
   display: flex;
 }
 
-.tft__table-col {
+.tft__table-slot {
   flex: 1;
   border: 1px solid rgb(55, 205, 210);
 }
