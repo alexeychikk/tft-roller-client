@@ -46,7 +46,7 @@ export class TftStore {
 
       buyExperience: action.bound,
       buyChampion: action.bound,
-      sellChampion: action.bound,
+      sellUnit: action.bound,
       moveUnit: action.bound,
       reroll: action.bound,
     });
@@ -163,15 +163,16 @@ export class TftStore {
     this.mergeUnits({ championName });
   }
 
-  sellChampion({ coords, gridType }: UnitContext) {
+  sellUnit({ coords, gridType }: UnitContext) {
     const unit = this[gridType].getUnit(coords);
     if (!unit) return;
-    const champion = CHAMPIONS_MAP[unit.name];
     this[gridType].setUnit(coords, undefined);
     this.shopChampionPool[unit.name]++;
-    const goldToAdd = champion.tier * Math.pow(3, unit.stars - 1);
-    this.gold +=
-      champion.tier === 1 || unit.stars === 1 ? goldToAdd : goldToAdd - 1;
+    this.gold += unit.sellCost;
+  }
+
+  getUnitCost({ coords, gridType }: UnitContext) {
+    return this[gridType].getUnit(coords)?.sellCost || 0;
   }
 
   canMoveUnit(source: UnitContext, dest: UnitContext): boolean {

@@ -37,7 +37,7 @@ const InputListenerBase: React.FC<InputListenerProps> = () => {
 
     if (!target) return;
     const [gridType, x, y] = target.dataset.tftUnit!.split(',');
-    tftStore.sellChampion({
+    tftStore.sellUnit({
       gridType: gridType as GridType,
       coords: { x: +x, y: +y },
     });

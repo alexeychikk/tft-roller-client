@@ -1,7 +1,7 @@
 import { useDrop } from 'react-dnd';
 
 import {
-  DndItemTypes,
+  DndItemType,
   DndItemUnit,
   GridType,
   UnitContext,
@@ -14,7 +14,7 @@ export const useUnitSlot = (gridType: GridType, x: number, y: number) => {
 
   return useDrop(
     {
-      accept: DndItemTypes.Unit,
+      accept: DndItemType.Unit,
       canDrop: (item: DndItemUnit) => tftStore.canMoveUnit(item, dest),
       drop: (item: DndItemUnit) => tftStore.moveUnit(item, dest),
       collect: (monitor) => ({

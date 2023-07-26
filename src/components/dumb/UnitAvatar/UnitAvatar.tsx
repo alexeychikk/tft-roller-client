@@ -4,7 +4,7 @@ import clsx from 'clsx';
 import { useDrag } from 'react-dnd';
 
 import { CHAMPIONS_MAP } from '@src/constants';
-import { DndItemTypes, DndItemUnit, GridType } from '@src/state';
+import { DndItemType, DndItemUnit, GridType } from '@src/state';
 import { ReactComponent as IconStar } from '@src/assets/icons/star.svg';
 
 import { ChampionSplash } from '../ChampionSplash';
@@ -30,7 +30,7 @@ const UnitAvatarBase: React.FC<UnitAvatarProps> = (props) => {
     { isDragging: boolean }
   >(
     () => ({
-      type: DndItemTypes.Unit,
+      type: DndItemType.Unit,
       item: {
         gridType: props.gridType,
         coords: { x: props.x, y: props.y },

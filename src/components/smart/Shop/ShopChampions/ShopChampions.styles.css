@@ -1,7 +1,13 @@
 .tft__shop__champions {
-  display: flex;
+  position: relative;
   flex: 5;
-  border: 2px solid lime;
+  border: 2px solid greenyellow;
+}
+
+.tft__shop__slots-wrapper {
+  display: flex;
+  width: 100%;
+  height: 100%;
 }
 
 .tft__shop__champion-slot {

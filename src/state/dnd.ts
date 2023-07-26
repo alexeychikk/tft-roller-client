@@ -1,6 +1,6 @@
 import { UnitContext } from './UnitsGrid';
 
-export enum DndItemTypes {
+export enum DndItemType {
   Champion = 'champion',
   Unit = 'unit',
 }
