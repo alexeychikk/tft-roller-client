@@ -18,6 +18,7 @@ export type UnitAvatarProps = {
   gridType: GridType;
   x: number;
   y: number;
+  onSell?: () => void;
 };
 
 const UnitAvatarBase: React.FC<UnitAvatarProps> = (props) => {
@@ -50,6 +51,8 @@ const UnitAvatarBase: React.FC<UnitAvatarProps> = (props) => {
         props.className,
       )}
       ref={dragRef}
+      data-tft-component-type="UnitAvatar"
+      data-tft-unit={`${props.gridType},${props.x},${props.y}`}
     >
       <ChampionSplash name={props.name} />
 
