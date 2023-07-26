@@ -1,7 +1,9 @@
 import React from 'react';
+import { observer } from 'mobx-react-lite';
 
-import { GridType, useTftState, useUnitSlot } from '@src/state';
+import { GridType, tftStore } from '@src/state';
 import { UnitAvatar } from '@src/components/dumb/UnitAvatar';
+import { useUnitSlot } from '@src/components/hooks/useUnitSlot';
 
 export type BenchSlotProps = {
   x: number;
@@ -9,15 +11,22 @@ export type BenchSlotProps = {
 };
 
 const BenchSlotBase: React.FC<BenchSlotProps> = ({ x, y }) => {
-  const { bench } = useTftState();
-  const unit = bench.getUnit({ x, y });
+  const unit = tftStore.bench.getUnit({ x, y });
   const [, dropRef] = useUnitSlot(GridType.Bench, x, y);
 
   return (
     <div className="tft__bench-slot" ref={dropRef}>
-      {unit && <UnitAvatar gridType={GridType.Bench} unit={unit} x={x} y={y} />}
+      {unit && (
+        <UnitAvatar
+          name={unit.name}
+          stars={unit.stars}
+          gridType={GridType.Bench}
+          x={x}
+          y={y}
+        />
+      )}
     </div>
   );
 };
 
-export const BenchSlot = React.memo(BenchSlotBase);
+export const BenchSlot = observer(BenchSlotBase);

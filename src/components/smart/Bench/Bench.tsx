@@ -1,7 +1,8 @@
 import React from 'react';
 import { times } from 'lodash-es';
+import { observer } from 'mobx-react-lite';
 
-import { useTftState } from '@src/state';
+import { tftStore } from '@src/state';
 
 import { BenchSlot } from './BenchSlot';
 import './Bench.styles.css';
@@ -11,14 +12,12 @@ export type BenchProps = {
 };
 
 const BenchBase: React.FC<BenchProps> = () => {
-  const { bench } = useTftState();
-
   return (
     <div className="tft__bench">
-      {times(bench.height, (y) => {
+      {times(tftStore.bench.height, (y) => {
         return (
           <div key={y} className="tft__bench-row">
-            {times(bench.width, (x) => {
+            {times(tftStore.bench.width, (x) => {
               return <BenchSlot key={x} x={x} y={y} />;
             })}
           </div>
@@ -28,4 +27,4 @@ const BenchBase: React.FC<BenchProps> = () => {
   );
 };
 
-export const Bench = React.memo(BenchBase);
+export const Bench = observer(BenchBase);

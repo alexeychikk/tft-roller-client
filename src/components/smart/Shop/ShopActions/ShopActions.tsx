@@ -1,6 +1,7 @@
 import React from 'react';
+import { observer } from 'mobx-react-lite';
 
-import { useTftState } from '@src/state';
+import { tftStore } from '@src/state';
 
 import './ShopActions.styles.css';
 
@@ -9,27 +10,24 @@ export type ShopActionsProps = {
 };
 
 const ShopActionsBase: React.FC<ShopActionsProps> = () => {
-  const {
-    isEnoughGoldToBuyExperience,
-    isEnoughGoldToReroll,
-    isMaxLevelReached,
-    buyExperience,
-    reroll,
-  } = useTftState();
-
   return (
     <div className="tft__shop__actions">
       <button
-        onClick={buyExperience}
-        disabled={!isEnoughGoldToBuyExperience || isMaxLevelReached}
+        onClick={tftStore.buyExperience}
+        disabled={
+          !tftStore.isEnoughGoldToBuyExperience || tftStore.isMaxLevelReached
+        }
       >
         Level Up
       </button>
-      <button onClick={reroll} disabled={!isEnoughGoldToReroll}>
+      <button
+        onClick={tftStore.reroll}
+        disabled={!tftStore.isEnoughGoldToReroll}
+      >
         Reroll
       </button>
     </div>
   );
 };
 
-export const ShopActions = React.memo(ShopActionsBase);
+export const ShopActions = observer(ShopActionsBase);

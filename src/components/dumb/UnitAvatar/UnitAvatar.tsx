@@ -4,7 +4,7 @@ import clsx from 'clsx';
 import { useDrag } from 'react-dnd';
 
 import { CHAMPIONS_MAP } from '@src/constants';
-import { DndItemTypes, DndItemUnit, GridType, Unit } from '@src/state';
+import { DndItemTypes, DndItemUnit, GridType } from '@src/state';
 import { ReactComponent as IconStar } from '@src/assets/icons/star.svg';
 
 import { ChampionSplash } from '../ChampionSplash';
@@ -13,14 +13,15 @@ import './UnitAvatar.styles.css';
 
 export type UnitAvatarProps = {
   className?: string;
+  name: string;
+  stars: number;
   gridType: GridType;
-  unit: Unit;
   x: number;
   y: number;
 };
 
 const UnitAvatarBase: React.FC<UnitAvatarProps> = (props) => {
-  const champion = CHAMPIONS_MAP[props.unit.name];
+  const champion = CHAMPIONS_MAP[props.name];
 
   const [{ isDragging }, dragRef] = useDrag<
     DndItemUnit,
@@ -37,7 +38,7 @@ const UnitAvatarBase: React.FC<UnitAvatarProps> = (props) => {
         isDragging: monitor.isDragging(),
       }),
     }),
-    [props.gridType, props.unit, props.x, props.y],
+    [props.gridType, props.x, props.y],
   );
 
   return (
@@ -50,10 +51,10 @@ const UnitAvatarBase: React.FC<UnitAvatarProps> = (props) => {
       )}
       ref={dragRef}
     >
-      <ChampionSplash name={props.unit.name} />
+      <ChampionSplash name={props.name} />
 
       <div className="tft__unit-avatar__stars">
-        {times(props.unit.stars, (i) => (
+        {times(props.stars, (i) => (
           <IconStar key={i} />
         ))}
       </div>

@@ -5,8 +5,6 @@ import { traverseUniqueCombinations } from '@src/utils';
 export function calculateComps(
   level: number,
   traitActivationsThreshold: number,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  desiredTraits: string[] = [],
   minTier = 1,
   maxTier = 5,
 ) {

@@ -1,4 +1,5 @@
 import { times } from 'lodash-es';
+import { action, computed, makeObservable, observable } from 'mobx';
 import { Unit } from './Unit';
 
 export type Coords = { x: number; y: number };
@@ -22,7 +23,7 @@ export class UnitsGrid {
    *  [0,0,0,0,0,0,0],
    * ]
    */
-  private slots: (Unit | undefined)[][];
+  protected slots: (Unit | undefined)[][];
 
   constructor(options: {
     width: number;
@@ -34,10 +35,21 @@ export class UnitsGrid {
     this.slots =
       options.slots ??
       times(this.height, () => times(this.width, () => undefined));
+
+    makeObservable<UnitsGrid, 'slots'>(this, {
+      slots: observable,
+      isFull: computed,
+      units: computed,
+      firstEmptySlot: computed,
+      setUnit: action,
+      moveUnit: action,
+      removeUnits: action,
+      upgradeUnit: action,
+    });
   }
 
   get isFull(): boolean {
-    return !this.getFirstEmptySlot();
+    return !this.firstEmptySlot;
   }
 
   get units(): Unit[] {
@@ -50,7 +62,7 @@ export class UnitsGrid {
     return res;
   }
 
-  getFirstEmptySlot(): Coords | undefined {
+  get firstEmptySlot(): Coords | undefined {
     for (let y = 0; y < this.height; y++) {
       for (let x = 0; x < this.width; x++) {
         if (this.slots[y][x] === undefined) return { x, y };
@@ -63,14 +75,8 @@ export class UnitsGrid {
   }
 
   setUnit(coords: Coords, unit: Unit | undefined): UnitsGrid {
-    const grid = new UnitsGrid({
-      height: this.height,
-      width: this.width,
-      slots: this.slots.slice(),
-    });
-    grid.slots[coords.y] = grid.slots[coords.y].slice();
-    grid.slots[coords.y][coords.x] = unit;
-    return grid;
+    this.slots[coords.y][coords.x] = unit;
+    return this;
   }
 
   moveUnit(from: Coords, to: Coords): UnitsGrid {
@@ -78,12 +84,9 @@ export class UnitsGrid {
     if (!fromUnit) return this;
 
     const toUnit = this.getUnit(to);
-    const newGrid = this.setUnit(to, fromUnit);
-
-    if (toUnit) {
-      return newGrid.setUnit(from, toUnit);
-    }
-    return newGrid.setUnit(from, undefined);
+    this.setUnit(to, fromUnit);
+    this.setUnit(from, toUnit);
+    return this;
   }
 
   upgradeUnit(coords: Coords): UnitsGrid {
@@ -91,16 +94,15 @@ export class UnitsGrid {
     if (!unit) {
       throw new Error(`Unit at coords ${coords.x},${coords.y} does not exist!`);
     }
-    return this.setUnit(coords, unit.upgrade());
+    unit.upgrade();
+    return this;
   }
 
   removeUnits(coords: Coords[]): UnitsGrid {
-    // eslint-disable-next-line @typescript-eslint/no-this-alias
-    let grid: UnitsGrid = this;
-    coords.forEach((c) => {
-      grid = grid.setUnit(c, undefined);
-    });
-    return grid;
+    for (const coord of coords) {
+      this.setUnit(coord, undefined);
+    }
+    return this;
   }
 
   getCoordsOfUnitsOfStars(

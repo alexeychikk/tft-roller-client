@@ -1,7 +1,8 @@
 import React from 'react';
 import { times } from 'lodash-es';
+import { observer } from 'mobx-react-lite';
 
-import { useTftState } from '@src/state';
+import { tftStore } from '@src/state';
 
 import { TableSlot } from './TableSlot';
 import './Table.styles.css';
@@ -11,13 +12,12 @@ export type TableProps = {
 };
 
 const TableBase: React.FC<TableProps> = () => {
-  const { table } = useTftState();
   return (
     <div className="tft__table">
-      {times(table.height, (y) => {
+      {times(tftStore.table.height, (y) => {
         return (
           <div key={y} className="tft__table-row">
-            {times(table.width, (x) => {
+            {times(tftStore.table.width, (x) => {
               return <TableSlot key={x} x={x} y={y} />;
             })}
           </div>
@@ -27,4 +27,4 @@ const TableBase: React.FC<TableProps> = () => {
   );
 };
 
-export const Table = React.memo(TableBase);
+export const Table = observer(TableBase);

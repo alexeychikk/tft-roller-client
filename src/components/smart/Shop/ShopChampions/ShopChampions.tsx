@@ -1,6 +1,7 @@
 import React from 'react';
+import { observer } from 'mobx-react-lite';
 
-import { useTftState } from '@src/state';
+import { tftStore } from '@src/state';
 import { ChampionAvatar } from '@src/components/dumb/ChampionAvatar';
 
 import './ShopChampions.styles.css';
@@ -10,15 +11,16 @@ export type ShopChampionsProps = {
 };
 
 const ShopChampionsBase: React.FC<ShopChampionsProps> = () => {
-  const { shopChampionNames, buyChampion } = useTftState();
-
   return (
     <div className="tft__shop__champions">
-      {shopChampionNames.map((name, index) => {
+      {tftStore.shopChampionNames.map((name, index) => {
         return (
           <div key={index} className="tft__shop__champion-slot">
             {name && (
-              <ChampionAvatar name={name} onClick={() => buyChampion(index)} />
+              <ChampionAvatar
+                name={name}
+                onClick={() => tftStore.buyChampion(index)}
+              />
             )}
           </div>
         );
@@ -27,4 +29,4 @@ const ShopChampionsBase: React.FC<ShopChampionsProps> = () => {
   );
 };
 
-export const ShopChampions = React.memo(ShopChampionsBase);
+export const ShopChampions = observer(ShopChampionsBase);

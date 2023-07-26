@@ -1,13 +1,16 @@
+import { action, makeObservable, observable } from 'mobx';
+
 export class Unit {
-  readonly name: string;
-  readonly stars: number;
+  name: string;
+  stars: number;
 
   constructor(options: { name: string; stars: number }) {
     this.name = options.name;
     this.stars = options.stars;
+    makeObservable(this, { stars: observable, upgrade: action });
   }
 
-  upgrade(): Unit {
-    return new Unit({ name: this.name, stars: this.stars + 1 });
+  upgrade() {
+    this.stars++;
   }
 }

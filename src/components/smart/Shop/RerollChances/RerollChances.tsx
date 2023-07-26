@@ -1,7 +1,8 @@
 import React from 'react';
 import clsx from 'clsx';
+import { observer } from 'mobx-react-lite';
 
-import { useTftState } from '@src/state';
+import { tftStore } from '@src/state';
 
 import './RerollChances.styles.css';
 
@@ -10,10 +11,9 @@ export type RerollChancesProps = {
 };
 
 const RerollChancesBase: React.FC<RerollChancesProps> = () => {
-  const { rerollChances } = useTftState();
   return (
     <div className="tft__shop__reroll-chances">
-      {rerollChances.map((percent, index) => (
+      {tftStore.rerollChances.map((percent, index) => (
         <span
           key={index}
           className={clsx(
@@ -28,4 +28,4 @@ const RerollChancesBase: React.FC<RerollChancesProps> = () => {
   );
 };
 
-export const RerollChances = React.memo(RerollChancesBase);
+export const RerollChances = observer(RerollChancesBase);
