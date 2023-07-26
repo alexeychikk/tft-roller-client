@@ -2,9 +2,11 @@ import React from 'react';
 
 import './Comps.styles.css';
 
-export type CompsProps = {};
+export type CompsProps = {
+  /* empty */
+};
 
-const CompsBase: React.FC<CompsProps> = (props) => {
+const CompsBase: React.FC<CompsProps> = () => {
   return <div className="tft__comps">Comps</div>;
 };
 

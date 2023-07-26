@@ -1,12 +1,12 @@
 import { useDrop } from 'react-dnd';
 import { useTftState } from './TftContext';
 import { DndItemTypes, DndItemUnit } from './dnd';
-import { UnitContext, UnitsGrid } from './UnitsGrid';
+import { GridType, UnitContext } from './UnitsGrid';
 
-export const useUnitSlot = (grid: UnitsGrid, x: number, y: number) => {
+export const useUnitSlot = (gridType: GridType, x: number, y: number) => {
   const { bench, table, level, canMoveUnit, moveUnit } = useTftState();
   const coords = { x, y };
-  const dest: UnitContext = { grid, coords };
+  const dest: UnitContext = { gridType, coords };
 
   return useDrop(
     {
@@ -18,6 +18,6 @@ export const useUnitSlot = (grid: UnitsGrid, x: number, y: number) => {
         canDrop: monitor.canDrop(),
       }),
     },
-    [grid, x, y, bench, table, level, canMoveUnit, moveUnit],
+    [gridType, x, y, bench, table, level, canMoveUnit, moveUnit],
   );
 };

@@ -19,7 +19,7 @@
   display: flex;
 }
 .tft__shop__tob-bar__right-wrapper::after {
-  content: "";
+  content: '';
   flex: 4;
 }
 

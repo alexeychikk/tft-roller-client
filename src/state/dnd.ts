@@ -1,5 +1,3 @@
-import { Champion } from '@src/constants';
-import { Unit } from './Unit';
 import { UnitContext } from './UnitsGrid';
 
 export enum DndItemTypes {
@@ -7,12 +5,9 @@ export enum DndItemTypes {
   Unit = 'unit',
 }
 
-export type DndItemUnit = UnitContext & {
-  unit: Unit;
-};
+export type DndItemUnit = UnitContext;
 
 export type DndItemChampion = {
-  champion: Champion;
   shopIndex: number;
 };
 

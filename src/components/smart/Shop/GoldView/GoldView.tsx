@@ -4,9 +4,11 @@ import { useTftState } from '@src/state';
 
 import './GoldView.styles.css';
 
-export type GoldViewProps = {};
+export type GoldViewProps = {
+  /* empty */
+};
 
-const GoldViewBase: React.FC<GoldViewProps> = (props) => {
+const GoldViewBase: React.FC<GoldViewProps> = () => {
   const { gold } = useTftState();
   return (
     <div className="tft__shop__gold-view">

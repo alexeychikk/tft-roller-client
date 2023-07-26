@@ -5,6 +5,7 @@ import { traverseUniqueCombinations } from '@src/utils';
 export function calculateComps(
   level: number,
   traitActivationsThreshold: number,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   desiredTraits: string[] = [],
   minTier = 1,
   maxTier = 5,
@@ -16,7 +17,7 @@ export function calculateComps(
 
   console.log('Traversing...');
 
-  traverseUniqueCombinations(champs, level, (comb, iteration) => {
+  traverseUniqueCombinations(champs, level, (comb) => {
     const champsPerTrait: Record<string, number> = {};
     for (const champ of comb) {
       for (const trait of champ.classTraits) {
@@ -33,7 +34,7 @@ export function calculateComps(
     let totalActivations = 0;
     const activationsPerTrait: Record<string, number> = {};
 
-    for (let trait in champsPerTrait) {
+    for (const trait in champsPerTrait) {
       const { activations } = ALL_TRAITS_MAP[trait];
       if (activations.length === 1 && activations[0] === 1) continue;
       const champsOfTrait = champsPerTrait[trait];

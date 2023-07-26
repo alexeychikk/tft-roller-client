@@ -5,9 +5,11 @@ import { EXPERIENCE_PER_LEVEL } from '@src/constants';
 
 import './LevelView.styles.css';
 
-export type LevelViewProps = {};
+export type LevelViewProps = {
+  /* empty */
+};
 
-const LevelViewBase: React.FC<LevelViewProps> = (props) => {
+const LevelViewBase: React.FC<LevelViewProps> = () => {
   const { experience, level, levelAbove } = useTftState();
 
   const levelExperience = EXPERIENCE_PER_LEVEL[level] || 0;

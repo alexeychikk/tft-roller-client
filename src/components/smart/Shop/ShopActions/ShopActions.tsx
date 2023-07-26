@@ -1,11 +1,14 @@
 import React from 'react';
 
-import './ShopActions.styles.css';
 import { useTftState } from '@src/state';
 
-export type ShopActionsProps = {};
+import './ShopActions.styles.css';
 
-const ShopActionsBase: React.FC<ShopActionsProps> = (props) => {
+export type ShopActionsProps = {
+  /* empty */
+};
+
+const ShopActionsBase: React.FC<ShopActionsProps> = () => {
   const {
     isEnoughGoldToBuyExperience,
     isEnoughGoldToReroll,

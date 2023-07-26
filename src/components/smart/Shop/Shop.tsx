@@ -7,9 +7,11 @@ import { LevelView } from './LevelView';
 import { RerollChances } from './RerollChances';
 import { GoldView } from './GoldView';
 
-export type ShopProps = {};
+export type ShopProps = {
+  /* empty */
+};
 
-const ShopBase: React.FC<ShopProps> = (props) => {
+const ShopBase: React.FC<ShopProps> = () => {
   return (
     <div className="tft__shop">
       <div className="tft__shop__top-bar">

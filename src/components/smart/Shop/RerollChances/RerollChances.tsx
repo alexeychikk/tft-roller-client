@@ -5,9 +5,11 @@ import { useTftState } from '@src/state';
 
 import './RerollChances.styles.css';
 
-export type RerollChancesProps = {};
+export type RerollChancesProps = {
+  /* empty */
+};
 
-const RerollChancesBase: React.FC<RerollChancesProps> = (props) => {
+const RerollChancesBase: React.FC<RerollChancesProps> = () => {
   const { rerollChances } = useTftState();
   return (
     <div className="tft__shop__reroll-chances">

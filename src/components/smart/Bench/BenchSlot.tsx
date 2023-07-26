@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useTftState, useUnitSlot } from '@src/state';
+import { GridType, useTftState, useUnitSlot } from '@src/state';
 import { UnitAvatar } from '@src/components/dumb/UnitAvatar';
 
 export type BenchSlotProps = {
@@ -11,11 +11,11 @@ export type BenchSlotProps = {
 const BenchSlotBase: React.FC<BenchSlotProps> = ({ x, y }) => {
   const { bench } = useTftState();
   const unit = bench.getUnit({ x, y });
-  const [{}, dropRef] = useUnitSlot(bench, x, y);
+  const [, dropRef] = useUnitSlot(GridType.Bench, x, y);
 
   return (
     <div className="tft__bench-slot" ref={dropRef}>
-      {unit && <UnitAvatar grid={bench} unit={unit} x={x} y={y} />}
+      {unit && <UnitAvatar gridType={GridType.Bench} unit={unit} x={x} y={y} />}
     </div>
   );
 };

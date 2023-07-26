@@ -6,9 +6,11 @@ import { useTftState } from '@src/state';
 import { TableSlot } from './TableSlot';
 import './Table.styles.css';
 
-export type TableProps = {};
+export type TableProps = {
+  /* empty */
+};
 
-const TableBase: React.FC<TableProps> = (props) => {
+const TableBase: React.FC<TableProps> = () => {
   const { table } = useTftState();
   return (
     <div className="tft__table">

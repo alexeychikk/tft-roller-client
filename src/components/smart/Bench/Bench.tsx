@@ -6,9 +6,11 @@ import { useTftState } from '@src/state';
 import { BenchSlot } from './BenchSlot';
 import './Bench.styles.css';
 
-export type BenchProps = {};
+export type BenchProps = {
+  /* empty */
+};
 
-const BenchBase: React.FC<BenchProps> = (props) => {
+const BenchBase: React.FC<BenchProps> = () => {
   const { bench } = useTftState();
 
   return (

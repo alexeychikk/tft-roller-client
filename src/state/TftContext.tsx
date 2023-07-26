@@ -1,4 +1,4 @@
-import { pickBy, noop, sumBy, mapValues, times } from 'lodash-es';
+import { noop, times } from 'lodash-es';
 import React, {
   useCallback,
   useContext,
@@ -7,42 +7,51 @@ import React, {
   useState,
 } from 'react';
 import { useKeyPressEvent } from 'react-use';
+
 import {
   EXPERIENCE_PER_BUY,
-  EXPERIENCE_PER_LEVEL,
   GOLD_PER_EXPERIENCE_BUY,
-  MAX_LEVEL,
-  MIN_LEVEL,
-  REROLL_CHANCES,
   CHAMPIONS_MAP,
   CHAMPIONS_POOL,
   GOLD_PER_REROLL,
   SHOP_SIZE,
 } from '@src/constants';
-import { weightedRandom } from '@src/utils';
-import { Unit } from './Unit';
-import { Coords, UnitContext, UnitsGrid } from './UnitsGrid';
 
-export type TftContextType = {
+import { Unit } from './Unit';
+import { GridType, UnitContext, UnitsGrid } from './UnitsGrid';
+import { getComputedState } from './computed';
+import { mergeUnits, rerollShop } from './actions';
+
+export type TftContextState = {
   gold: number;
   experience: number;
   shopChampionNames: (string | undefined)[];
   shopChampionPool: Record<string, number>;
   bench: UnitsGrid;
   table: UnitsGrid;
+};
+
+export type TftContextComputed = {
   level: number;
   levelAbove?: number;
   rerollChances: number[];
   isEnoughGoldToBuyExperience: boolean;
   isEnoughGoldToReroll: boolean;
   isMaxLevelReached: boolean;
+};
+
+export type TftContextActions = {
   buyExperience: () => void;
   buyChampion: (index: number) => void;
-  sellChampion: (grid: UnitsGrid, coords: Coords) => void;
+  sellChampion: (unitContext: UnitContext) => void;
   canMoveUnit: (source: UnitContext, dest: UnitContext) => boolean;
   moveUnit: (source: UnitContext, dest: UnitContext) => void;
   reroll: () => void;
 };
+
+export type TftContextType = TftContextState &
+  TftContextComputed &
+  TftContextActions;
 
 export const TftContext = React.createContext<TftContextType>({
   gold: 0,
@@ -69,246 +78,218 @@ export type TftProviderProps = {
 };
 
 export const TftProvider: React.FC<TftProviderProps> = (props) => {
-  const [gold, setGold] = useState(300);
-  const [experience, setExperience] = useState(2);
-  const [bench, setBench] = useState(new UnitsGrid({ height: 1, width: 9 }));
-  const [table, setTable] = useState(new UnitsGrid({ height: 4, width: 7 }));
-
-  const isEnoughGoldToBuyExperience = gold >= GOLD_PER_EXPERIENCE_BUY;
-  const isEnoughGoldToReroll = gold >= GOLD_PER_REROLL;
-  const isMaxLevelReached = experience >= EXPERIENCE_PER_LEVEL[MAX_LEVEL];
-
-  const levelAboveName = Object.keys(EXPERIENCE_PER_LEVEL).find((level) => {
-    const exp = EXPERIENCE_PER_LEVEL[+level];
-    return experience < exp;
+  const [state, setState] = useState<TftContextState>({
+    gold: 300,
+    experience: 2,
+    bench: new UnitsGrid({ height: 1, width: 9 }),
+    table: new UnitsGrid({ height: 4, width: 7 }),
+    shopChampionNames: new Array(SHOP_SIZE).fill(undefined),
+    shopChampionPool: CHAMPIONS_POOL,
   });
-  const levelAbove = levelAboveName ? +levelAboveName : undefined;
-  const level = Math.max(
-    levelAbove !== undefined ? levelAbove - 1 : MAX_LEVEL,
-    MIN_LEVEL,
-  );
-  const rerollChances = REROLL_CHANCES[level];
 
-  const [shopChampionPool, setShopChampionPool] =
-    useState<Record<string, number>>(CHAMPIONS_POOL);
-
-  const [shopChampionNames, setShopChampionNames] = useState<
-    (string | undefined)[]
-  >(new Array(SHOP_SIZE).fill(undefined));
-
-  function rerollShop(
-    rerollChancesLocal: typeof rerollChances,
-    shopChampionNamesLocal: typeof shopChampionNames,
-    shopChampionPoolLocal: typeof shopChampionPool,
-  ) {
-    let newChampionPool = { ...shopChampionPoolLocal };
-    times(shopChampionNamesLocal.length, (index) => {
-      const poolByTier: Record<
-        number,
-        { pool: Record<string, number>; total: number }
-      > = {};
-
-      const tierSpec = rerollChancesLocal.reduce(
-        (result, probability, index) => {
-          if (probability <= 0) return result;
-
-          const tier = index + 1;
-          const pool = pickBy(
-            newChampionPool,
-            (_, name) => CHAMPIONS_MAP[name].tier === tier,
-          );
-          const total = sumBy(Object.keys(pool), (name) => pool[name]);
-
-          if (total <= 0) return result;
-
-          poolByTier[tier] = { pool, total };
-          result[tier] = probability;
-          return result;
-        },
-        {} as Record<number, number>,
-      );
-
-      const tier = +weightedRandom(tierSpec);
-
-      const tierPool = poolByTier[tier].pool;
-      const totalTierPoolSize = poolByTier[tier].total;
-
-      const champSpec = mapValues(
-        pickBy(tierPool, (pool) => pool > 0),
-        (size) => size / totalTierPoolSize,
-      );
-      const championName = weightedRandom(champSpec);
-
-      newChampionPool = {
-        ...newChampionPool,
-        [championName]: newChampionPool[championName] - 1,
-      };
-      setShopChampionPool(newChampionPool);
-      setShopChampionNames((names) => {
-        const newNames = [...names];
-        newNames[index] = championName;
-        return newNames;
-      });
-    });
-  }
-
-  function mergeUnits(
-    localBench: UnitsGrid,
-    championName: string,
-    stars = 1,
-  ): UnitsGrid {
-    const coords = localBench.getCoordsOfUnitsOfStars(championName, 3, stars);
-    if (coords.length !== 3) return localBench;
-    const [firstUnitCoords, ...restCoords] = coords;
-    localBench = localBench.removeUnits(restCoords);
-    localBench = localBench.upgradeUnit(firstUnitCoords);
-    return mergeUnits(localBench, championName, stars + 1);
-  }
+  const computed = getComputedState(state);
 
   useEffect(() => {
-    rerollShop(rerollChances, shopChampionNames, shopChampionPool);
+    setState((state) => ({
+      ...state,
+      bench: state.bench
+        .setUnit({ x: 0, y: 0 }, new Unit({ name: 'Cassiopeia', stars: 1 }))
+        .setUnit({ x: 1, y: 0 }, new Unit({ name: 'Cassiopeia', stars: 1 }))
+        .setUnit({ x: 2, y: 0 }, new Unit({ name: 'Zed', stars: 1 }))
+        .setUnit({ x: 3, y: 0 }, new Unit({ name: 'Zed', stars: 1 }))
+        .setUnit({ x: 4, y: 0 }, new Unit({ name: 'Maokai', stars: 1 }))
+        .setUnit({ x: 5, y: 0 }, new Unit({ name: 'Maokai', stars: 1 }))
+        .setUnit({ x: 6, y: 0 }, new Unit({ name: 'Poppy', stars: 1 }))
+        .setUnit({ x: 7, y: 0 }, new Unit({ name: 'Poppy', stars: 1 }))
+        .setUnit({ x: 8, y: 0 }, new Unit({ name: 'Tristana', stars: 1 })),
+      shopChampionNames: [
+        'Cassiopeia',
+        'Tristana',
+        'Tristana',
+        'Maokai',
+        'Maokai',
+      ],
+    }));
   }, []);
 
   const buyExperience = useCallback(() => {
-    if (!isEnoughGoldToBuyExperience) return;
-    if (isMaxLevelReached) return;
-    setExperience((exp) => exp + EXPERIENCE_PER_BUY);
-    setGold((g) => g - GOLD_PER_EXPERIENCE_BUY);
-  }, [isEnoughGoldToBuyExperience, isMaxLevelReached]);
+    if (!computed.isEnoughGoldToBuyExperience) return;
+    if (computed.isMaxLevelReached) return;
+    setState((s) => ({
+      ...s,
+      experience: s.experience + EXPERIENCE_PER_BUY,
+      gold: s.gold - GOLD_PER_EXPERIENCE_BUY,
+    }));
+  }, [computed.isEnoughGoldToBuyExperience, computed.isMaxLevelReached]);
 
   const buyChampion = useCallback(
     (index: number) => {
-      const championName = shopChampionNames[index];
+      const championName = state.shopChampionNames[index];
       if (championName === undefined) return;
 
       const champion = CHAMPIONS_MAP[championName];
-      if (gold < champion.tier) return;
+      if (state.gold < champion.tier) return;
 
-      const emptySlot = bench.getFirstEmptySlot();
+      const emptySlot = state.bench.getFirstEmptySlot();
       if (!emptySlot) {
-        // 1. Взять массив координат юнитов с таким именем на доске
-        // 2. Если пустой массив - выходим
-        // 3. Посчитать количество чемпиона в магазине amount_in_shop
-        //    amount_to_buy = 3 - amount_on_bench
-        // 4. Если amount_in_shop < amount_to_buy - выход
-        // 5. Если не хватает золота на amount_to_buy - выход
-        // 6. Потратить золота на amount_to_buy юнитов
-        // 7. Апгрейдим первый юнит и удаляем остальные, рекурсия
-        // 8. Удалить amount_to_buy чемпов из магаза
+        const benchUnitsCoords = state.bench.getCoordsOfUnitsOfStars(
+          championName,
+          2,
+          1,
+        );
+        const tableUnitsCoords = state.table.getCoordsOfUnitsOfStars(
+          championName,
+          2,
+          1,
+        );
+        if (!benchUnitsCoords.length && !tableUnitsCoords.length) {
+          return;
+        }
+
+        const shopChampionIndexes = [
+          index,
+          ...state.shopChampionNames
+            .map((name, i) => (name === championName ? i : -1))
+            .filter((i) => i !== -1 && i !== index),
+        ];
+        const amountToBuy =
+          3 - (benchUnitsCoords.length + tableUnitsCoords.length);
+        if (shopChampionIndexes.length < amountToBuy) {
+          return;
+        }
+        if (state.gold < amountToBuy * champion.tier) {
+          return;
+        }
+
+        setState((s) => {
+          const newChampNames = [...s.shopChampionNames];
+          times(amountToBuy, (i) => {
+            newChampNames[shopChampionIndexes[i]] = undefined;
+          });
+          return {
+            ...s,
+            gold: s.gold - amountToBuy * champion.tier,
+            shopChampionNames: newChampNames,
+          };
+        });
+        setState((s) => mergeUnits(s, { championName, minUnitsAmount: 1 }));
         return;
       }
 
-      setBench((b) =>
-        b.setUnit(emptySlot, new Unit({ name: championName, stars: 1 })),
-      );
-      setGold((g) => g - champion.tier);
-      setShopChampionNames((champNames) => {
-        const res = [...champNames];
-        res[index] = undefined;
-        return res;
+      setState((s) => {
+        const newChampNames = [...s.shopChampionNames];
+        newChampNames[index] = undefined;
+        return {
+          ...s,
+          bench: s.bench.setUnit(
+            emptySlot,
+            new Unit({ name: championName, stars: 1 }),
+          ),
+          gold: s.gold - champion.tier,
+          shopChampionNames: newChampNames,
+        };
       });
-      setBench((b) => mergeUnits(b, championName));
+      setState((s) => mergeUnits(s, { championName }));
     },
-    [shopChampionNames, gold, bench],
-  );
-
-  const updateGrid = useCallback(
-    (grid: UnitsGrid, updateFn: (g: UnitsGrid) => UnitsGrid) => {
-      if (grid === bench) {
-        setBench(updateFn);
-      } else if (grid === table) {
-        setTable(updateFn);
-      } else {
-        throw new Error('Grid is not bench nor table');
-      }
-    },
-    [bench, table],
+    [state.shopChampionNames, state.gold, state.bench, state.table],
   );
 
   const sellChampion = useCallback(
-    (grid: UnitsGrid, coords: Coords) => {
-      const unit = grid.getUnit(coords);
+    ({ coords, gridType }: UnitContext) => {
+      const unit = state[gridType].getUnit(coords);
       if (!unit) return;
       const champion = CHAMPIONS_MAP[unit.name];
-      updateGrid(grid, (g) => g.setUnit(coords, undefined));
-      setShopChampionPool((p) => ({ ...p, [unit.name]: p[unit.name] + 1 }));
-      setGold((g) => {
-        const newGold = g + champion.tier * Math.pow(3, unit.stars - 1);
-        if (champion.tier === 1 || unit.stars === 1) return newGold;
-        return newGold - 1;
+      setState((s) => ({
+        ...s,
+        [gridType]: s[gridType].setUnit(coords, undefined),
+      }));
+      setState((s) => {
+        const newGold = s.gold + champion.tier * Math.pow(3, unit.stars - 1);
+        return {
+          ...s,
+          shopChampionPool: {
+            ...s.shopChampionPool,
+            [unit.name]: s.shopChampionPool[unit.name] + 1,
+          },
+          gold: champion.tier === 1 || unit.stars === 1 ? newGold : newGold - 1,
+        };
       });
     },
-    [updateGrid],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [state.bench, state.table],
   );
 
   const canMoveUnit = useCallback(
     (source: UnitContext, dest: UnitContext): boolean => {
-      const unitFrom = source.grid.getUnit(source.coords);
+      const unitFrom = state[source.gridType].getUnit(source.coords);
       if (!unitFrom) return false;
 
-      const unitTo = dest.grid.getUnit(dest.coords);
+      const unitTo = state[dest.gridType].getUnit(dest.coords);
 
       if (
-        source.grid === bench &&
-        dest.grid === table &&
+        source.gridType === GridType.Bench &&
+        dest.gridType === GridType.Table &&
         !unitTo &&
-        table.units.length >= level
+        state.table.units.length >= computed.level
       ) {
         return false;
       }
 
       return true;
     },
-    [bench, table, level],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [state.bench, state.table, computed.level],
   );
 
   const moveUnit = useCallback(
     (source: UnitContext, dest: UnitContext) => {
       if (!canMoveUnit(source, dest)) return;
-      const unitFrom = source.grid.getUnit(source.coords);
-      const unitTo = dest.grid.getUnit(dest.coords);
-      updateGrid(source.grid, (g) => g.setUnit(source.coords, unitTo));
-      updateGrid(dest.grid, (g) => g.setUnit(dest.coords, unitFrom));
+      setState((s) => {
+        const sourceGrid = s[source.gridType];
+        const destGrid = s[dest.gridType];
+        const unitFrom = sourceGrid.getUnit(source.coords);
+        const unitTo = destGrid.getUnit(dest.coords);
+        if (source.gridType === dest.gridType) {
+          return {
+            ...s,
+            [source.gridType]: sourceGrid
+              .setUnit(source.coords, unitTo)
+              .setUnit(dest.coords, unitFrom),
+          };
+        }
+        return {
+          ...s,
+          [source.gridType]: sourceGrid.setUnit(source.coords, unitTo),
+          [dest.gridType]: destGrid.setUnit(dest.coords, unitFrom),
+        };
+      });
     },
-    [updateGrid, canMoveUnit],
+    [canMoveUnit],
   );
 
   const reroll = useCallback(() => {
-    if (!isEnoughGoldToReroll) return;
+    if (!computed.isEnoughGoldToReroll) return;
 
-    let newPool = { ...shopChampionPool };
-    shopChampionNames.forEach((name) => {
-      if (name === undefined) return;
-      newPool = { ...newPool, [name]: newPool[name] + 1 };
-      setShopChampionPool(newPool);
+    setState((s) => {
+      const shopChampionPool = { ...s.shopChampionPool };
+      s.shopChampionNames.forEach((name) => {
+        if (name === undefined) return;
+        shopChampionPool[name] = shopChampionPool[name] + 1;
+      });
+
+      return { ...s, shopChampionPool };
     });
-
-    rerollShop(rerollChances, shopChampionNames, newPool);
-    setGold((g) => g - GOLD_PER_REROLL);
-  }, [
-    isEnoughGoldToReroll,
-    rerollChances,
-    shopChampionNames,
-    shopChampionPool,
-  ]);
+    setState((s) => rerollShop(s));
+    setState((s) => ({ ...s, gold: s.gold - GOLD_PER_REROLL }));
+  }, [computed.isEnoughGoldToReroll]);
 
   useKeyPressEvent('d', null, reroll);
   useKeyPressEvent('f', null, buyExperience);
 
   const value = useMemo(
     (): TftContextType => ({
-      gold,
-      experience,
-      shopChampionNames,
-      shopChampionPool,
-      bench,
-      table,
-      level,
-      levelAbove,
-      rerollChances,
-      isEnoughGoldToBuyExperience,
-      isEnoughGoldToReroll,
-      isMaxLevelReached,
+      ...state,
+      ...computed,
       buyExperience,
       buyChampion,
       sellChampion,
@@ -316,7 +297,15 @@ export const TftProvider: React.FC<TftProviderProps> = (props) => {
       moveUnit,
       reroll,
     }),
-    [gold, experience, shopChampionNames, shopChampionPool, bench, table],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [
+      state.gold,
+      state.experience,
+      state.bench,
+      state.table,
+      state.shopChampionNames,
+      state.shopChampionPool,
+    ],
   );
 
   return (
@@ -324,4 +313,5 @@ export const TftProvider: React.FC<TftProviderProps> = (props) => {
   );
 };
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useTftState = () => useContext(TftContext);

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useTftState, useUnitSlot } from '@src/state';
+import { GridType, useTftState, useUnitSlot } from '@src/state';
 import { UnitAvatar } from '@src/components/dumb/UnitAvatar';
 
 export type TableSlotProps = {
@@ -11,11 +11,11 @@ export type TableSlotProps = {
 const TableSlotBase: React.FC<TableSlotProps> = ({ x, y }) => {
   const { table } = useTftState();
   const unit = table.getUnit({ x, y });
-  const [{}, dropRef] = useUnitSlot(table, x, y);
+  const [, dropRef] = useUnitSlot(GridType.Table, x, y);
 
   return (
     <div className="tft__table-slot" ref={dropRef}>
-      {unit && <UnitAvatar grid={table} unit={unit} x={x} y={y} />}
+      {unit && <UnitAvatar gridType={GridType.Table} unit={unit} x={x} y={y} />}
     </div>
   );
 };

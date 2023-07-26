@@ -1,15 +1,15 @@
 import React from 'react';
-import clsx from 'clsx';
 
 import { useTftState } from '@src/state';
-import { CHAMPIONS_MAP } from '@src/constants';
 import { ChampionAvatar } from '@src/components/dumb/ChampionAvatar';
 
 import './ShopChampions.styles.css';
 
-export type ShopChampionsProps = {};
+export type ShopChampionsProps = {
+  /* empty */
+};
 
-const ShopChampionsBase: React.FC<ShopChampionsProps> = (props) => {
+const ShopChampionsBase: React.FC<ShopChampionsProps> = () => {
   const { shopChampionNames, buyChampion } = useTftState();
 
   return (

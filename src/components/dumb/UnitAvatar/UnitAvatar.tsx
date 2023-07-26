@@ -4,7 +4,7 @@ import clsx from 'clsx';
 import { useDrag } from 'react-dnd';
 
 import { CHAMPIONS_MAP } from '@src/constants';
-import { DndItemTypes, Unit, UnitsGrid } from '@src/state';
+import { DndItemTypes, DndItemUnit, GridType, Unit } from '@src/state';
 import { ReactComponent as IconStar } from '@src/assets/icons/star.svg';
 
 import { ChampionSplash } from '../ChampionSplash';
@@ -13,7 +13,7 @@ import './UnitAvatar.styles.css';
 
 export type UnitAvatarProps = {
   className?: string;
-  grid: UnitsGrid;
+  gridType: GridType;
   unit: Unit;
   x: number;
   y: number;
@@ -22,19 +22,22 @@ export type UnitAvatarProps = {
 const UnitAvatarBase: React.FC<UnitAvatarProps> = (props) => {
   const champion = CHAMPIONS_MAP[props.unit.name];
 
-  const [{ isDragging }, dragRef] = useDrag(
+  const [{ isDragging }, dragRef] = useDrag<
+    DndItemUnit,
+    unknown,
+    { isDragging: boolean }
+  >(
     () => ({
       type: DndItemTypes.Unit,
       item: {
-        grid: props.grid,
-        unit: props.unit,
+        gridType: props.gridType,
         coords: { x: props.x, y: props.y },
       },
       collect: (monitor) => ({
         isDragging: monitor.isDragging(),
       }),
     }),
-    [props.grid, props.unit, props.x, props.y],
+    [props.gridType, props.unit, props.x, props.y],
   );
 
   return (

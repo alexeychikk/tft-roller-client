@@ -3,7 +3,12 @@ import { Unit } from './Unit';
 
 export type Coords = { x: number; y: number };
 
-export type UnitContext = { grid: UnitsGrid; coords: Coords };
+export enum GridType {
+  Bench = 'bench',
+  Table = 'table',
+}
+
+export type UnitContext = { gridType: GridType; coords: Coords };
 
 export class UnitsGrid {
   readonly width: number;
@@ -90,6 +95,7 @@ export class UnitsGrid {
   }
 
   removeUnits(coords: Coords[]): UnitsGrid {
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
     let grid: UnitsGrid = this;
     coords.forEach((c) => {
       grid = grid.setUnit(c, undefined);
@@ -102,7 +108,7 @@ export class UnitsGrid {
     numUnits: number,
     stars: number,
   ): Coords[] {
-    let coords: Coords[] = [];
+    const coords: Coords[] = [];
     for (let y = 0; y < this.height; y++) {
       for (let x = 0; x < this.width; x++) {
         if (
