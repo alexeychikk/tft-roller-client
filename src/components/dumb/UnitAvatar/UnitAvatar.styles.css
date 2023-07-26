@@ -13,7 +13,7 @@
 }
 
 .tft__unit-avatar_is-dragging {
-  display: none;
+  visibility: hidden;
 }
 
 .tft__unit-avatar__stars {
