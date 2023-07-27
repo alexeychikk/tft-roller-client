@@ -7,6 +7,10 @@
   flex-direction: column;
 }
 
+.tft__champion-avatar_is-dragging {
+  visibility: hidden;
+}
+
 .tft__champion-avatar .tft__champion-splash {
   width: 100%;
   flex: 1;

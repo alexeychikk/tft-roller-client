@@ -21,7 +21,8 @@ const ShopChampionsBase: React.FC<ShopChampionsProps> = () => {
               {name && (
                 <ChampionAvatar
                   name={name}
-                  onClick={() => tftStore.buyChampion(index)}
+                  shopIndex={index}
+                  onClick={tftStore.buyChampion}
                 />
               )}
             </div>

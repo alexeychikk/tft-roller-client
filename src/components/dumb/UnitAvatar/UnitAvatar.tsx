@@ -18,7 +18,6 @@ export type UnitAvatarProps = {
   gridType: GridType;
   x: number;
   y: number;
-  onSell?: () => void;
 };
 
 const UnitAvatarBase: React.FC<UnitAvatarProps> = (props) => {

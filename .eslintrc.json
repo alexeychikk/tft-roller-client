@@ -15,6 +15,7 @@
     "@typescript-eslint/no-unused-vars": [
       "error",
       { "ignoreRestSiblings": true }
-    ]
+    ],
+    "react-hooks/exhaustive-deps": "off"
   }
 }

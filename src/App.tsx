@@ -14,11 +14,11 @@ export function App() {
   return (
     <DndProvider backend={HTML5Backend}>
       <InputListener />
-      <DragLayer />
       <Table />
       <Bench />
       <Shop />
       <Comps />
+      <DragLayer />
     </DndProvider>
   );
 }
