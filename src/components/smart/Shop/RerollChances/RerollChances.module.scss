@@ -1,0 +1,27 @@
+.rootRerollChances {
+  flex: 3;
+  border: 2px solid lightblue;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.percent {
+  font-weight: 500;
+
+  &Tier1 {
+    color: grey;
+  }
+  &Tier2 {
+    color: #2e7d32;
+  }
+  &Tier3 {
+    color: cyan;
+  }
+  &Tier4 {
+    color: purple;
+  }
+  &Tier5 {
+    color: orange;
+  }
+}

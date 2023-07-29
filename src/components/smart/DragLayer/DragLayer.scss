@@ -8,8 +8,8 @@
   bottom: 20%;
   left: 0;
   right: 0;
-}
 
-.tft__drag-layer_dragging_champion .tft__champion-dropbox {
-  display: block;
+  .tft__drag-layer_dragging_champion & {
+    display: block;
+  }
 }

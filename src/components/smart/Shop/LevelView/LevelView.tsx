@@ -4,7 +4,7 @@ import { observer } from 'mobx-react-lite';
 import { tftStore } from '@src/state';
 import { EXPERIENCE_PER_LEVEL } from '@src/constants';
 
-import './LevelView.styles.css';
+import styles from './LevelView.module.scss';
 
 export type LevelViewProps = {
   /* empty */
@@ -22,9 +22,9 @@ const LevelViewBase: React.FC<LevelViewProps> = () => {
       : undefined;
 
   return (
-    <div className="tft__shop__level-view">
-      <span className="tft__shop__level-indicator">Lvl. {tftStore.level}</span>
-      <span className="tft__shop__exp-indicator">
+    <div className={styles.rootLevelView}>
+      <span className={styles.level}>Lvl. {tftStore.level}</span>
+      <span className={styles.experience}>
         {relativeLevelExperience !== undefined
           ? `${relativeLevelExperience} / ${experienceToLevelUp}`
           : 'Max.'}

@@ -1,22 +1,29 @@
-.tft__champion-avatar {
+.rootChampionAvatar {
   position: relative;
   width: 100%;
   height: 100%;
   padding: 0;
   display: flex;
   flex-direction: column;
+
+  &.isDragging {
+    visibility: hidden;
+  }
 }
 
-.tft__champion-avatar_is-dragging {
-  visibility: hidden;
+.tier1 {
+}
+.tier2 {
+}
+.tier3 {
 }
 
-.tft__champion-avatar .tft__champion-splash {
+.championSplash {
   width: 100%;
   flex: 1;
 }
 
-.tft__champion-avatar__footer {
+.footer {
   width: 100%;
   display: flex;
   font-size: 14px;
@@ -25,7 +32,7 @@
   justify-content: space-between;
 }
 
-.tft__champion-avatar__name {
+.name {
 }
-.tft__champion-avatar__cost {
+.cost {
 }

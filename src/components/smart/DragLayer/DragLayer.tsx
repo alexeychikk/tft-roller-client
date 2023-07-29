@@ -4,7 +4,7 @@ import clsx from 'clsx';
 
 import { DndItemChampion, DndItemType, tftStore } from '@src/state';
 
-import './DragLayer.styles.css';
+import './DragLayer.scss';
 
 export type DragLayerProps = {
   /* empty */

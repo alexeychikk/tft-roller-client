@@ -1,4 +1,4 @@
-.tft__shop {
+.rootShop {
   position: absolute;
   bottom: 0;
   left: 13%;
@@ -9,21 +9,22 @@
   flex-direction: column;
 }
 
-.tft__shop__top-bar {
+.topBar {
   flex: 1;
   display: flex;
 }
 
-.tft__shop__tob-bar__right-wrapper {
+.topRightBar {
   flex: 5;
   display: flex;
-}
-.tft__shop__tob-bar__right-wrapper::after {
-  content: '';
-  flex: 4;
+
+  &::after {
+    content: '';
+    flex: 4;
+  }
 }
 
-.tft__shop__bottom-bar {
+.bottomBar {
   flex: 3;
   display: flex;
 }

@@ -5,7 +5,7 @@ import { observer } from 'mobx-react-lite';
 import { tftStore } from '@src/state';
 
 import { BenchSlot } from './BenchSlot';
-import './Bench.styles.css';
+import styles from './Bench.module.scss';
 
 export type BenchProps = {
   /* empty */
@@ -13,12 +13,12 @@ export type BenchProps = {
 
 const BenchBase: React.FC<BenchProps> = () => {
   return (
-    <div className="tft__bench">
+    <div className={styles.rootBench}>
       {times(tftStore.bench.height, (y) => {
         return (
-          <div key={y} className="tft__bench-row">
+          <div key={y} className={styles.row}>
             {times(tftStore.bench.width, (x) => {
-              return <BenchSlot key={x} x={x} y={y} />;
+              return <BenchSlot className={styles.slot} key={x} x={x} y={y} />;
             })}
           </div>
         );

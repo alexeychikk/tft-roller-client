@@ -1,5 +1,6 @@
 import React from 'react';
-import './Shop.styles.css';
+
+import styles from './Shop.module.scss';
 
 import { ShopActions } from './ShopActions';
 import { ShopChampions } from './ShopChampions';
@@ -13,15 +14,15 @@ export type ShopProps = {
 
 const ShopBase: React.FC<ShopProps> = () => {
   return (
-    <div className="tft__shop">
-      <div className="tft__shop__top-bar">
+    <div className={styles.rootShop}>
+      <div className={styles.topBar}>
         <LevelView />
-        <div className="tft__shop__tob-bar__right-wrapper">
+        <div className={styles.topRightBar}>
           <RerollChances />
           <GoldView />
         </div>
       </div>
-      <div className="tft__shop__bottom-bar">
+      <div className={styles.bottomBar}>
         <ShopActions />
         <ShopChampions />
       </div>

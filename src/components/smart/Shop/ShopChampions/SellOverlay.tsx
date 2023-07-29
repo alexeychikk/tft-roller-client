@@ -4,7 +4,7 @@ import { useDrop } from 'react-dnd';
 
 import { DndItemType, DndItemUnit, tftStore } from '@src/state';
 
-import './SellOverlay.styles.css';
+import styles from './SellOverlay.module.scss';
 
 export type SellOverlayProps = {
   /* empty */
@@ -23,7 +23,7 @@ const SellOverlayBase: React.FC<SellOverlayProps> = () => {
   });
 
   return (
-    <div className="tft__shop__sell-overlay" ref={dropRef}>
+    <div className={styles.rootSellOverlay} ref={dropRef}>
       <span>Sell for {item ? tftStore.getUnitCost(item) : 0} gold</span>
     </div>
   );

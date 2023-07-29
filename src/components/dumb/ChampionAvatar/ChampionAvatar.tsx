@@ -7,7 +7,7 @@ import { DndItemChampion, DndItemType } from '@src/state';
 
 import { ChampionSplash } from '../ChampionSplash';
 
-import './ChampionAvatar.styles.css';
+import styles from './ChampionAvatar.module.scss';
 
 export type ChampionAvatarProps = {
   className?: string;
@@ -44,18 +44,18 @@ const ChampionAvatarBase: React.FC<ChampionAvatarProps> = (props) => {
   return (
     <button
       className={clsx(
-        'tft__champion-avatar',
-        `tft__champion-avatar_tier_${tier}`,
-        isDragging && `tft__champion-avatar_is-dragging`,
+        styles.rootChampionAvatar,
+        styles[`tier${tier}`],
+        isDragging && styles.isDragging,
         props.className,
       )}
       ref={dragRef}
       onClick={handleClick}
     >
-      <ChampionSplash name={props.name} />
-      <div className="tft__champion-avatar__footer">
-        <div className="tft__champion-avatar__name">{props.name}</div>
-        <div className="tft__champion-avatar__cost">{tier}</div>
+      <ChampionSplash className={styles.championSplash} name={props.name} />
+      <div className={styles.footer}>
+        <div className={styles.name}>{props.name}</div>
+        <div className={styles.cost}>{tier}</div>
       </div>
     </button>
   );

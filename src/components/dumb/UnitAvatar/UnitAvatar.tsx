@@ -9,7 +9,7 @@ import { ReactComponent as IconStar } from '@src/assets/icons/star.svg';
 
 import { ChampionSplash } from '../ChampionSplash';
 
-import './UnitAvatar.styles.css';
+import styles from './UnitAvatar.module.scss';
 
 export type UnitAvatarProps = {
   className?: string;
@@ -44,18 +44,18 @@ const UnitAvatarBase: React.FC<UnitAvatarProps> = (props) => {
   return (
     <button
       className={clsx(
-        'tft__unit-avatar',
-        `tft__unit-avatar_tier_${champion.tier}`,
-        isDragging && `tft__unit-avatar_is-dragging`,
+        styles.rootUnitAvatar,
+        styles[`tier${champion.tier}`],
+        isDragging && styles.isDragging,
         props.className,
       )}
       ref={dragRef}
       data-tft-component-type="UnitAvatar"
       data-tft-unit={`${props.gridType},${props.x},${props.y}`}
     >
-      <ChampionSplash name={props.name} />
+      <ChampionSplash className={styles.championSplash} name={props.name} />
 
-      <div className="tft__unit-avatar__stars">
+      <div className={styles.stars}>
         {times(props.stars, (i) => (
           <IconStar key={i} />
         ))}

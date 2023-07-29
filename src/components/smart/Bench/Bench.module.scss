@@ -1,4 +1,4 @@
-.tft__bench {
+.rootBench {
   position: absolute;
   bottom: 21%;
   left: 20%;
@@ -9,12 +9,12 @@
   flex-direction: column;
 }
 
-.tft__bench-row {
+.row {
   display: flex;
   flex: 1;
 }
 
-.tft__bench-slot {
+.slot {
   position: relative;
   border: 2px solid purple;
   flex: 1;

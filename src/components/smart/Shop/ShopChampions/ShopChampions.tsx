@@ -5,7 +5,8 @@ import { tftStore } from '@src/state';
 import { ChampionAvatar } from '@src/components/dumb/ChampionAvatar';
 
 import { SellOverlay } from './SellOverlay';
-import './ShopChampions.styles.css';
+
+import styles from './ShopChampions.module.scss';
 
 export type ShopChampionsProps = {
   /* empty */
@@ -13,11 +14,11 @@ export type ShopChampionsProps = {
 
 const ShopChampionsBase: React.FC<ShopChampionsProps> = () => {
   return (
-    <div className="tft__shop__champions">
-      <div className="tft__shop__slots-wrapper">
+    <div className={styles.rootShopChampions}>
+      <div className={styles.slotsWrapper}>
         {tftStore.shopChampionNames.map((name, index) => {
           return (
-            <div key={index} className="tft__shop__champion-slot">
+            <div key={index} className={styles.slot}>
               {name && (
                 <ChampionAvatar
                   name={name}

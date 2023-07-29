@@ -1,0 +1,29 @@
+.rootTraitStats {
+  display: flex;
+  align-items: center;
+}
+
+.activated {
+}
+
+.icon {
+}
+
+.amount {
+  display: none;
+  .activated & {
+    display: block;
+  }
+}
+
+.activationsWrapper {
+}
+
+.traitName {
+}
+
+.activations {
+}
+
+.threshold {
+}

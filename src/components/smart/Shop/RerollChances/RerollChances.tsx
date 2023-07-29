@@ -4,7 +4,7 @@ import { observer } from 'mobx-react-lite';
 
 import { tftStore } from '@src/state';
 
-import './RerollChances.styles.css';
+import styles from './RerollChances.module.scss';
 
 export type RerollChancesProps = {
   /* empty */
@@ -12,14 +12,11 @@ export type RerollChancesProps = {
 
 const RerollChancesBase: React.FC<RerollChancesProps> = () => {
   return (
-    <div className="tft__shop__reroll-chances">
+    <div className={styles.rootRerollChances}>
       {tftStore.rerollChances.map((percent, index) => (
         <span
           key={index}
-          className={clsx(
-            `tft__shop__reroll-tier`,
-            `tft__shop__reroll-tier_${index + 1}`,
-          )}
+          className={clsx(styles.percent, styles[`percentTier${index + 1}`])}
         >
           {Math.round(percent * 100)}%
         </span>

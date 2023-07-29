@@ -6,16 +6,17 @@ import { UnitAvatar } from '@src/components/dumb/UnitAvatar';
 import { useUnitSlot } from '@src/components/hooks/useUnitSlot';
 
 export type BenchSlotProps = {
+  className?: string;
   x: number;
   y: number;
 };
 
-const BenchSlotBase: React.FC<BenchSlotProps> = ({ x, y }) => {
+const BenchSlotBase: React.FC<BenchSlotProps> = ({ className, x, y }) => {
   const unit = tftStore.bench.getUnit({ x, y });
   const [, dropRef] = useUnitSlot(GridType.Bench, x, y);
 
   return (
-    <div className="tft__bench-slot" ref={dropRef}>
+    <div className={className} ref={dropRef}>
       {unit && (
         <UnitAvatar
           name={unit.name}

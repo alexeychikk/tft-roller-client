@@ -6,16 +6,17 @@ import { UnitAvatar } from '@src/components/dumb/UnitAvatar';
 import { useUnitSlot } from '@src/components/hooks/useUnitSlot';
 
 export type TableSlotProps = {
+  className?: string;
   x: number;
   y: number;
 };
 
-const TableSlotBase: React.FC<TableSlotProps> = ({ x, y }) => {
+const TableSlotBase: React.FC<TableSlotProps> = ({ className, x, y }) => {
   const unit = tftStore.table.getUnit({ x, y });
   const [, dropRef] = useUnitSlot(GridType.Table, x, y);
 
   return (
-    <div className="tft__table-slot" ref={dropRef}>
+    <div className={className} ref={dropRef}>
       {unit && (
         <UnitAvatar
           name={unit.name}

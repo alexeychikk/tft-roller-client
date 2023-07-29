@@ -3,7 +3,7 @@ import { observer } from 'mobx-react-lite';
 
 import { tftStore } from '@src/state';
 
-import './ShopActions.styles.css';
+import styles from './ShopActions.module.scss';
 
 export type ShopActionsProps = {
   /* empty */
@@ -11,7 +11,7 @@ export type ShopActionsProps = {
 
 const ShopActionsBase: React.FC<ShopActionsProps> = () => {
   return (
-    <div className="tft__shop__actions">
+    <div className={styles.rootShopActions}>
       <button
         onClick={tftStore.buyExperience}
         disabled={

@@ -1,4 +1,4 @@
-.tft__table {
+.rootTable {
   position: absolute;
   bottom: 33%;
   left: 20%;
@@ -9,12 +9,12 @@
   flex-direction: column;
 }
 
-.tft__table-row {
+.row {
   flex: 1;
   display: flex;
 }
 
-.tft__table-slot {
+.slot {
   flex: 1;
   border: 1px solid rgb(55, 205, 210);
 }

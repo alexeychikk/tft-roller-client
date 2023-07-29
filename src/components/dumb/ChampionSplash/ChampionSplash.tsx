@@ -2,7 +2,7 @@ import React from 'react';
 import { capitalize } from 'lodash-es';
 import clsx from 'clsx';
 
-import './ChampionSplash.styles.css';
+import styles from './ChampionSplash.module.scss';
 
 export type ChampionSplashProps = {
   name: string;
@@ -14,7 +14,7 @@ const ChampionSplashBase: React.FC<ChampionSplashProps> = (props) => {
 
   return (
     <div
-      className={clsx('tft__champion-splash', className)}
+      className={clsx(styles.rootChampionSplash, className)}
       style={{
         backgroundImage: `url("https://cdn.lolchess.gg/images/lol/champion-splash-modified/${championUrlName}.jpg")`,
       }}
