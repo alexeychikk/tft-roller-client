@@ -1,7 +1,7 @@
 import React from 'react';
 import { observer } from 'mobx-react-lite';
 
-import { ReactComponent as IconCoin } from '@src/assets/icons/coin.svg';
+import { ReactComponent as IconCoin } from '@src/assets/icons/common/coin.svg';
 import { tftStore } from '@src/state';
 
 import styles from './GoldView.module.scss';

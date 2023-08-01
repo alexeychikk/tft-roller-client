@@ -1,16 +1,24 @@
 .rootTraitStats {
   display: flex;
   align-items: center;
+  padding: 8px;
+  border: 1px solid grey;
+  border-radius: 4px;
+
+  & > *:not(:last-child) {
+    margin-right: 8px;
+  }
 }
 
 .activated {
 }
 
-.icon {
-}
-
 .amount {
   display: none;
+  padding: 8px;
+  border: 1px solid grey;
+  border-radius: 4px;
+  font-weight: 700;
   .activated & {
     display: block;
   }

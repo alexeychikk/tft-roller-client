@@ -5,7 +5,7 @@ import { useDrag } from 'react-dnd';
 
 import { CHAMPIONS_MAP } from '@src/constants';
 import { DndItemType, DndItemUnit, GridType } from '@src/state';
-import { ReactComponent as IconStar } from '@src/assets/icons/star.svg';
+import { ReactComponent as IconStar } from '@src/assets/icons/common/star.svg';
 
 import { ChampionSplash } from '../ChampionSplash';
 

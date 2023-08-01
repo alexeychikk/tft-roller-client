@@ -1,0 +1,24 @@
+.rootTraitHex {
+  position: relative;
+}
+
+.iconWrapper {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.icon {
+  width: 100%;
+  height: 100%;
+}
+
+.childrenWrapper {
+  position: relative;
+  padding: 6px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

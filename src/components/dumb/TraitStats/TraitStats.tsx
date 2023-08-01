@@ -3,7 +3,10 @@ import clsx from 'clsx';
 
 import { CompStats } from '@src/utils';
 import { ALL_TRAITS_MAP } from '@src/constants';
+import { TraitIcon } from '@src/components/dumb/TraitIcon';
+import { TraitHex } from '@src/components/dumb/TraitHex';
 
+import { getHexType } from './getHexType';
 import styles from './TraitStats.module.scss';
 
 export type TraitStatsProps = CompStats & {
@@ -13,6 +16,7 @@ export type TraitStatsProps = CompStats & {
 const TraitStatsBase: React.FC<TraitStatsProps> = (props) => {
   const { activations } = ALL_TRAITS_MAP[props.trait];
   const activated = props.activationLevel > 0;
+  const hexType = getHexType(props.trait, props.activationLevel);
 
   return (
     <div
@@ -22,7 +26,10 @@ const TraitStatsBase: React.FC<TraitStatsProps> = (props) => {
         props.className,
       )}
     >
-      <div className={styles.icon}></div>
+      <TraitHex hexType={hexType}>
+        <TraitIcon trait={props.trait} />
+      </TraitHex>
+
       <div className={styles.amount}>{props.champions.length}</div>
       <div className={styles.activationsWrapper}>
         <div className={styles.traitName}>{props.trait}</div>
