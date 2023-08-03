@@ -1,0 +1,30 @@
+@use 'sass:color';
+
+$colorsByTier: (
+  1: #9e9e9e,
+  2: #4caf50,
+  3: #2196f3,
+  4: #e91e63,
+  5: #ffc107,
+);
+
+$colorCoin: #ffe082;
+$colorUiBackground: darken(#004d40, 8%);
+$colorUiInnerBorder: rgba(lighten(#004d40, 15%), 0.5);
+$colorBackgroundTransparent: rgba($colorUiBackground, 0.5);
+$colorTextMain: #fff;
+$colorTextDisabled: #9e9e9e;
+
+@mixin textMain {
+  color: $colorTextMain;
+  text-shadow: 0.1em 0.1em 0.05em black;
+}
+
+@mixin uiInsetBoxShadow {
+  box-shadow: inset 0px 0px 4px 2px rgba($colorUiInnerBorder, 0.5);
+}
+
+@mixin uiBackground {
+  background-color: $colorUiBackground;
+  @include uiInsetBoxShadow;
+}

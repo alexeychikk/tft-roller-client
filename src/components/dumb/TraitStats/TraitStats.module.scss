@@ -1,16 +1,20 @@
+@use 'src/assets/styles/theme';
+
 .rootTraitStats {
   display: flex;
   align-items: center;
   padding: 8px;
-  border: 1px solid grey;
   border-radius: 4px;
+  background-color: theme.$colorBackgroundTransparent;
+  color: theme.$colorTextDisabled;
+
+  &.activated {
+    @include theme.textMain;
+  }
 
   & > *:not(:last-child) {
     margin-right: 8px;
   }
-}
-
-.activated {
 }
 
 .amount {

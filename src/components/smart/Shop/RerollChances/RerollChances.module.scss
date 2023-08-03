@@ -1,27 +1,20 @@
+@use 'src/assets/styles/theme';
+
 .rootRerollChances {
   flex: 3;
-  border: 2px solid lightblue;
   display: flex;
   justify-content: space-around;
   align-items: center;
+  background-color: theme.$colorBackgroundTransparent;
+  border-radius: 10px 10px 0 0;
 }
 
 .percent {
   font-weight: 500;
 
-  &Tier1 {
-    color: grey;
-  }
-  &Tier2 {
-    color: #2e7d32;
-  }
-  &Tier3 {
-    color: cyan;
-  }
-  &Tier4 {
-    color: purple;
-  }
-  &Tier5 {
-    color: orange;
+  @each $i, $color in theme.$colorsByTier {
+    &Tier#{$i} {
+      color: $color;
+    }
   }
 }

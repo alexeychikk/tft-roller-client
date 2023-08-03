@@ -1,7 +1,9 @@
+@use 'src/assets/styles/theme';
+
 .rootShopChampions {
   position: relative;
   flex: 5;
-  border: 2px solid greenyellow;
+  @include theme.uiBackground;
 }
 
 .slotsWrapper {
@@ -12,4 +14,5 @@
 
 .slot {
   flex: 1;
+  margin: 0.3%;
 }

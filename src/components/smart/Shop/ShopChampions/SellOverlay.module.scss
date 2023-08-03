@@ -1,3 +1,5 @@
+@use 'src/assets/styles/theme';
+
 .rootSellOverlay {
   display: none;
   position: absolute;
@@ -5,13 +7,22 @@
   bottom: 0;
   left: 0;
   right: 0;
-  background-color: aqua;
   align-items: center;
   justify-content: center;
   font-size: 24px;
   font-weight: 700;
+  @include theme.textMain;
+  @include theme.uiBackground;
 
   :global(.tft__drag-layer_dragging_unit) & {
     display: flex;
+  }
+}
+
+.iconCoin {
+  margin-left: 1%;
+  margin-right: 0.5%;
+  & path {
+    fill: theme.$colorCoin;
   }
 }

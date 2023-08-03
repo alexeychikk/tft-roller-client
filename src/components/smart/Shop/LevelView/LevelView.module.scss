@@ -1,12 +1,19 @@
+@use 'src/assets/styles/theme';
+
 .rootLevelView {
   flex: 1;
-  border: 2px solid lightblue;
   display: flex;
+  border-radius: 4px 4px 0 0;
+  align-items: center;
+  @include theme.textMain;
+  @include theme.uiBackground;
 }
 
 .level {
   flex: 1;
+  margin-left: 5%;
 }
 
 .experience {
+  margin-right: 5%;
 }

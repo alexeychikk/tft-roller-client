@@ -1,4 +1,6 @@
+@use 'src/assets/styles/theme';
+
 .rootShopActions {
   flex: 1;
-  border: 2px solid lightblue;
+  @include theme.uiBackground;
 }

@@ -1,3 +1,5 @@
+@use 'src/assets/styles/theme';
+
 .rootChampionAvatar {
   position: relative;
   width: 100%;
@@ -5,17 +7,16 @@
   padding: 0;
   display: flex;
   flex-direction: column;
+  border-radius: 2px;
 
   &.isDragging {
     visibility: hidden;
   }
-}
-
-.tier1 {
-}
-.tier2 {
-}
-.tier3 {
+  @each $i, $color in theme.$colorsByTier {
+    &.tier#{$i} {
+      border-color: $color;
+    }
+  }
 }
 
 .championSplash {
@@ -29,10 +30,29 @@
   font-size: 14px;
   font-weight: 700;
   padding: 0.3em 0.5em;
+  align-items: center;
   justify-content: space-between;
+  @include theme.textMain;
+
+  @each $i, $color in theme.$colorsByTier {
+    .tier#{$i} & {
+      background: linear-gradient(45deg, darken($color, 20%), $color);
+    }
+  }
 }
 
 .name {
 }
 .cost {
+  display: flex;
+  align-items: center;
+}
+.iconCoin {
+  width: 14px;
+  height: 14px;
+  margin-right: 4px;
+
+  & path {
+    fill: theme.$colorCoin;
+  }
 }

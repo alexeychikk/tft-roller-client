@@ -4,6 +4,7 @@ import { useDrag } from 'react-dnd';
 
 import { CHAMPIONS_MAP } from '@src/constants';
 import { DndItemChampion, DndItemType } from '@src/state';
+import { ReactComponent as IconCoin } from '@src/assets/icons/common/coin.svg';
 
 import { ChampionSplash } from '../ChampionSplash';
 
@@ -55,7 +56,10 @@ const ChampionAvatarBase: React.FC<ChampionAvatarProps> = (props) => {
       <ChampionSplash className={styles.championSplash} name={props.name} />
       <div className={styles.footer}>
         <div className={styles.name}>{props.name}</div>
-        <div className={styles.cost}>{tier}</div>
+        <div className={styles.cost}>
+          <IconCoin className={styles.iconCoin} />
+          <span>{tier}</span>
+        </div>
       </div>
     </button>
   );

@@ -3,6 +3,7 @@ import { observer } from 'mobx-react-lite';
 import { useDrop } from 'react-dnd';
 
 import { DndItemType, DndItemUnit, tftStore } from '@src/state';
+import { ReactComponent as IconCoin } from '@src/assets/icons/common/coin.svg';
 
 import styles from './SellOverlay.module.scss';
 
@@ -24,7 +25,8 @@ const SellOverlayBase: React.FC<SellOverlayProps> = () => {
 
   return (
     <div className={styles.rootSellOverlay} ref={dropRef}>
-      <span>Sell for {item ? tftStore.getUnitCost(item) : 0} gold</span>
+      <span>Sell for</span> <IconCoin className={styles.iconCoin} />
+      <span> {item ? tftStore.getUnitCost(item) : 0}</span>
     </div>
   );
 };
