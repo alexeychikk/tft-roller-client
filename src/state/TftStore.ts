@@ -20,7 +20,7 @@ import { GridType, UnitContext, UnitsGrid } from './UnitsGrid';
 
 export class TftStore {
   gold = 300;
-  experience = 2;
+  experience = 300;
   shopChampionNames: (string | undefined)[] = new Array(SHOP_SIZE).fill(
     undefined,
   );
@@ -51,24 +51,7 @@ export class TftStore {
       reroll: action.bound,
     });
 
-    this.bench
-      .setUnit({ x: 0, y: 0 }, new Unit({ name: 'Cassiopeia', stars: 1 }))
-      .setUnit({ x: 1, y: 0 }, new Unit({ name: 'Cassiopeia', stars: 1 }))
-      .setUnit({ x: 2, y: 0 }, new Unit({ name: 'Zed', stars: 1 }))
-      .setUnit({ x: 3, y: 0 }, new Unit({ name: 'Zed', stars: 1 }))
-      .setUnit({ x: 4, y: 0 }, new Unit({ name: 'Maokai', stars: 1 }))
-      .setUnit({ x: 5, y: 0 }, new Unit({ name: 'Maokai', stars: 1 }))
-      .setUnit({ x: 6, y: 0 }, new Unit({ name: 'Poppy', stars: 1 }))
-      .setUnit({ x: 7, y: 0 }, new Unit({ name: 'Poppy', stars: 1 }))
-      .setUnit({ x: 8, y: 0 }, new Unit({ name: 'Tristana', stars: 1 }));
-
-    this.shopChampionNames = [
-      'Cassiopeia',
-      'Tristana',
-      'Tristana',
-      'Maokai',
-      'Maokai',
-    ];
+    this.rerollShop();
   }
 
   get isEnoughGoldToBuyExperience() {

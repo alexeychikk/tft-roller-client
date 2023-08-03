@@ -6,7 +6,7 @@
   justify-content: space-around;
   align-items: center;
   background-color: theme.$colorBackgroundTransparent;
-  border-radius: 10px 10px 0 0;
+  @include theme.textMain;
 }
 
 .percent {

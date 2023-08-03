@@ -3,4 +3,5 @@
 .rootShopActions {
   flex: 1;
   @include theme.uiBackground;
+  @include theme.uiBorderOuterBold($left: 1, $bottom: 1);
 }
