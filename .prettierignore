@@ -1,6 +1,6 @@
 # Add files here to ignore them from prettier formatting
 
-/dist
+/docs
 package.json
 package-lock.json
 node_modules
