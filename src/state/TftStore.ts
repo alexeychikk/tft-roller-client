@@ -20,7 +20,7 @@ import { GridType, UnitContext, UnitsGrid } from './UnitsGrid';
 
 export class TftStore {
   gold = 300;
-  experience = 300;
+  experience = 0;
   shopChampionNames: (string | undefined)[] = new Array(SHOP_SIZE).fill(
     undefined,
   );

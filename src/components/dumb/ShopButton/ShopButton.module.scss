@@ -1,0 +1,32 @@
+@use 'src/assets/styles/theme';
+
+.rootShopButton {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 8% 0 4%;
+  box-shadow: inset 0 0 2px 2px theme.$colorUiBackgroundDark,
+    inset 0 0 2px 2px theme.$colorUiInnerBorder;
+  @include theme.textMain;
+
+  &:not(:disabled) {
+    @include theme.uiBackground;
+    cursor: pointer;
+  }
+}
+
+.name {
+  font-size: 1rem;
+}
+
+.cost {
+  display: flex;
+  align-items: center;
+  gap: 10%;
+
+  svg {
+    width: 14px;
+    height: 14px;
+    color: theme.$colorCoin;
+  }
+}

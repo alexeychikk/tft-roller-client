@@ -15,7 +15,5 @@
 
 .iconCoin {
   padding-right: 0.3em;
-  & path {
-    fill: theme.$colorCoin;
-  }
+  color: theme.$colorCoin;
 }

@@ -4,6 +4,10 @@ import { observer } from 'mobx-react-lite';
 import { tftStore } from '@src/state';
 
 import styles from './ShopActions.module.scss';
+import {
+  ShopButtonBuyXp,
+  ShopButtonReroll,
+} from '@src/components/dumb/ShopButton';
 
 export type ShopActionsProps = {
   /* empty */
@@ -12,20 +16,16 @@ export type ShopActionsProps = {
 const ShopActionsBase: React.FC<ShopActionsProps> = () => {
   return (
     <div className={styles.rootShopActions}>
-      <button
-        onClick={tftStore.buyExperience}
+      <ShopButtonBuyXp
         disabled={
           !tftStore.isEnoughGoldToBuyExperience || tftStore.isMaxLevelReached
         }
-      >
-        Level Up
-      </button>
-      <button
-        onClick={tftStore.reroll}
+        onClick={tftStore.buyExperience}
+      />
+      <ShopButtonReroll
         disabled={!tftStore.isEnoughGoldToReroll}
-      >
-        Reroll
-      </button>
+        onClick={tftStore.reroll}
+      />
     </div>
   );
 };

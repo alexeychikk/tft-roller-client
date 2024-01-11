@@ -22,7 +22,5 @@
 .iconCoin {
   margin-left: 1%;
   margin-right: 0.5%;
-  & path {
-    fill: theme.$colorCoin;
-  }
+  color: theme.$colorCoin;
 }
