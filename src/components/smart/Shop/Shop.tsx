@@ -16,15 +16,15 @@ const ShopBase: React.FC<ShopProps> = () => {
   return (
     <div className={styles.rootShop}>
       <div className={styles.topBar}>
-        <LevelView />
+        <LevelView className={styles.levelView} />
         <div className={styles.topRightBar}>
-          <RerollChances />
-          <GoldView />
+          <RerollChances className={styles.rerollChances} />
+          <GoldView className={styles.goldView} />
         </div>
       </div>
       <div className={styles.bottomBar}>
-        <ShopActions />
-        <ShopChampions />
+        <ShopActions className={styles.shopActions} />
+        <ShopChampions className={styles.shopChampions} />
       </div>
     </div>
   );

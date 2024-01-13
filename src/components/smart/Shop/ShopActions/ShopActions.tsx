@@ -1,21 +1,23 @@
 import React from 'react';
 import { observer } from 'mobx-react-lite';
+import clsx from 'clsx';
 
 import { tftStore } from '@src/state';
 
-import styles from './ShopActions.module.scss';
 import {
   ShopButtonBuyXp,
   ShopButtonReroll,
 } from '@src/components/dumb/ShopButton';
 
+import styles from './ShopActions.module.scss';
+
 export type ShopActionsProps = {
-  /* empty */
+  className?: string;
 };
 
-const ShopActionsBase: React.FC<ShopActionsProps> = () => {
+const ShopActionsBase: React.FC<ShopActionsProps> = (props) => {
   return (
-    <div className={styles.rootShopActions}>
+    <div className={clsx(styles.rootShopActions, props.className)}>
       <ShopButtonBuyXp
         disabled={
           !tftStore.isEnoughGoldToBuyExperience || tftStore.isMaxLevelReached

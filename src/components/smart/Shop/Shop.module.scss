@@ -13,17 +13,37 @@
   display: flex;
 }
 
-.topRightBar {
-  flex: 5;
-  display: flex;
-
-  &::after {
-    content: '';
-    flex: 4;
-  }
-}
-
 .bottomBar {
   flex: 3;
   display: flex;
+}
+
+.levelView {
+  flex: 1;
+}
+
+.topRightBar {
+  flex: 5;
+  display: flex;
+}
+
+.rerollChances {
+  flex: 1.7;
+}
+
+.goldView {
+  flex: 0.6;
+}
+
+.topRightBar::after {
+  content: '';
+  flex: 2.7;
+}
+
+.shopActions {
+  flex: 1;
+}
+
+.shopChampions {
+  flex: 5;
 }

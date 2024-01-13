@@ -1,7 +1,6 @@
 @use 'src/assets/styles/theme';
 
 .rootShopActions {
-  flex: 1;
   display: flex;
   flex-direction: column;
   @include theme.uiBackground;

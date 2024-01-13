@@ -7,12 +7,12 @@ import { tftStore } from '@src/state';
 import styles from './RerollChances.module.scss';
 
 export type RerollChancesProps = {
-  /* empty */
+  className?: string;
 };
 
-const RerollChancesBase: React.FC<RerollChancesProps> = () => {
+const RerollChancesBase: React.FC<RerollChancesProps> = (props) => {
   return (
-    <div className={styles.rootRerollChances}>
+    <div className={clsx(styles.rootRerollChances, props.className)}>
       {tftStore.rerollChances.map((percent, index) => (
         <span
           key={index}
