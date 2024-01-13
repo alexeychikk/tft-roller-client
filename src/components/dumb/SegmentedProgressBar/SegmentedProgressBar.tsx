@@ -15,12 +15,12 @@ const SegmentedProgressBarBase: React.FC<SegmentedProgressBarProps> = (
 ) => {
   const { className, min, max, step, value, ...restProps } = props;
   const range = max - min;
-  const isOdd = range % step !== 0;
-  const smallSegmentIndex = isOdd
-    ? min + step > range / 2
-      ? min + step
-      : min
-    : undefined;
+  const smallSegmentIndex =
+    range > step
+      ? (value - min) % step === 0
+        ? range - (range % step)
+        : min
+      : undefined;
 
   const segments = [];
   for (let i = min; i < max; i += step) {
@@ -30,8 +30,20 @@ const SegmentedProgressBarBase: React.FC<SegmentedProgressBarProps> = (
         className={clsx(
           styles.segment,
           i < value && styles.segmentActive,
-          isOdd && i === smallSegmentIndex && styles.segmentSmall,
+          i === smallSegmentIndex && styles.segmentSmall,
         )}
+      />,
+    );
+  }
+
+  if (
+    smallSegmentIndex === min &&
+    (segments.length - 1) * step + (value % step) < range
+  ) {
+    segments.push(
+      <div
+        key={segments.length}
+        className={clsx(styles.segment, styles.segmentSmall)}
       />,
     );
   }
