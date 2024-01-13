@@ -1,0 +1,44 @@
+@use 'src/assets/styles/theme';
+
+.rootSegmentedProgressBar {
+  display: flex;
+  gap: 1%;
+}
+
+.segment {
+  flex: 1;
+  background-color: theme.$colorControlBackground;
+  border-radius: 2px;
+  transition: width 0.3s ease-in-out;
+}
+
+.segmentActive {
+  background-color: theme.$colorGlow;
+  box-shadow: 0px 0px 1px 1px rgba(theme.$colorGlow, 0.3);
+}
+
+.segmentMax {
+  background-color: theme.$colorControlBackground;
+  background-image: repeating-linear-gradient(
+    -45deg,
+    transparent,
+    transparent 5%,
+    theme.$colorGlow 5%,
+    theme.$colorGlow 10%
+  );
+  box-shadow: 0px 0px 1px 1px rgba(theme.$colorGlow, 0.15);
+}
+
+.segmentSmall {
+  flex: 0.5;
+}
+
+.segmentActivePartial {
+  background: linear-gradient(
+    to right,
+    theme.$colorGlow 0%,
+    theme.$colorGlow 50%,
+    theme.$colorControlBackground 50%,
+    theme.$colorControlBackground 100%
+  );
+}

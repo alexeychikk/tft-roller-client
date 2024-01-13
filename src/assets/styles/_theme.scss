@@ -16,6 +16,9 @@ $colorUiOuterBorder: darken($colorCoin, 40%);
 $colorBackgroundTransparent: rgba($colorUiBackground, 0.5);
 $colorTextMain: #fff;
 $colorTextDisabled: #9e9e9e;
+$colorControlBackground: #006064;
+$colorControlBackgroundDisabled: desaturate($colorControlBackground, 75%);
+$colorGlow: #84ffff;
 
 @mixin textMain {
   color: $colorTextMain;

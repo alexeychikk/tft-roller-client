@@ -2,7 +2,8 @@ import React from 'react';
 import { observer } from 'mobx-react-lite';
 
 import { tftStore } from '@src/state';
-import { EXPERIENCE_PER_LEVEL } from '@src/constants';
+import { EXPERIENCE_PER_BUY, EXPERIENCE_PER_LEVEL } from '@src/constants';
+import { SegmentedProgressBar } from '@src/components/dumb/SegmentedProgressBar';
 
 import styles from './LevelView.module.scss';
 
@@ -23,12 +24,21 @@ const LevelViewBase: React.FC<LevelViewProps> = () => {
 
   return (
     <div className={styles.rootLevelView}>
-      <span className={styles.level}>Lvl. {tftStore.level}</span>
-      <span className={styles.experience}>
-        {relativeLevelExperience !== undefined
-          ? `${relativeLevelExperience} / ${experienceToLevelUp}`
-          : 'Max.'}
-      </span>
+      <div className={styles.labels}>
+        <span className={styles.level}>Lvl. {tftStore.level}</span>
+        <span className={styles.experience}>
+          {relativeLevelExperience !== undefined
+            ? `${relativeLevelExperience} / ${experienceToLevelUp}`
+            : 'Max.'}
+        </span>
+      </div>
+      <SegmentedProgressBar
+        className={styles.progressBar}
+        min={0}
+        max={experienceToLevelUp || 0}
+        step={EXPERIENCE_PER_BUY}
+        value={relativeLevelExperience || 0}
+      />
     </div>
   );
 };

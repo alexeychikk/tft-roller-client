@@ -3,11 +3,16 @@
 .rootLevelView {
   flex: 1;
   display: flex;
-  border-radius: 4px 4px 0 0;
-  align-items: center;
+  flex-direction: column;
+  justify-content: end;
   @include theme.textMain;
   @include theme.uiBackground;
   @include theme.uiBorderOuterBold($top: 1, $left: 1, $right: 1);
+}
+
+.labels {
+  display: flex;
+  align-items: center;
 }
 
 .level {
@@ -17,4 +22,9 @@
 
 .experience {
   margin-right: 5%;
+}
+
+.progressBar {
+  margin: 1% 5% 4% 5%;
+  min-height: 15%;
 }
