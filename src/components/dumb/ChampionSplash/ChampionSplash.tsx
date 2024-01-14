@@ -19,7 +19,7 @@ const ChampionSplashBase: React.FC<ChampionSplashProps> = (props) => {
         backgroundImage: `url("https://cdn.lolchess.gg/images/lol/champion-splash-modified/${championUrlName}.jpg")`,
       }}
       {...restProps}
-    ></div>
+    />
   );
 };
 

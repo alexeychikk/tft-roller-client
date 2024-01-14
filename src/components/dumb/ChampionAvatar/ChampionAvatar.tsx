@@ -7,6 +7,7 @@ import { DndItemChampion, DndItemType } from '@src/state';
 import { ReactComponent as IconCoin } from '@src/assets/icons/common/coin.svg';
 
 import { ChampionSplash } from '../ChampionSplash';
+import { TraitTitle } from '../TraitTitle';
 
 import styles from './ChampionAvatar.module.scss';
 
@@ -18,7 +19,7 @@ export type ChampionAvatarProps = {
 };
 
 const ChampionAvatarBase: React.FC<ChampionAvatarProps> = (props) => {
-  const { tier } = CHAMPIONS_MAP[props.name];
+  const { classTraits, originTraits, tier } = CHAMPIONS_MAP[props.name];
 
   const [{ isDragging }, dragRef] = useDrag<
     DndItemChampion,
@@ -53,7 +54,15 @@ const ChampionAvatarBase: React.FC<ChampionAvatarProps> = (props) => {
       ref={dragRef}
       onClick={handleClick}
     >
-      <ChampionSplash className={styles.championSplash} name={props.name} />
+      <ChampionSplash className={styles.championSplash} name={props.name}>
+        {originTraits.map((trait) => (
+          <TraitTitle className={styles.traitTitle} key={trait} trait={trait} />
+        ))}
+        {classTraits.map((trait) => (
+          <TraitTitle className={styles.traitTitle} key={trait} trait={trait} />
+        ))}
+      </ChampionSplash>
+
       <div className={styles.footer}>
         <div className={styles.name}>{props.name}</div>
         <div className={styles.cost}>

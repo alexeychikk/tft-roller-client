@@ -26,11 +26,12 @@ const TraitStatsBase: React.FC<TraitStatsProps> = (props) => {
         props.className,
       )}
     >
-      <TraitHex hexType={hexType}>
+      <TraitHex className={styles.traitHex} hexType={hexType}>
         <TraitIcon className={styles.traitIcon} trait={props.trait} />
       </TraitHex>
 
       <div className={styles.amount}>{props.champions.length}</div>
+
       <div className={styles.activationsWrapper}>
         <div className={styles.traitName}>{props.trait}</div>
         {activated ? (

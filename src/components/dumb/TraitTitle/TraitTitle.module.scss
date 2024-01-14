@@ -1,0 +1,14 @@
+@use 'src/assets/styles/theme';
+
+.rootTraitTitle {
+  display: flex;
+  align-items: center;
+  gap: 3%;
+  color: theme.$colorTextMain;
+  text-shadow: 0.1em 0.1em 0.2em #000, 0.1em -0.1em 0.2em #000,
+    -0.1em 0.1em 0.2em #000, -0.1em -0.1em 0.2em #000;
+}
+
+.traitHex {
+  height: 100%;
+}
