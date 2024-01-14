@@ -5,6 +5,9 @@
   justify-content: space-around;
   align-items: center;
   background-color: theme.$colorBackgroundTransparent;
+  position: relative;
+  height: 90%;
+  top: 10%;
   @include theme.textMain;
 }
 
