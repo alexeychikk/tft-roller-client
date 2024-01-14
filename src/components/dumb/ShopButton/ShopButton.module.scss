@@ -11,7 +11,6 @@
 
   &:not(:disabled) {
     @include theme.uiBackground;
-    cursor: pointer;
   }
 }
 

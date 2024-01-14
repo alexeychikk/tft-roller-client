@@ -9,6 +9,7 @@
   flex-direction: column;
   border-radius: 2px;
 
+  @include theme.grabCursor;
   &.isDragging {
     visibility: hidden;
   }

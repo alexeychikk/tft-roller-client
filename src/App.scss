@@ -15,6 +15,10 @@ html * {
   box-sizing: border-box;
 }
 
+button:not(:disabled) {
+  cursor: pointer;
+}
+
 #root {
   height: 100%;
   margin: 0 auto;

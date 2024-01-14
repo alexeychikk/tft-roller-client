@@ -63,3 +63,12 @@ $colorGlow: #84ffff;
     border-bottom-right-radius: 0;
   }
 }
+
+@mixin grabCursor {
+  &:not(:disabled) {
+    cursor: grab;
+  }
+  &:active {
+    cursor: grabbing;
+  }
+}
