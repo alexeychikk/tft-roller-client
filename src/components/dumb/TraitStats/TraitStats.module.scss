@@ -17,6 +17,12 @@
   }
 }
 
+.traitIcon {
+  .activated & {
+    color: #000;
+  }
+}
+
 .amount {
   display: none;
   padding: 8px;

@@ -22,7 +22,7 @@ $colorGlow: #84ffff;
 
 @mixin textMain {
   color: $colorTextMain;
-  text-shadow: 0.05em 0.05em 0.05em black;
+  text-shadow: 0.05em 0.05em 0.05em #000;
 }
 
 @mixin uiInsetBoxShadow {

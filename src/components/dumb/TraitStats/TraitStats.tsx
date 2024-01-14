@@ -27,7 +27,7 @@ const TraitStatsBase: React.FC<TraitStatsProps> = (props) => {
       )}
     >
       <TraitHex hexType={hexType}>
-        <TraitIcon trait={props.trait} />
+        <TraitIcon className={styles.traitIcon} trait={props.trait} />
       </TraitHex>
 
       <div className={styles.amount}>{props.champions.length}</div>
