@@ -47,7 +47,7 @@
 
   @each $i, $color in theme.$colorsByTier {
     .tier#{$i} & {
-      background: linear-gradient(45deg, darken($color, 20%), $color);
+      background: linear-gradient(to right, darken($color, 20%), 70%, $color);
     }
   }
 }

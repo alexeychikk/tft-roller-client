@@ -16,7 +16,7 @@
 
   @each $i, $color in theme.$colorsByTier {
     &Tier#{$i} {
-      color: $color;
+      color: lighten($color, 15%);
     }
   }
 }

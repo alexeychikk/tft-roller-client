@@ -35,6 +35,7 @@ const LevelViewBase: React.FC<LevelViewProps> = (props) => {
       </div>
       <SegmentedProgressBar
         className={styles.progressBar}
+        fixedGap={tftStore.level < 6 ? 2 : 1}
         min={0}
         max={experienceToLevelUp || 0}
         step={EXPERIENCE_PER_BUY}

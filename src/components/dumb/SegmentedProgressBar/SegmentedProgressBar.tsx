@@ -4,6 +4,7 @@ import clsx from 'clsx';
 import styles from './SegmentedProgressBar.module.scss';
 
 export type SegmentedProgressBarProps = {
+  fixedGap?: number;
   min: number;
   max: number;
   step: number;
@@ -13,7 +14,7 @@ export type SegmentedProgressBarProps = {
 const SegmentedProgressBarBase: React.FC<SegmentedProgressBarProps> = (
   props,
 ) => {
-  const { className, min, max, step, value, ...restProps } = props;
+  const { className, fixedGap, min, max, step, value, ...restProps } = props;
   const range = max - min;
   const smallSegmentIndex =
     range > step
@@ -51,6 +52,7 @@ const SegmentedProgressBarBase: React.FC<SegmentedProgressBarProps> = (
   return (
     <div
       className={clsx(styles.rootSegmentedProgressBar, className)}
+      style={fixedGap == null ? undefined : { gap: `${fixedGap}px` }}
       {...restProps}
     >
       {value >= max ? (
