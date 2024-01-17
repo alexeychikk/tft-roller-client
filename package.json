@@ -1,7 +1,7 @@
 {
-	"name": "tft-roller",
+	"name": "tft-roller-client",
+	"version": "0.0.1",
 	"private": true,
-	"version": "0.0.0",
 	"type": "module",
 	"scripts": {
 		"start": "vite --host",
