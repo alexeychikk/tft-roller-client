@@ -1,5 +1,4 @@
 import React from 'react';
-import times from 'lodash-es/times';
 import { observer } from 'mobx-react-lite';
 
 import { tftStore } from '@src/state';
@@ -14,10 +13,10 @@ export type TableProps = {
 const TableBase: React.FC<TableProps> = () => {
   return (
     <div className={styles.rootTable}>
-      {times(tftStore.table.height, (y) => {
+      {Array.from({ length: tftStore.table.height }, (_, y) => {
         return (
           <div key={y} className={styles.row}>
-            {times(tftStore.table.width, (x) => {
+            {Array.from({ length: tftStore.table.width }, (_, x) => {
               return <TableSlot className={styles.slot} key={x} x={x} y={y} />;
             })}
           </div>

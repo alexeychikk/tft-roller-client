@@ -1,6 +1,6 @@
 import React from 'react';
-import capitalize from 'lodash-es/capitalize';
 import clsx from 'clsx';
+import { capitalize } from 'radash';
 
 import styles from './ChampionSplash.module.scss';
 

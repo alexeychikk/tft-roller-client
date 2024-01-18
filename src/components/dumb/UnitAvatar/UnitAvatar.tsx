@@ -1,5 +1,4 @@
 import React from 'react';
-import times from 'lodash-es/times';
 import clsx from 'clsx';
 import { useDrag } from 'react-dnd';
 
@@ -56,7 +55,7 @@ const UnitAvatarBase: React.FC<UnitAvatarProps> = (props) => {
       <ChampionSplash className={styles.championSplash} name={props.name} />
 
       <div className={styles.stars}>
-        {times(props.stars, (i) => (
+        {Array.from({ length: props.stars }, (_, i) => (
           <IconStar key={i} />
         ))}
       </div>

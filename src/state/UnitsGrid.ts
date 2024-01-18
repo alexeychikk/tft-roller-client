@@ -1,4 +1,3 @@
-import { times } from 'lodash-es';
 import { action, computed, makeObservable, observable } from 'mobx';
 import { Unit } from './Unit';
 
@@ -34,7 +33,9 @@ export class UnitsGrid {
     this.height = options.height;
     this.slots =
       options.slots ??
-      times(this.height, () => times(this.width, () => undefined));
+      Array.from({ length: this.height }, () =>
+        Array.from({ length: this.width }, () => undefined),
+      );
 
     makeObservable<UnitsGrid, 'slots'>(this, {
       slots: observable,

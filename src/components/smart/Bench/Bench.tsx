@@ -1,5 +1,4 @@
 import React from 'react';
-import times from 'lodash-es/times';
 import { observer } from 'mobx-react-lite';
 
 import { tftStore } from '@src/state';
@@ -14,10 +13,10 @@ export type BenchProps = {
 const BenchBase: React.FC<BenchProps> = () => {
   return (
     <div className={styles.rootBench}>
-      {times(tftStore.bench.height, (y) => {
+      {Array.from({ length: tftStore.bench.height }, (_, y) => {
         return (
           <div key={y} className={styles.row}>
-            {times(tftStore.bench.width, (x) => {
+            {Array.from({ length: tftStore.bench.width }, (_, x) => {
               return <BenchSlot className={styles.slot} key={x} x={x} y={y} />;
             })}
           </div>

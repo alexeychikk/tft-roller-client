@@ -1,4 +1,4 @@
-import { mapValues, pickBy, sumBy, times } from 'lodash-es';
+import { mapValues, pick, shake, sum } from 'radash';
 import { action, computed, makeObservable, observable } from 'mobx';
 
 import {
@@ -129,9 +129,9 @@ export class TftStore {
         return;
       }
 
-      times(amountToBuy, (i) => {
+      for (let i = 0; i < amountToBuy; i++) {
         this.shopChampionNames[shopChampionIndexes[i]] = undefined;
-      });
+      }
       this.gold -= amountToBuy * champion.tier;
       this.mergeUnits({ championName, minUnitsAmount: 1 });
       return;
@@ -204,7 +204,9 @@ export class TftStore {
   }
 
   protected rerollShop() {
-    times(this.shopChampionNames.length, (index) => this.rerollShopSlot(index));
+    for (let i = 0; i < this.shopChampionNames.length; i++) {
+      this.rerollShopSlot(i);
+    }
   }
 
   protected rerollShopSlot(index: number) {
@@ -217,11 +219,13 @@ export class TftStore {
       if (probability <= 0) return result;
 
       const tier = index + 1;
-      const pool = pickBy(
+      const pool = pick(
         this.shopChampionPool,
-        (_, name) => CHAMPIONS_MAP[name].tier === tier,
+        Object.keys(CHAMPIONS_MAP).filter(
+          (name) => CHAMPIONS_MAP[name].tier === tier,
+        ),
       );
-      const total = sumBy(Object.keys(pool), (name) => pool[name]);
+      const total = sum(Object.values(pool));
 
       if (total <= 0) return result;
 
@@ -236,7 +240,7 @@ export class TftStore {
     const totalTierPoolSize = poolByTier[tier].total;
 
     const champSpec = mapValues(
-      pickBy(tierPool, (pool) => pool > 0),
+      shake(tierPool, (pool) => pool <= 0),
       (size) => size / totalTierPoolSize,
     );
     const championName = weightedRandom(champSpec);
