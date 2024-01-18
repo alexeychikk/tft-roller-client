@@ -1,5 +1,5 @@
 import React from 'react';
-import { times } from 'lodash-es';
+import times from 'lodash-es/times';
 import { observer } from 'mobx-react-lite';
 
 import { tftStore } from '@src/state';

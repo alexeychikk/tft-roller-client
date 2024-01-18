@@ -1,9 +1,9 @@
 import React from 'react';
-import { times } from 'lodash-es';
+import times from 'lodash-es/times';
 import clsx from 'clsx';
 import { useDrag } from 'react-dnd';
 
-import { CHAMPIONS_MAP } from '@src/constants';
+import { CHAMPIONS_MAP } from '@tft-roller';
 import { DndItemType, DndItemUnit, GridType } from '@src/state';
 import { ReactComponent as IconStar } from '@src/assets/icons/common/star.svg';
 

@@ -2,7 +2,7 @@ import React from 'react';
 import clsx from 'clsx';
 
 import { ReactComponent as IconReroll } from '@src/assets/icons/common/reroll.svg';
-import { GOLD_PER_REROLL } from '@src/constants';
+import { GOLD_PER_REROLL } from '@tft-roller';
 
 import { ShopButton, ShopButtonExtendedProps } from './ShopButton';
 import styles from './ShopButton.module.scss';

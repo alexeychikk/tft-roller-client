@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import clsx from 'clsx';
 import { useDrag } from 'react-dnd';
 
-import { CHAMPIONS_MAP } from '@src/constants';
+import { CHAMPIONS_MAP } from '@tft-roller';
 import { DndItemChampion, DndItemType } from '@src/state';
 import { ReactComponent as IconCoin } from '@src/assets/icons/common/coin.svg';
 

@@ -3,7 +3,7 @@ import { observer } from 'mobx-react-lite';
 import clsx from 'clsx';
 
 import { tftStore } from '@src/state';
-import { EXPERIENCE_PER_BUY, EXPERIENCE_PER_LEVEL } from '@src/constants';
+import { EXPERIENCE_PER_BUY, EXPERIENCE_PER_LEVEL } from '@tft-roller';
 import { SegmentedProgressBar } from '@src/components/dumb/SegmentedProgressBar';
 
 import styles from './LevelView.module.scss';

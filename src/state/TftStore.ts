@@ -12,8 +12,8 @@ import {
   MIN_LEVEL,
   REROLL_CHANCES,
   SHOP_SIZE,
-} from '@src/constants';
-import { weightedRandom } from '@src/utils';
+  weightedRandom,
+} from '@tft-roller';
 
 import { Unit } from './Unit';
 import { GridType, UnitContext, UnitsGrid } from './UnitsGrid';

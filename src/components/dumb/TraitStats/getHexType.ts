@@ -1,5 +1,5 @@
 import { TraitHexType } from '@src/components/dumb/TraitHex';
-import { ALL_TRAITS_MAP, TRAIT_TO_CHAMPIONS_MAP } from '@src/constants';
+import { ALL_TRAITS_MAP, TRAIT_TO_CHAMPIONS_MAP } from '@tft-roller';
 
 export function getHexType(
   trait: string,

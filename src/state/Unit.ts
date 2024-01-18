@@ -1,5 +1,5 @@
 import { action, computed, makeObservable, observable } from 'mobx';
-import { CHAMPIONS_MAP } from '@src/constants';
+import { CHAMPIONS_MAP } from '@tft-roller';
 
 export class Unit {
   name: string;

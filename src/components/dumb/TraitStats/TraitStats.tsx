@@ -1,8 +1,7 @@
 import React from 'react';
 import clsx from 'clsx';
 
-import { CompStats } from '@src/utils';
-import { ALL_TRAITS_MAP } from '@src/constants';
+import { ALL_TRAITS_MAP, CompStats } from '@tft-roller';
 import { TraitIcon } from '@src/components/dumb/TraitIcon';
 import { TraitHex } from '@src/components/dumb/TraitHex';
 
