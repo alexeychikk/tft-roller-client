@@ -1,4 +1,4 @@
-import { times } from 'lodash-es';
+import { times } from 'remeda';
 import { action, computed, makeObservable, observable } from 'mobx';
 import { Unit } from './Unit';
 

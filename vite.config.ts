@@ -17,6 +17,6 @@ export default defineConfig({
     outDir: 'docs',
   },
   resolve: {
-    dedupe: ['lodash-es'],
+    dedupe: ['remeda'],
   },
 });

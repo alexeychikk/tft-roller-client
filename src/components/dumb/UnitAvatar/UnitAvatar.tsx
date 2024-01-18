@@ -1,5 +1,5 @@
 import React from 'react';
-import times from 'lodash-es/times';
+import { times } from 'remeda';
 import clsx from 'clsx';
 import { useDrag } from 'react-dnd';
 

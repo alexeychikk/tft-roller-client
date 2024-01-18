@@ -1,4 +1,4 @@
-import { mapValues, pickBy, sumBy, times } from 'lodash-es';
+import { mapValues, pickBy, sumBy, times } from 'remeda';
 import { action, computed, makeObservable, observable } from 'mobx';
 
 import {
