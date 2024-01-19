@@ -3,8 +3,8 @@ import { times } from 'remeda';
 import clsx from 'clsx';
 import { useDrag } from 'react-dnd';
 
-import { CHAMPIONS_MAP } from '@tft-roller';
-import { DndItemType, DndItemUnit, GridType } from '@src/state';
+import { CHAMPIONS_MAP, GridType } from '@tft-roller';
+import { DndItemType, DndItemUnit } from '@src/state';
 import { ReactComponent as IconStar } from '@src/assets/icons/common/star.svg';
 
 import { ChampionSplash } from '../ChampionSplash';

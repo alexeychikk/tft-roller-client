@@ -12,10 +12,9 @@ export type CompsProps = {
 };
 
 const CompsBase: React.FC<CompsProps> = () => {
-  const stats = getCompStats(tftStore.table.units.map((u) => u.name)).slice(
-    0,
-    9,
-  );
+  const stats = tftStore.me
+    ? getCompStats(tftStore.me.table.units.map((u) => u.name)).slice(0, 9)
+    : [];
 
   if (!stats.length) return null;
 

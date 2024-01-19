@@ -1,8 +1,9 @@
 import { observer } from 'mobx-react-lite';
 import React, { useEffect, useRef } from 'react';
 import { useKeyPressEvent } from 'react-use';
+import { GridType } from '@tft-roller';
 
-import { GridType, tftStore } from '@src/state';
+import { tftStore } from '@src/state';
 import { findParentElement } from '@src/utils';
 
 export type InputListenerProps = {

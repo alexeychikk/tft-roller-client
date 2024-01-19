@@ -13,20 +13,21 @@ export type LevelViewProps = {
 };
 
 const LevelViewBase: React.FC<LevelViewProps> = (props) => {
-  const levelExperience = EXPERIENCE_PER_LEVEL[tftStore.level] || 0;
+  const level = tftStore.me?.level || 0;
+  const levelExperience = EXPERIENCE_PER_LEVEL[level] || 0;
   const experienceToLevelUp =
-    tftStore.levelAbove !== undefined
-      ? EXPERIENCE_PER_LEVEL[tftStore.levelAbove] - levelExperience
+    tftStore.me?.levelAbove !== undefined
+      ? EXPERIENCE_PER_LEVEL[tftStore.me.levelAbove] - levelExperience
       : undefined;
   const relativeLevelExperience =
     experienceToLevelUp !== undefined
-      ? tftStore.experience - levelExperience
+      ? tftStore.me!.experience - levelExperience
       : undefined;
 
   return (
     <div className={clsx(styles.rootLevelView, props.className)}>
       <div className={styles.labels}>
-        <span className={styles.level}>Lvl. {tftStore.level}</span>
+        <span className={styles.level}>Lvl. {level}</span>
         <span className={styles.experience}>
           {relativeLevelExperience !== undefined
             ? `${relativeLevelExperience} / ${experienceToLevelUp}`
@@ -35,7 +36,7 @@ const LevelViewBase: React.FC<LevelViewProps> = (props) => {
       </div>
       <SegmentedProgressBar
         className={styles.progressBar}
-        fixedGap={tftStore.level < 6 ? 2 : 1}
+        fixedGap={level < 6 ? 2 : 1}
         min={0}
         max={experienceToLevelUp || 0}
         step={EXPERIENCE_PER_BUY}

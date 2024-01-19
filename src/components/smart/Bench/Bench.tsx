@@ -12,12 +12,13 @@ export type BenchProps = {
 };
 
 const BenchBase: React.FC<BenchProps> = () => {
+  if (!tftStore.me) return null;
   return (
     <div className={styles.rootBench}>
-      {times(tftStore.bench.height, (y) => {
+      {times(tftStore.me.bench.height, (y) => {
         return (
           <div key={y} className={styles.row}>
-            {times(tftStore.bench.width, (x) => {
+            {times(tftStore.me!.bench.width, (x) => {
               return <BenchSlot className={styles.slot} key={x} x={x} y={y} />;
             })}
           </div>

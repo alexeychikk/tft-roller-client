@@ -1,12 +1,7 @@
 import { useDrop } from 'react-dnd';
 
-import {
-  DndItemType,
-  DndItemUnit,
-  GridType,
-  UnitContext,
-  tftStore,
-} from '@src/state';
+import { DndItemType, DndItemUnit, tftStore } from '@src/state';
+import { GridType, UnitContext } from '@tft-roller';
 
 export const useUnitSlot = (gridType: GridType, x: number, y: number) => {
   const coords = { x, y };
@@ -15,7 +10,8 @@ export const useUnitSlot = (gridType: GridType, x: number, y: number) => {
   return useDrop(
     {
       accept: DndItemType.Unit,
-      canDrop: (item: DndItemUnit) => tftStore.canMoveUnit(item, dest),
+      canDrop: (item: DndItemUnit) =>
+        tftStore.me?.canMoveUnit(item, dest) || false,
       drop: (item: DndItemUnit) => tftStore.moveUnit(item, dest),
       collect: (monitor) => ({
         isOver: monitor.isOver(),

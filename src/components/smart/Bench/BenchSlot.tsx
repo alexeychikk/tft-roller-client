@@ -1,7 +1,8 @@
 import React from 'react';
 import { observer } from 'mobx-react-lite';
+import { GridType } from '@tft-roller';
 
-import { GridType, tftStore } from '@src/state';
+import { tftStore } from '@src/state';
 import { UnitAvatar } from '@src/components/dumb/UnitAvatar';
 import { useUnitSlot } from '@src/components/hooks/useUnitSlot';
 
@@ -12,7 +13,7 @@ export type BenchSlotProps = {
 };
 
 const BenchSlotBase: React.FC<BenchSlotProps> = ({ className, x, y }) => {
-  const unit = tftStore.bench.getUnit({ x, y });
+  const unit = tftStore.me?.bench.getUnit({ x, y });
   const [, dropRef] = useUnitSlot(GridType.Bench, x, y);
 
   return (

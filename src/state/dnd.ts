@@ -1,4 +1,4 @@
-import { UnitContext } from './UnitsGrid';
+import { UnitContext } from '@tft-roller';
 
 export enum DndItemType {
   Champion = 'champion',

@@ -17,7 +17,7 @@ const ShopChampionsBase: React.FC<ShopChampionsProps> = (props) => {
   return (
     <div className={clsx(styles.rootShopChampions, props.className)}>
       <div className={styles.slotsWrapper}>
-        {tftStore.shopChampionNames.map((name, index) => {
+        {tftStore.me?.shopChampionNames.map((name, index) => {
           return (
             <div key={index} className={styles.slot}>
               {name && (

@@ -26,7 +26,7 @@ const SellOverlayBase: React.FC<SellOverlayProps> = () => {
   return (
     <div className={styles.rootSellOverlay} ref={dropRef}>
       <span>Sell for</span> <IconCoin className={styles.iconCoin} />
-      <span> {item ? tftStore.getUnitCost(item) : 0}</span>
+      <span> {item ? tftStore.me?.getUnitCost(item) : 0}</span>
     </div>
   );
 };

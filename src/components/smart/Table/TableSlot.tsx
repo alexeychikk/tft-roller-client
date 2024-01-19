@@ -1,7 +1,8 @@
 import React from 'react';
 import { observer } from 'mobx-react-lite';
+import { GridType } from '@tft-roller';
 
-import { GridType, tftStore } from '@src/state';
+import { tftStore } from '@src/state';
 import { UnitAvatar } from '@src/components/dumb/UnitAvatar';
 import { useUnitSlot } from '@src/components/hooks/useUnitSlot';
 
@@ -12,7 +13,7 @@ export type TableSlotProps = {
 };
 
 const TableSlotBase: React.FC<TableSlotProps> = ({ className, x, y }) => {
-  const unit = tftStore.table.getUnit({ x, y });
+  const unit = tftStore.me?.table.getUnit({ x, y });
   const [, dropRef] = useUnitSlot(GridType.Table, x, y);
 
   return (

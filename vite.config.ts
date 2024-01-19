@@ -17,6 +17,6 @@ export default defineConfig({
     outDir: 'docs',
   },
   resolve: {
-    dedupe: ['remeda'],
+    dedupe: ['remeda', '@colyseus/schema'],
   },
 });
