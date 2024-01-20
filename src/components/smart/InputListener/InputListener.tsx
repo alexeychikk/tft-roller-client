@@ -13,6 +13,8 @@ export type InputListenerProps = {
 const InputListenerBase: React.FC<InputListenerProps> = () => {
   useKeyPressEvent((e) => e.code === 'KeyD', null, tftStore.reroll);
   useKeyPressEvent((e) => e.code === 'KeyF', null, tftStore.buyExperience);
+  useKeyPressEvent((e) => e.code === 'Digit1', null, tftStore.viewPrevPlayer);
+  useKeyPressEvent((e) => e.code === 'Digit3', null, tftStore.viewNextPlayer);
 
   const mouseCoords = useRef({ x: 0, y: 0 });
   useEffect(() => {

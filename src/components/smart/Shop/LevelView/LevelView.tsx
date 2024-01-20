@@ -13,15 +13,15 @@ export type LevelViewProps = {
 };
 
 const LevelViewBase: React.FC<LevelViewProps> = (props) => {
-  const level = tftStore.me?.level || 0;
+  const level = tftStore.viewedPlayer?.level || 0;
   const levelExperience = EXPERIENCE_PER_LEVEL[level] || 0;
   const experienceToLevelUp =
-    tftStore.me?.levelAbove !== undefined
-      ? EXPERIENCE_PER_LEVEL[tftStore.me.levelAbove] - levelExperience
+    tftStore.viewedPlayer?.levelAbove !== undefined
+      ? EXPERIENCE_PER_LEVEL[tftStore.viewedPlayer.levelAbove] - levelExperience
       : undefined;
   const relativeLevelExperience =
     experienceToLevelUp !== undefined
-      ? tftStore.me!.experience - levelExperience
+      ? tftStore.viewedPlayer!.experience - levelExperience
       : undefined;
 
   return (

@@ -13,7 +13,7 @@ export type BenchSlotProps = {
 };
 
 const BenchSlotBase: React.FC<BenchSlotProps> = ({ className, x, y }) => {
-  const unit = tftStore.me?.bench.getUnit({ x, y });
+  const unit = tftStore.viewedPlayer?.bench.getUnit({ x, y });
   const [, dropRef] = useUnitSlot(GridType.Bench, x, y);
 
   return (

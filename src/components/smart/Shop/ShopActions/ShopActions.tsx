@@ -20,13 +20,14 @@ const ShopActionsBase: React.FC<ShopActionsProps> = (props) => {
     <div className={clsx(styles.rootShopActions, props.className)}>
       <ShopButtonBuyXp
         disabled={
+          !tftStore.isViewingMe ||
           !tftStore.me?.isEnoughGoldToBuyExperience ||
           tftStore.me?.isMaxLevelReached
         }
         onClick={tftStore.buyExperience}
       />
       <ShopButtonReroll
-        disabled={!tftStore.me?.isEnoughGoldToReroll}
+        disabled={!tftStore.isViewingMe || !tftStore.me?.isEnoughGoldToReroll}
         onClick={tftStore.reroll}
       />
     </div>

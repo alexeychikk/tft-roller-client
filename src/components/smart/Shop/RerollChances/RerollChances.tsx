@@ -13,7 +13,7 @@ export type RerollChancesProps = {
 const RerollChancesBase: React.FC<RerollChancesProps> = (props) => {
   return (
     <div className={clsx(styles.rootRerollChances, props.className)}>
-      {tftStore.me?.rerollChances.map((percent, index) => (
+      {tftStore.viewedPlayer?.rerollChances.map((percent, index) => (
         <span
           key={index}
           className={clsx(styles.percent, styles[`percentTier${index + 1}`])}

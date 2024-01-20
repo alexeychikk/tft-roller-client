@@ -12,13 +12,13 @@ export type TableProps = {
 };
 
 const TableBase: React.FC<TableProps> = () => {
-  if (!tftStore.me) return null;
+  if (!tftStore.viewedPlayer) return null;
   return (
     <div className={styles.rootTable}>
-      {times(tftStore.me.table.height, (y) => {
+      {times(tftStore.viewedPlayer.table.height, (y) => {
         return (
           <div key={y} className={styles.row}>
-            {times(tftStore.me!.table.width, (x) => {
+            {times(tftStore.viewedPlayer!.table.width, (x) => {
               return <TableSlot className={styles.slot} key={x} x={x} y={y} />;
             })}
           </div>

@@ -17,19 +17,20 @@ const ShopChampionsBase: React.FC<ShopChampionsProps> = (props) => {
   return (
     <div className={clsx(styles.rootShopChampions, props.className)}>
       <div className={styles.slotsWrapper}>
-        {tftStore.me?.shopChampionNames.map((name, index) => {
-          return (
-            <div key={index} className={styles.slot}>
-              {name && (
-                <ChampionAvatar
-                  name={name}
-                  shopIndex={index}
-                  onClick={tftStore.buyChampion}
-                />
-              )}
-            </div>
-          );
-        })}
+        {tftStore.isViewingMe &&
+          tftStore.me?.shopChampionNames.map((name, index) => {
+            return (
+              <div key={index} className={styles.slot}>
+                {name && (
+                  <ChampionAvatar
+                    name={name}
+                    shopIndex={index}
+                    onClick={tftStore.buyChampion}
+                  />
+                )}
+              </div>
+            );
+          })}
       </div>
       <SellOverlay />
     </div>

@@ -7,7 +7,9 @@ export class PlayerStore extends Player {
   constructor(player: PlayerSchema) {
     super({
       ...player,
-      shopChampionNames: Array.from(player.shopChampionNames),
+      shopChampionNames: player.shopChampionNames
+        ? Array.from(player.shopChampionNames)
+        : [],
       bench: new UnitsGridStore(player.bench),
       table: new UnitsGridStore(player.table),
     });

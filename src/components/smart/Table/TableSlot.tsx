@@ -13,7 +13,7 @@ export type TableSlotProps = {
 };
 
 const TableSlotBase: React.FC<TableSlotProps> = ({ className, x, y }) => {
-  const unit = tftStore.me?.table.getUnit({ x, y });
+  const unit = tftStore.viewedPlayer?.table.getUnit({ x, y });
   const [, dropRef] = useUnitSlot(GridType.Table, x, y);
 
   return (

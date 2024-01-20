@@ -7,6 +7,10 @@
   border: 2px solid rgb(255, 119, 0);
   display: flex;
   flex-direction: column;
+
+  :global(.tft__is-viewing-enemy) & {
+    pointer-events: none;
+  }
 }
 
 .row {

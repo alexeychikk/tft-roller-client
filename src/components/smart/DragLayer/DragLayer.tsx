@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDrop } from 'react-dnd';
 import clsx from 'clsx';
+import { observer } from 'mobx-react-lite';
 
 import { DndItemChampion, DndItemType, tftStore } from '@src/state';
 
@@ -28,6 +29,7 @@ const DragLayerBase: React.FC<DragLayerProps> = () => {
     'tft__drag-layer',
     itemType && `tft__drag-layer_dragging`,
     itemType && `tft__drag-layer_dragging_${itemType}`,
+    tftStore.isViewingEnemy && `tft__is-viewing-enemy`,
   );
 
   useEffect(() => {
@@ -41,4 +43,4 @@ const DragLayerBase: React.FC<DragLayerProps> = () => {
   );
 };
 
-export const DragLayer = React.memo(DragLayerBase);
+export const DragLayer = observer(DragLayerBase);

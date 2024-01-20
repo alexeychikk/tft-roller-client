@@ -14,7 +14,8 @@ export type GoldViewProps = {
 const GoldViewBase: React.FC<GoldViewProps> = (props) => {
   return (
     <div className={clsx(styles.rootGoldView, props.className)}>
-      <IconCoin className={styles.iconCoin} /> {tftStore.me?.gold || 0}
+      <IconCoin className={styles.iconCoin} />{' '}
+      {tftStore.viewedPlayer?.gold || 0}
     </div>
   );
 };
