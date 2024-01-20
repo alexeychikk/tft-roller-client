@@ -38,7 +38,10 @@ export class TftStore {
   }
 
   async connect() {
-    this.client = new Client('ws://localhost:2567');
+    const wsUrl = `ws://${
+      import.meta.env.VITE_SERVER_HOST || window.location.hostname
+    }:${import.meta.env.VITE_SERVER_PORT || window.location.port}`;
+    this.client = new Client(wsUrl);
     this.room = await this.client.joinOrCreate('gameRoom', {}, GameSchema);
     this.room.onStateChange.once((state) => {
       console.log('state change', state.toJSON());
