@@ -11,8 +11,8 @@ export type InputListenerProps = {
 };
 
 const InputListenerBase: React.FC<InputListenerProps> = () => {
-  useKeyPressEvent('d', null, tftStore.reroll);
-  useKeyPressEvent('f', null, tftStore.buyExperience);
+  useKeyPressEvent((e) => e.code === 'KeyD', null, tftStore.reroll);
+  useKeyPressEvent((e) => e.code === 'KeyF', null, tftStore.buyExperience);
 
   const mouseCoords = useRef({ x: 0, y: 0 });
   useEffect(() => {
@@ -25,24 +25,28 @@ const InputListenerBase: React.FC<InputListenerProps> = () => {
     return () => document.removeEventListener('mousemove', handler);
   });
 
-  useKeyPressEvent('e', null, () => {
-    const element = document.elementFromPoint(
-      mouseCoords.current.x,
-      mouseCoords.current.y,
-    );
+  useKeyPressEvent(
+    (e) => e.code === 'KeyE',
+    null,
+    () => {
+      const element = document.elementFromPoint(
+        mouseCoords.current.x,
+        mouseCoords.current.y,
+      );
 
-    const target = findParentElement(
-      element,
-      (el) => el.dataset.tftComponentType === 'UnitAvatar',
-    );
+      const target = findParentElement(
+        element,
+        (el) => el.dataset.tftComponentType === 'UnitAvatar',
+      );
 
-    if (!target) return;
-    const [gridType, x, y] = target.dataset.tftUnit!.split(',');
-    tftStore.sellUnit({
-      gridType: gridType as GridType,
-      coords: { x: +x, y: +y },
-    });
-  });
+      if (!target) return;
+      const [gridType, x, y] = target.dataset.tftUnit!.split(',');
+      tftStore.sellUnit({
+        gridType: gridType as GridType,
+        coords: { x: +x, y: +y },
+      });
+    },
+  );
 
   return null;
 };
