@@ -5,10 +5,15 @@
   align-items: center;
   gap: 3%;
   color: theme.$colorTextMain;
-  text-shadow: 0.1em 0.1em 0.2em #000, 0.1em -0.1em 0.2em #000,
-    -0.1em 0.1em 0.2em #000, -0.1em -0.1em 0.2em #000;
+  font-size: 1rem;
 }
 
 .traitHex {
   height: 100%;
+}
+
+.traitName {
+  font-size: 0.75em;
+  text-shadow: 0.1em 0.1em 0.2em #000, 0.1em -0.1em 0.2em #000,
+    -0.1em 0.1em 0.2em #000, -0.1em -0.1em 0.2em #000;
 }

@@ -22,11 +22,11 @@ $colorGlow: #84ffff;
 
 @mixin textMain {
   color: $colorTextMain;
-  text-shadow: 0.05em 0.05em 0.05em #000;
+  text-shadow: 0.05rem 0.05rem 0.05rem #000;
 }
 
 @mixin uiInsetBoxShadow {
-  box-shadow: inset 0px 0px 2px 2px $colorUiInnerBorder;
+  box-shadow: inset 0 0 0.15rem 0.15rem $colorUiInnerBorder;
 }
 
 @mixin uiBackground {
@@ -35,29 +35,31 @@ $colorGlow: #84ffff;
 }
 
 @mixin uiBorderOuterBold($top: 0, $right: 0, $bottom: 0, $left: 0) {
+  $borderWidth: 0.3rem;
+
   border-style: ridge;
-  border-radius: 4px;
+  border-radius: $borderWidth;
   border-color: $colorUiOuterBorder;
   @if $top != 0 {
-    border-top-width: 4px;
+    border-top-width: $borderWidth;
   } @else {
     border-top-left-radius: 0;
     border-top-right-radius: 0;
   }
   @if $bottom != 0 {
-    border-bottom-width: 4px;
+    border-bottom-width: $borderWidth;
   } @else {
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
   }
   @if $left != 0 {
-    border-left-width: 4px;
+    border-left-width: $borderWidth;
   } @else {
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
   }
   @if $right != 0 {
-    border-right-width: 4px;
+    border-right-width: $borderWidth;
   } @else {
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;

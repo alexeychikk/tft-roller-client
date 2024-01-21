@@ -8,13 +8,13 @@
 
   & > * {
     flex: 1;
-    margin: 2px 4px;
+    margin: 0.2rem 0.4rem;
 
     &:first-child {
-      margin-top: 4px;
+      margin-top: 0.4rem;
     }
     &:last-child {
-      margin-bottom: 4px;
+      margin-bottom: 0.4rem;
     }
   }
 }

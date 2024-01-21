@@ -4,7 +4,7 @@
   left: 20%;
   height: 10%;
   width: 55%;
-  border: 2px solid red;
+  border: 0.1rem solid red;
   display: flex;
   flex-direction: column;
 
@@ -20,6 +20,6 @@
 
 .slot {
   position: relative;
-  border: 2px solid purple;
+  border: 0.1rem solid purple;
   flex: 1;
 }

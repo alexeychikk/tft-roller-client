@@ -4,7 +4,7 @@
   left: 20%;
   height: 40%;
   width: 55%;
-  border: 2px solid rgb(255, 119, 0);
+  border: 0.15rem solid rgb(255, 119, 0);
   display: flex;
   flex-direction: column;
 
@@ -20,5 +20,5 @@
 
 .slot {
   flex: 1;
-  border: 1px solid rgb(55, 205, 210);
+  border: 0.1rem solid rgb(55, 205, 210);
 }

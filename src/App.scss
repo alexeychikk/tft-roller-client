@@ -20,7 +20,8 @@ button:not(:disabled) {
 }
 
 #root {
-  height: 100%;
+  height: auto;
+  max-height: 100vh;
   margin: 0 auto;
   position: relative;
   aspect-ratio: 16 / 9;
@@ -38,6 +39,6 @@ button:not(:disabled) {
 }
 
 svg {
-  width: 24px;
-  height: 24px;
+  width: 1em;
+  height: 1em;
 }

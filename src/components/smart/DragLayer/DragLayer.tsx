@@ -36,6 +36,20 @@ const DragLayerBase: React.FC<DragLayerProps> = () => {
     rootElement.className = className;
   }, [className]);
 
+  useEffect(() => {
+    const resizeObserver = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        const width = entry.contentBoxSize?.[0]?.inlineSize;
+        if (!width) continue;
+        document.documentElement.style.fontSize = `${(width / 100).toFixed(
+          2,
+        )}px`;
+      }
+    });
+    resizeObserver.observe(rootElement);
+    return () => resizeObserver.disconnect();
+  });
+
   return (
     <>
       <div className="tft__champion-dropbox" ref={dropRef} />

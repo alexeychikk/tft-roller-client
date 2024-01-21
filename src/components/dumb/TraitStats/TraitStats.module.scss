@@ -3,8 +3,9 @@
 .rootTraitStats {
   display: flex;
   align-items: center;
-  padding: 8px;
-  border-radius: 4px;
+  font-size: 1rem;
+  padding: 0.5em;
+  border-radius: 0.25em;
   background-color: theme.$colorBackgroundTransparent;
   color: theme.$colorTextDisabled;
 
@@ -13,11 +14,12 @@
   }
 
   & > *:not(:last-child) {
-    margin-right: 8px;
+    margin-right: 0.5em;
   }
 }
 
 .traitHex {
+  height: 2em;
   max-width: 20%;
 }
 
@@ -29,9 +31,10 @@
 
 .amount {
   display: none;
-  padding: 8px;
-  border: 1px solid grey;
-  border-radius: 4px;
+  font-size: 1.25em;
+  padding: 0.25em;
+  border: 0.1rem solid grey;
+  border-radius: 0.15em;
   font-weight: 700;
   .activated & {
     display: block;
@@ -43,10 +46,13 @@
 }
 
 .traitName {
+  font-size: 1em;
 }
 
 .activations {
+  font-size: 0.8em;
 }
 
 .threshold {
+  font-size: 0.8em;
 }
