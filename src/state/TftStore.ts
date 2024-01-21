@@ -38,9 +38,11 @@ export class TftStore {
   }
 
   async connect() {
-    const wsUrl = `ws://${
-      import.meta.env.VITE_SERVER_HOST || window.location.hostname
-    }:${import.meta.env.VITE_SERVER_PORT || window.location.port}`;
+    const wsUrl = `${
+      window.location.protocol.includes('https') ? 'wss' : 'ws'
+    }://${import.meta.env.VITE_SERVER_HOST || window.location.hostname}:${
+      import.meta.env.VITE_SERVER_PORT || window.location.port
+    }`;
     this.client = new Client(wsUrl);
     this.room = await this.client.joinOrCreate('gameRoom', {}, GameSchema);
     this.room.onStateChange.once((state) => {
