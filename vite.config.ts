@@ -1,8 +1,8 @@
-import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+import { defineConfig } from 'vite';
+import { analyzer } from 'vite-bundle-analyzer';
 import svgr from 'vite-plugin-svgr';
 import tsconfigPaths from 'vite-tsconfig-paths';
-import { analyzer } from 'vite-bundle-analyzer';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -17,6 +17,12 @@ export default defineConfig({
     outDir: 'build',
   },
   resolve: {
-    dedupe: ['remeda', '@colyseus/schema'],
+    dedupe: [
+      'remeda',
+      '@colyseus/schema',
+      'reflect-metadata',
+      'class-validator',
+      'class-transformer',
+    ],
   },
 });

@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import './utils/transpilerCheck';
 import ReactDOM from 'react-dom/client';
 

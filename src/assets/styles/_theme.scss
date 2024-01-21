@@ -19,6 +19,7 @@ $colorTextDisabled: #9e9e9e;
 $colorControlBackground: #006064;
 $colorControlBackgroundDisabled: desaturate($colorControlBackground, 75%);
 $colorGlow: #84ffff;
+$colorError: #f44336;
 
 @mixin textMain {
   color: $colorTextMain;
@@ -34,9 +35,13 @@ $colorGlow: #84ffff;
   @include uiInsetBoxShadow;
 }
 
-@mixin uiBorderOuterBold($top: 0, $right: 0, $bottom: 0, $left: 0) {
-  $borderWidth: 0.3rem;
-
+@mixin uiBorderOuterBold(
+  $top: 0,
+  $right: 0,
+  $bottom: 0,
+  $left: 0,
+  $borderWidth: 0.3rem
+) {
   border-style: ridge;
   border-radius: $borderWidth;
   border-color: $colorUiOuterBorder;
@@ -72,5 +77,19 @@ $colorGlow: #84ffff;
   }
   &:active {
     cursor: grabbing;
+  }
+}
+
+@mixin formItem {
+  border: 0.1em solid $colorGlow;
+  border-radius: 0.2em;
+  outline: none;
+
+  @include textMain;
+
+  &:not(:disabled) {
+    background-color: $colorUiInnerBorder;
+    box-shadow: inset 0 0 0.15em 0.15em $colorUiInnerBorder,
+      0 0 0.15em 0.1em rgba($colorGlow, 0.15);
   }
 }

@@ -1,29 +1,43 @@
-import { useEffect } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 
 import './App.scss';
-import { Bench } from './components/smart/Bench';
-import { Comps } from './components/smart/Comps';
-import { DragLayer } from './components/smart/DragLayer';
-import { InputListener } from './components/smart/InputListener';
-import { Shop } from './components/smart/Shop';
-import { Table } from './components/smart/Table';
-import { tftStore } from './state';
+import { useHtmlFontSize } from './components/hooks/useHtmlFontSize';
+import { Game } from './components/routes/Game';
+import { Lobby } from './components/routes/Lobby';
+import { Login } from './components/routes/Login';
+import { AuthGuard } from './components/smart/AuthGuard';
 
 export function App() {
-  useEffect(() => {
-    tftStore.connect();
-  }, []);
+  const isFontSizeReady = useHtmlFontSize();
+  if (!isFontSizeReady) return null;
 
   return (
-    <DndProvider backend={HTML5Backend}>
-      <InputListener />
-      <Table />
-      <Bench />
-      <Shop />
-      <Comps />
-      <DragLayer />
-    </DndProvider>
+    <BrowserRouter>
+      <DndProvider backend={HTML5Backend}>
+        <Routes>
+          <Route
+            path="/game"
+            element={
+              <AuthGuard>
+                <Game />
+              </AuthGuard>
+            }
+          />
+          <Route path="/login" element={<Login />} />
+          <Route
+            path="/"
+            element={
+              <AuthGuard>
+                <Lobby />
+              </AuthGuard>
+            }
+          />
+          <Route path="/" element={<Lobby />} />
+          <Route path="*" element={<Navigate to="/" />} />
+        </Routes>
+      </DndProvider>
+    </BrowserRouter>
   );
 }

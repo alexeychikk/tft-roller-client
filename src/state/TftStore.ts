@@ -7,13 +7,20 @@ import {
   observable,
   runInAction,
 } from 'mobx';
-import type { UnitContext } from '@tft-roller';
-import { GameSchema, RoomType } from '@tft-roller';
+import type { JoinLobbyOptions, UnitContext } from '@tft-roller';
+import {
+  RoomType,
+  GameSchema,
+  LobbyMessageType,
+  GameMessageType,
+} from '@tft-roller';
 
 import { GameStore } from './GameStore';
 
 export class TftStore {
   client: Client | null = null;
+  lobby: Room | null = null;
+  allRooms: Map<string, RoomAvailable> = new Map();
   room: Room<GameSchema> | null = null;
   game: GameStore | null = null;
   sessionId: string | null = null;
@@ -21,13 +28,16 @@ export class TftStore {
 
   constructor() {
     makeObservable(this, {
+      lobby: observable,
+      allRooms: observable,
       game: observable,
       sessionId: observable,
       viewedPlayerId: observable,
 
       me: computed,
 
-      connect: action,
+      joinLobby: action,
+      joinGame: action,
       setViewedPlayer: action,
       viewPrevPlayer: action,
       viewNextPlayer: action,
@@ -39,7 +49,7 @@ export class TftStore {
     });
   }
 
-  async connect() {
+  async joinLobby(options: JoinLobbyOptions) {
     const wsUrl = `${
       window.location.protocol.includes('https') ? 'wss' : 'ws'
     }://${import.meta.env.VITE_SERVER_HOST || window.location.hostname}:${
@@ -47,31 +57,31 @@ export class TftStore {
     }`;
     this.client = new Client(wsUrl);
 
-    const lobby = await this.client.join(RoomType.Lobby);
+    const lobby = await this.client.join(RoomType.Lobby, options);
 
-    let allRooms: RoomAvailable[] = [];
-
-    lobby.onMessage('rooms', (rooms) => {
-      console.log('rooms', rooms);
-      allRooms = rooms;
+    lobby.onMessage(LobbyMessageType.Rooms, (rooms: RoomAvailable[]) => {
+      console.info('rooms', rooms);
+      this.allRooms = new Map(rooms.map((room) => [room.roomId, room]));
     });
 
-    lobby.onMessage('+', ([roomId, room]) => {
-      const roomIndex = allRooms.findIndex((room) => room.roomId === roomId);
-      if (roomIndex !== -1) {
-        allRooms[roomIndex] = room;
-      } else {
-        allRooms.push(room);
-      }
+    lobby.onMessage(LobbyMessageType.Add, ([roomId, room]) => {
+      console.info('room added', roomId, room);
+      this.allRooms.set(roomId, room);
     });
 
-    lobby.onMessage('-', (roomId) => {
-      allRooms = allRooms.filter((room) => room.roomId !== roomId);
+    lobby.onMessage(LobbyMessageType.Remove, (roomId) => {
+      console.info('room removed', roomId);
+      this.allRooms.delete(roomId);
     });
 
-    this.room = await this.client.joinOrCreate(RoomType.Game, {}, GameSchema);
+    this.lobby = lobby;
+  }
+
+  async joinGame() {
+    if (!this.client) return;
+    this.room = await this.client.join(RoomType.Game, {}, GameSchema);
     this.room.onStateChange.once((state) => {
-      console.log('state change', state.toJSON());
+      console.info('state change', state.toJSON());
       runInAction(() => {
         this.game = new GameStore(state);
         this.sessionId = this.room!.sessionId;
@@ -122,31 +132,31 @@ export class TftStore {
 
   buyExperience = () => {
     if (!this.isViewingMe) return;
-    console.log('buyExperience');
-    this.room!.send('buyExperience');
+    console.info(GameMessageType.BuyExperience);
+    this.room!.send(GameMessageType.BuyExperience);
   };
 
   buyChampion = (index: number) => {
     if (!this.isViewingMe) return;
-    console.log('buyChampion', index);
-    this.room!.send('buyChampion', { index });
+    console.info(GameMessageType.BuyChampion, index);
+    this.room!.send(GameMessageType.BuyChampion, { index });
   };
 
   sellUnit = (unit: UnitContext) => {
     if (!this.isViewingMe) return;
-    console.log('sellUnit', unit);
-    this.room!.send('sellUnit', unit);
+    console.info(GameMessageType.SellUnit, unit);
+    this.room!.send(GameMessageType.SellUnit, unit);
   };
 
   moveUnit = (source: UnitContext, dest: UnitContext) => {
     if (!this.isViewingMe) return;
-    console.log('moveUnit', source, dest);
-    this.room!.send('moveUnit', { source, dest });
+    console.info(GameMessageType.MoveUnit, source, dest);
+    this.room!.send(GameMessageType.MoveUnit, { source, dest });
   };
 
   reroll = () => {
     if (!this.isViewingMe) return;
-    console.log('reroll');
-    this.room!.send('reroll');
+    console.info(GameMessageType.Reroll);
+    this.room!.send(GameMessageType.Reroll);
   };
 }
