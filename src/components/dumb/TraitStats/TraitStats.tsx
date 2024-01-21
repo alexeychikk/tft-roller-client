@@ -1,9 +1,10 @@
-import React from 'react';
 import clsx from 'clsx';
+import React from 'react';
+import type { CompStats } from '@tft-roller';
+import { ALL_TRAITS_MAP } from '@tft-roller';
 
-import { ALL_TRAITS_MAP, CompStats } from '@tft-roller';
-import { TraitIcon } from '@src/components/dumb/TraitIcon';
 import { TraitHex } from '@src/components/dumb/TraitHex';
+import { TraitIcon } from '@src/components/dumb/TraitIcon';
 
 import { getHexType } from './getHexType';
 import styles from './TraitStats.module.scss';

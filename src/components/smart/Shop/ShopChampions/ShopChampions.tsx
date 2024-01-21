@@ -1,12 +1,11 @@
-import React from 'react';
-import { observer } from 'mobx-react-lite';
 import clsx from 'clsx';
+import { observer } from 'mobx-react-lite';
+import React from 'react';
 
-import { tftStore } from '@src/state';
 import { ChampionAvatar } from '@src/components/dumb/ChampionAvatar';
+import { tftStore } from '@src/state';
 
 import { SellOverlay } from './SellOverlay';
-
 import styles from './ShopChampions.module.scss';
 
 export type ShopChampionsProps = {

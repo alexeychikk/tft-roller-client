@@ -1,10 +1,10 @@
-import React from 'react';
 import { observer } from 'mobx-react-lite';
+import React from 'react';
 import { GridType } from '@tft-roller';
 
-import { tftStore } from '@src/state';
 import { UnitAvatar } from '@src/components/dumb/UnitAvatar';
 import { useUnitSlot } from '@src/components/hooks/useUnitSlot';
+import { tftStore } from '@src/state';
 
 export type BenchSlotProps = {
   className?: string;

@@ -1,9 +1,10 @@
-import React, { useEffect } from 'react';
-import { useDrop } from 'react-dnd';
 import clsx from 'clsx';
 import { observer } from 'mobx-react-lite';
+import React, { useEffect } from 'react';
+import { useDrop } from 'react-dnd';
 
-import { DndItemChampion, DndItemType, tftStore } from '@src/state';
+import { DndItemType, tftStore } from '@src/state';
+import type { DndItemChampion } from '@src/state';
 
 import './DragLayer.scss';
 

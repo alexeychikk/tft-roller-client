@@ -1,8 +1,8 @@
-import React from 'react';
 import clsx from 'clsx';
+import React from 'react';
 
 import { ReactComponent as IconCoin } from '@src/assets/icons/common/coin.svg';
-import { ReactSvgIcon } from '@src/utils';
+import type { ReactSvgIcon } from '@src/utils';
 
 import styles from './ShopButton.module.scss';
 

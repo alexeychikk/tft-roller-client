@@ -1,5 +1,5 @@
-import React from 'react';
 import clsx from 'clsx';
+import React from 'react';
 import { capitalize } from '@tft-roller';
 
 import styles from './ChampionSplash.module.scss';

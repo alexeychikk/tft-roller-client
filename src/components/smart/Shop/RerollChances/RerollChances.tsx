@@ -1,6 +1,6 @@
-import React from 'react';
 import clsx from 'clsx';
 import { observer } from 'mobx-react-lite';
+import React from 'react';
 
 import { tftStore } from '@src/state';
 

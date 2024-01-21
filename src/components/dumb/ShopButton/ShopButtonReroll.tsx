@@ -1,10 +1,11 @@
-import React from 'react';
 import clsx from 'clsx';
-
-import { ReactComponent as IconReroll } from '@src/assets/icons/common/reroll.svg';
+import React from 'react';
 import { GOLD_PER_REROLL } from '@tft-roller';
 
-import { ShopButton, ShopButtonExtendedProps } from './ShopButton';
+import { ReactComponent as IconReroll } from '@src/assets/icons/common/reroll.svg';
+
+import type { ShopButtonExtendedProps } from './ShopButton';
+import { ShopButton } from './ShopButton';
 import styles from './ShopButton.module.scss';
 
 export const ShopButtonReroll: React.FC<ShopButtonExtendedProps> = ({

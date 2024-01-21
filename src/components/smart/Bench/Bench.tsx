@@ -1,6 +1,6 @@
+import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { times } from 'remeda';
-import { observer } from 'mobx-react-lite';
 
 import { tftStore } from '@src/state';
 

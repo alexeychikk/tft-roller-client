@@ -1,5 +1,7 @@
 import { makeObservable, observable } from 'mobx';
-import { UnitsGrid, UnitsGridSchema } from '@tft-roller';
+import type { UnitsGridSchema } from '@tft-roller';
+import { UnitsGrid } from '@tft-roller';
+
 import { listenMap } from '@src/utils';
 
 import { UnitStore } from './UnitStore';

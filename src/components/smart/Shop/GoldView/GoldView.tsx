@@ -1,6 +1,6 @@
-import React from 'react';
-import { observer } from 'mobx-react-lite';
 import clsx from 'clsx';
+import { observer } from 'mobx-react-lite';
+import React from 'react';
 
 import { ReactComponent as IconCoin } from '@src/assets/icons/common/coin.svg';
 import { tftStore } from '@src/state';

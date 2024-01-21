@@ -1,9 +1,10 @@
-import React from 'react';
 import { observer } from 'mobx-react-lite';
+import React from 'react';
 import { useDrop } from 'react-dnd';
 
-import { DndItemType, DndItemUnit, tftStore } from '@src/state';
 import { ReactComponent as IconCoin } from '@src/assets/icons/common/coin.svg';
+import type { DndItemUnit } from '@src/state';
+import { DndItemType, tftStore } from '@src/state';
 
 import styles from './SellOverlay.module.scss';
 

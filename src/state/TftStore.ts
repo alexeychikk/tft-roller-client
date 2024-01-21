@@ -1,3 +1,5 @@
+import type { Room, RoomAvailable } from 'colyseus.js';
+import { Client } from 'colyseus.js';
 import {
   action,
   computed,
@@ -5,8 +7,8 @@ import {
   observable,
   runInAction,
 } from 'mobx';
-import { Client, Room } from 'colyseus.js';
-import { GameSchema, UnitContext } from '@tft-roller';
+import type { UnitContext } from '@tft-roller';
+import { GameSchema, RoomType } from '@tft-roller';
 
 import { GameStore } from './GameStore';
 
@@ -44,7 +46,30 @@ export class TftStore {
       import.meta.env.VITE_SERVER_PORT || window.location.port
     }`;
     this.client = new Client(wsUrl);
-    this.room = await this.client.joinOrCreate('gameRoom', {}, GameSchema);
+
+    const lobby = await this.client.join(RoomType.Lobby);
+
+    let allRooms: RoomAvailable[] = [];
+
+    lobby.onMessage('rooms', (rooms) => {
+      console.log('rooms', rooms);
+      allRooms = rooms;
+    });
+
+    lobby.onMessage('+', ([roomId, room]) => {
+      const roomIndex = allRooms.findIndex((room) => room.roomId === roomId);
+      if (roomIndex !== -1) {
+        allRooms[roomIndex] = room;
+      } else {
+        allRooms.push(room);
+      }
+    });
+
+    lobby.onMessage('-', (roomId) => {
+      allRooms = allRooms.filter((room) => room.roomId !== roomId);
+    });
+
+    this.room = await this.client.joinOrCreate(RoomType.Game, {}, GameSchema);
     this.room.onStateChange.once((state) => {
       console.log('state change', state.toJSON());
       runInAction(() => {

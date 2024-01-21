@@ -1,10 +1,11 @@
-import React from 'react';
 import clsx from 'clsx';
-
-import { ReactComponent as IconBuyXp } from '@src/assets/icons/common/buy_xp.svg';
+import React from 'react';
 import { GOLD_PER_EXPERIENCE_BUY } from '@tft-roller';
 
-import { ShopButton, ShopButtonExtendedProps } from './ShopButton';
+import { ReactComponent as IconBuyXp } from '@src/assets/icons/common/buy_xp.svg';
+
+import type { ShopButtonExtendedProps } from './ShopButton';
+import { ShopButton } from './ShopButton';
 import styles from './ShopButton.module.scss';
 
 export const ShopButtonBuyXp: React.FC<ShopButtonExtendedProps> = ({

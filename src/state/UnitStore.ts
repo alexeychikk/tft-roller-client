@@ -1,5 +1,7 @@
 import { makeObservable, observable } from 'mobx';
-import { Unit, UnitSchema } from '@tft-roller';
+import type { UnitSchema } from '@tft-roller';
+import { Unit } from '@tft-roller';
+
 import { listenPrimitive } from '@src/utils';
 
 export class UnitStore extends Unit {

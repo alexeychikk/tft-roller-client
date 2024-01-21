@@ -1,5 +1,5 @@
 import { makeObservable, observable } from 'mobx';
-import { GameSchema } from '@tft-roller';
+import type { GameSchema } from '@tft-roller';
 
 import { listenMap } from '@src/utils';
 

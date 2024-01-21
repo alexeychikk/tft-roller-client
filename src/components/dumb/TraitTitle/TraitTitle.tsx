@@ -1,8 +1,8 @@
-import React from 'react';
 import clsx from 'clsx';
+import React from 'react';
 
-import { TraitIcon } from '@src/components/dumb/TraitIcon';
 import { TraitHex } from '@src/components/dumb/TraitHex';
+import { TraitIcon } from '@src/components/dumb/TraitIcon';
 
 import styles from './TraitTitle.module.scss';
 

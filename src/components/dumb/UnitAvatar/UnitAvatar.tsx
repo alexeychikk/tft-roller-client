@@ -1,12 +1,13 @@
-import React from 'react';
-import { times } from 'remeda';
 import clsx from 'clsx';
+import React from 'react';
 import { useDrag } from 'react-dnd';
+import { times } from 'remeda';
+import type { GridType } from '@tft-roller';
+import { CHAMPIONS_MAP } from '@tft-roller';
 
-import { CHAMPIONS_MAP, GridType } from '@tft-roller';
-import { DndItemType, DndItemUnit } from '@src/state';
 import { ReactComponent as IconStar } from '@src/assets/icons/common/star.svg';
-
+import { DndItemType } from '@src/state';
+import type { DndItemUnit } from '@src/state';
 import { ChampionSplash } from '../ChampionSplash';
 
 import styles from './UnitAvatar.module.scss';

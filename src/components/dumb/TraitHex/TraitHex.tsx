@@ -1,12 +1,12 @@
-import React from 'react';
 import clsx from 'clsx';
+import React from 'react';
 
+import { ReactComponent as Bronze } from '@src/assets/icons/hexes/bronze.svg';
+import { ReactComponent as Chromatic } from '@src/assets/icons/hexes/chromatic.svg';
 import { ReactComponent as Default } from '@src/assets/icons/hexes/default.svg';
 import { ReactComponent as Disabled } from '@src/assets/icons/hexes/disabled.svg';
-import { ReactComponent as Bronze } from '@src/assets/icons/hexes/bronze.svg';
-import { ReactComponent as Silver } from '@src/assets/icons/hexes/silver.svg';
 import { ReactComponent as Gold } from '@src/assets/icons/hexes/gold.svg';
-import { ReactComponent as Chromatic } from '@src/assets/icons/hexes/chromatic.svg';
+import { ReactComponent as Silver } from '@src/assets/icons/hexes/silver.svg';
 
 import styles from './TraitHex.module.scss';
 

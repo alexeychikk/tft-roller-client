@@ -1,7 +1,8 @@
 import { observer } from 'mobx-react-lite';
-import React, { useEffect, useRef } from 'react';
+import type React from 'react';
+import { useEffect, useRef } from 'react';
 import { useKeyPressEvent } from 'react-use';
-import { GridType } from '@tft-roller';
+import type { GridType } from '@tft-roller';
 
 import { tftStore } from '@src/state';
 import { findParentElement } from '@src/utils';

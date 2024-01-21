@@ -1,9 +1,9 @@
-import React from 'react';
 import { observer } from 'mobx-react-lite';
-
+import React from 'react';
 import { getCompStats } from '@tft-roller';
-import { tftStore } from '@src/state';
+
 import { TraitStats } from '@src/components/dumb/TraitStats';
+import { tftStore } from '@src/state';
 
 import styles from './Comps.module.scss';
 

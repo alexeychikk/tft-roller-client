@@ -1,6 +1,6 @@
-import { ArraySchema, MapSchema, Schema } from '@colyseus/schema';
+import type { ArraySchema, MapSchema, Schema } from '@colyseus/schema';
 import { runInAction } from 'mobx';
-import { NonFunctionKeys } from 'utility-types';
+import type { NonFunctionKeys } from 'utility-types';
 
 type Unmap<T> = T extends MapSchema<infer U> ? U : T;
 type Unarray<T> = T extends ArraySchema<infer U> ? U : T;

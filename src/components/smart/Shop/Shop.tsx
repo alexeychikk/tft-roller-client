@@ -1,12 +1,11 @@
 import React from 'react';
 
-import styles from './Shop.module.scss';
-
-import { ShopActions } from './ShopActions';
-import { ShopChampions } from './ShopChampions';
+import { GoldView } from './GoldView';
 import { LevelView } from './LevelView';
 import { RerollChances } from './RerollChances';
-import { GoldView } from './GoldView';
+import { ShopActions } from './ShopActions';
+import { ShopChampions } from './ShopChampions';
+import styles from './Shop.module.scss';
 
 export type ShopProps = {
   /* empty */

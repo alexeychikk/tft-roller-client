@@ -1,11 +1,11 @@
-import React, { useCallback } from 'react';
 import clsx from 'clsx';
+import React, { useCallback } from 'react';
 import { useDrag } from 'react-dnd';
-
 import { CHAMPIONS_MAP } from '@tft-roller';
-import { DndItemChampion, DndItemType } from '@src/state';
-import { ReactComponent as IconCoin } from '@src/assets/icons/common/coin.svg';
 
+import { ReactComponent as IconCoin } from '@src/assets/icons/common/coin.svg';
+import { DndItemType } from '@src/state';
+import type { DndItemChampion } from '@src/state';
 import { ChampionSplash } from '../ChampionSplash';
 import { TraitTitle } from '../TraitTitle';
 

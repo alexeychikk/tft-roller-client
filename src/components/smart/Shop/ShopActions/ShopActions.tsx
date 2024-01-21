@@ -1,13 +1,12 @@
-import React from 'react';
-import { observer } from 'mobx-react-lite';
 import clsx from 'clsx';
-
-import { tftStore } from '@src/state';
+import { observer } from 'mobx-react-lite';
+import React from 'react';
 
 import {
   ShopButtonBuyXp,
   ShopButtonReroll,
 } from '@src/components/dumb/ShopButton';
+import { tftStore } from '@src/state';
 
 import styles from './ShopActions.module.scss';
 

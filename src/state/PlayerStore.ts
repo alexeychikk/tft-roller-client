@@ -1,7 +1,10 @@
-import { Player, PlayerSchema } from '@tft-roller';
 import { makeObservable, observable } from 'mobx';
-import { UnitsGridStore } from './UnitsGridStore';
+import type { PlayerSchema } from '@tft-roller';
+import { Player } from '@tft-roller';
+
 import { listenArray, listenPrimitive } from '@src/utils';
+
+import { UnitsGridStore } from './UnitsGridStore';
 
 export class PlayerStore extends Player {
   constructor(player: PlayerSchema) {
