@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAsyncFn } from 'react-use';
 import { JoinLobbyOptions } from '@tft-roller';
 
+import { Button, Input } from '@src/components/dumb/Form';
 import { tftStore } from '@src/state';
 
 import styles from './Login.module.scss';
@@ -13,8 +14,9 @@ import styles from './Login.module.scss';
 const resolver = classValidatorResolver(JoinLobbyOptions);
 
 export const Login: React.FC = observer(() => {
-  const { register, handleSubmit, formState } = useForm<JoinLobbyOptions>({
+  const { control, handleSubmit } = useForm<JoinLobbyOptions>({
     resolver,
+    defaultValues: { name: '' },
   });
   const navigate = useNavigate();
 
@@ -30,23 +32,23 @@ export const Login: React.FC = observer(() => {
 
   return (
     <form className={styles.rootLogin} onSubmit={onSubmit}>
-      <h1 className={styles.title}>Your nickname</h1>
+      <h1 className={styles.title}>Enter the Lobby</h1>
 
-      <input
+      <Input
+        control={control}
+        name="name"
+        label="Nickname"
         className={styles.input}
-        type="text"
         disabled={joinState.loading}
-        {...register('name')}
       />
-      <p className={styles.error}>{formState.errors.name?.message}</p>
 
-      <button
+      <Button
         className={styles.button}
         type="submit"
         disabled={joinState.loading}
       >
-        Enter
-      </button>
+        Play
+      </Button>
     </form>
   );
 });

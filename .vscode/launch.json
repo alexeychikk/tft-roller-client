@@ -4,7 +4,7 @@
     {
       "type": "chrome",
       "request": "launch",
-      "name": "Debug Client",
+      "name": "Dev Client",
       "url": "http://localhost:5173",
       "webRoot": "${workspaceFolder}/src",
       "preLaunchTask": "Start Client"

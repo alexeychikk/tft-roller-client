@@ -26,17 +26,8 @@
 .input {
   width: 100%;
   font-size: 0.75em;
-  padding: 0.2em 0.4em;
-  @include theme.formItem;
 }
 
 .button {
-  font-size: 0.75em;
-  padding: 0.2em 0.4em;
-  @include theme.formItem;
-}
-
-.error {
-  font-size: 0.5em;
-  color: theme.$colorError;
+  font-size: 1em;
 }
