@@ -18,7 +18,6 @@ export class PlayerStore extends Player {
     });
     makeObservable(this, {
       sessionId: observable,
-      isAdmin: observable,
       gold: observable,
       experience: observable,
       shopChampionNames: observable,

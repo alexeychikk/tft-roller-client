@@ -34,7 +34,6 @@ export function App() {
               </AuthGuard>
             }
           />
-          <Route path="/" element={<Lobby />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </DndProvider>

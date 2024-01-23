@@ -7,12 +7,19 @@ import {
   observable,
   runInAction,
 } from 'mobx';
-import type { JoinLobbyOptions, UnitContext } from '@tft-roller';
+import type {
+  CreateGameOptions,
+  GameOptions,
+  JoinGameOptions,
+  JoinLobbyOptions,
+  UnitContext,
+} from '@tft-roller';
 import {
   RoomType,
   GameSchema,
-  LobbyMessageType,
+  LobbyEventType,
   GameMessageType,
+  LobbyMessageType,
 } from '@tft-roller';
 
 import { GameStore } from './GameStore';
@@ -20,7 +27,8 @@ import { GameStore } from './GameStore';
 export class TftStore {
   client: Client | null = null;
   lobby: Room | null = null;
-  allRooms: Map<string, RoomAvailable> = new Map();
+  allRooms: Map<string, RoomAvailable<GameOptions>> = new Map();
+  createGameOptions: CreateGameOptions | null = null;
   room: Room<GameSchema> | null = null;
   game: GameStore | null = null;
   sessionId: string | null = null;
@@ -59,27 +67,41 @@ export class TftStore {
 
     const lobby = await this.client.join(RoomType.Lobby, options);
 
-    lobby.onMessage(LobbyMessageType.Rooms, (rooms: RoomAvailable[]) => {
+    lobby.onMessage(LobbyEventType.Rooms, (rooms: RoomAvailable[]) => {
       console.info('rooms', rooms);
       this.allRooms = new Map(rooms.map((room) => [room.roomId, room]));
     });
 
-    lobby.onMessage(LobbyMessageType.Add, ([roomId, room]) => {
+    lobby.onMessage(LobbyEventType.Add, ([roomId, room]) => {
       console.info('room added', roomId, room);
       this.allRooms.set(roomId, room);
     });
 
-    lobby.onMessage(LobbyMessageType.Remove, (roomId) => {
+    lobby.onMessage(LobbyEventType.Remove, (roomId) => {
       console.info('room removed', roomId);
       this.allRooms.delete(roomId);
     });
 
+    lobby.onMessage(
+      LobbyMessageType.CreateGame,
+      (message: { roomId: string }) => {
+        console.info('create game', message);
+        this.joinGame(message.roomId, this.createGameOptions!);
+      },
+    );
+
     this.lobby = lobby;
   }
 
-  async joinGame() {
+  async createGame(options: CreateGameOptions) {
+    if (!this.lobby) return;
+    this.createGameOptions = options;
+    this.lobby.send(LobbyMessageType.CreateGame, this.createGameOptions);
+  }
+
+  async joinGame(roomId: string, options: JoinGameOptions) {
     if (!this.client) return;
-    this.room = await this.client.join(RoomType.Game, {}, GameSchema);
+    this.room = await this.client.joinById(roomId, options, GameSchema);
     this.room.onStateChange.once((state) => {
       console.info('state change', state.toJSON());
       runInAction(() => {

@@ -1,11 +1,13 @@
 import { makeObservable, observable } from 'mobx';
-import type { GameSchema } from '@tft-roller';
+import type { GameStatus, GameSchema } from '@tft-roller';
 
-import { listenMap } from '@src/utils';
+import { listenMap, listenPrimitive } from '@src/utils';
 
 import { PlayerStore } from './PlayerStore';
 
 export class GameStore {
+  ownerId: string;
+  status: GameStatus;
   players = new Map<string, PlayerStore>();
 
   constructor(game: GameSchema) {
@@ -13,6 +15,8 @@ export class GameStore {
       players: observable,
     });
 
+    listenPrimitive(game, this, 'ownerId');
+    listenPrimitive(game, this, 'status');
     listenMap(game, this, 'players', (player) => new PlayerStore(player));
   }
 }
