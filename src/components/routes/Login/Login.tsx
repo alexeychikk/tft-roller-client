@@ -4,25 +4,26 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { useAsyncFn } from 'react-use';
-import { JoinLobbyOptions } from '@tft-roller';
+import { SignInAnonymouslyDto } from '@tft-roller';
 
 import { Button, Input } from '@src/components/dumb/Form';
 import { tftStore } from '@src/state';
 
 import styles from './Login.module.scss';
 
-const resolver = classValidatorResolver(JoinLobbyOptions);
+const resolver = classValidatorResolver(SignInAnonymouslyDto);
 
 export const Login: React.FC = observer(() => {
-  const { control, handleSubmit } = useForm<JoinLobbyOptions>({
+  const { control, handleSubmit } = useForm<SignInAnonymouslyDto>({
     resolver,
-    defaultValues: { name: '' },
+    defaultValues: { nickname: '' },
   });
   const navigate = useNavigate();
 
   const [joinState, joinLobby] = useAsyncFn(
-    async (data: JoinLobbyOptions) => {
-      await tftStore.joinLobby(data);
+    async (data: SignInAnonymouslyDto) => {
+      await tftStore.signInAnonymously(data);
+      await tftStore.joinLobby();
       navigate('/');
     },
     [navigate],
@@ -36,7 +37,7 @@ export const Login: React.FC = observer(() => {
 
       <Input
         control={control}
-        name="name"
+        name="nickname"
         label="Nickname"
         className={styles.input}
         disabled={joinState.loading}

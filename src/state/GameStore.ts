@@ -6,7 +6,7 @@ import { listenMap, listenPrimitive } from '@src/utils';
 import { PlayerStore } from './PlayerStore';
 
 export class GameStore {
-  ownerId: string;
+  ownerSessionId: string;
   status: GameStatus;
   players = new Map<string, PlayerStore>();
 
@@ -15,7 +15,7 @@ export class GameStore {
       players: observable,
     });
 
-    listenPrimitive(game, this, 'ownerId');
+    listenPrimitive(game, this, 'ownerSessionId');
     listenPrimitive(game, this, 'status');
     listenMap(game, this, 'players', (player) => new PlayerStore(player));
   }

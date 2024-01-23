@@ -8,10 +8,11 @@ import {
   runInAction,
 } from 'mobx';
 import type {
-  CreateGameOptions,
+  CreateGameDto,
   GameOptions,
-  JoinGameOptions,
-  JoinLobbyOptions,
+  GameRoomEntity,
+  JoinGameDto,
+  SignInAnonymouslyDto,
   UnitContext,
 } from '@tft-roller';
 import {
@@ -19,8 +20,9 @@ import {
   GameSchema,
   LobbyEventType,
   GameMessageType,
-  LobbyMessageType,
 } from '@tft-roller';
+
+import { HOSTNAME, IS_SECURE, PORT } from '@src/constants';
 
 import { GameStore } from './GameStore';
 
@@ -28,7 +30,6 @@ export class TftStore {
   client: Client | null = null;
   lobby: Room | null = null;
   allRooms: Map<string, RoomAvailable<GameOptions>> = new Map();
-  createGameOptions: CreateGameOptions | null = null;
   room: Room<GameSchema> | null = null;
   game: GameStore | null = null;
   sessionId: string | null = null;
@@ -57,15 +58,18 @@ export class TftStore {
     });
   }
 
-  async joinLobby(options: JoinLobbyOptions) {
-    const wsUrl = `${
-      window.location.protocol.includes('https') ? 'wss' : 'ws'
-    }://${import.meta.env.VITE_SERVER_HOST || window.location.hostname}:${
-      import.meta.env.VITE_SERVER_PORT || window.location.port
-    }`;
-    this.client = new Client(wsUrl);
+  async signInAnonymously(dto: SignInAnonymouslyDto) {
+    this.client = new Client({
+      hostname: HOSTNAME,
+      port: PORT,
+      secure: IS_SECURE,
+    });
+    await this.client?.auth.signInAnonymously(dto);
+  }
 
-    const lobby = await this.client.join(RoomType.Lobby, options);
+  async joinLobby() {
+    if (!this.client) return;
+    const lobby = await this.client.join(RoomType.Lobby);
 
     lobby.onMessage(LobbyEventType.Rooms, (rooms: RoomAvailable[]) => {
       console.info('rooms', rooms);
@@ -82,26 +86,20 @@ export class TftStore {
       this.allRooms.delete(roomId);
     });
 
-    lobby.onMessage(
-      LobbyMessageType.CreateGame,
-      (message: { roomId: string }) => {
-        console.info('create game', message);
-        this.joinGame(message.roomId, this.createGameOptions!);
-      },
-    );
-
     this.lobby = lobby;
   }
 
-  async createGame(options: CreateGameOptions) {
-    if (!this.lobby) return;
-    this.createGameOptions = options;
-    this.lobby.send(LobbyMessageType.CreateGame, this.createGameOptions);
+  async createGame(dto: CreateGameDto): Promise<GameRoomEntity> {
+    if (!this.client) throw new Error('Client not initialized');
+    const { data } = await this.client.http.post<GameRoomEntity>('/games', {
+      body: dto,
+    });
+    return data;
   }
 
-  async joinGame(roomId: string, options: JoinGameOptions) {
+  async joinGame(roomId: string, dto: JoinGameDto) {
     if (!this.client) return;
-    this.room = await this.client.joinById(roomId, options, GameSchema);
+    this.room = await this.client.joinById(roomId, dto, GameSchema);
     this.room.onStateChange.once((state) => {
       console.info('state change', state.toJSON());
       runInAction(() => {
