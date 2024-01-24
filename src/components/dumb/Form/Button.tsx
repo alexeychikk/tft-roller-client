@@ -8,6 +8,10 @@ export const Button = (props: ButtonProps) => {
   const { className, ...buttonProps } = props;
 
   return (
-    <button className={clsx(styles.formItemButton, styles.formControl, className)} {...buttonProps} />
+    <button
+      className={clsx(styles.formItemButton, styles.formControl, className)}
+      type="button"
+      {...buttonProps}
+    />
   );
 };

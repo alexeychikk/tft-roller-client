@@ -27,7 +27,7 @@ table {
   td {
     padding: 0.4em;
 
-    &:last-child {
+    &:last-child:not(:first-child) {
       text-align: right;
     }
   }

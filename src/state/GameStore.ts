@@ -1,17 +1,20 @@
 import { makeObservable, observable } from 'mobx';
-import type { GameStatus, GameSchema } from '@tft-roller';
+import type { GameSchema } from '@tft-roller';
+import { GameStatus } from '@tft-roller';
 
 import { listenMap, listenPrimitive } from '@src/utils';
 
 import { PlayerStore } from './PlayerStore';
 
 export class GameStore {
-  ownerSessionId: string;
-  status: GameStatus;
+  ownerSessionId = '';
+  status: GameStatus = GameStatus.InLobby;
   players = new Map<string, PlayerStore>();
 
   constructor(game: GameSchema) {
     makeObservable(this, {
+      ownerSessionId: observable,
+      status: observable,
       players: observable,
     });
 

@@ -30,22 +30,31 @@ export class TftStore {
   client: Client | null = null;
   lobby: Room | null = null;
   allRooms: Map<string, RoomAvailable<GameMeta>> = new Map();
-  room: Room<GameSchema> | null = null;
+  gameRoom: Room<GameSchema> | null = null;
   game: GameStore | null = null;
   sessionId: string | null = null;
   viewedPlayerId: string | null = null;
 
   constructor() {
     makeObservable(this, {
+      client: observable,
       lobby: observable,
       allRooms: observable,
+      gameRoom: observable,
       game: observable,
       sessionId: observable,
       viewedPlayerId: observable,
 
+      currentRoom: computed,
       me: computed,
+      isViewingMe: computed,
+      isViewingEnemy: computed,
+      isRoomOwner: computed,
+      viewedPlayer: computed,
 
+      signInAnonymously: action,
       joinLobby: action,
+      createGame: action,
       joinGame: action,
       setViewedPlayer: action,
       viewPrevPlayer: action,
@@ -105,15 +114,19 @@ export class TftStore {
 
   async joinGame(dto: JoinGameRoomDto) {
     if (!this.client) return;
-    this.room = await this.client.joinById(dto.roomId, dto, GameSchema);
-    this.room.onStateChange.once((state) => {
+    this.gameRoom = await this.client.joinById(dto.roomId, dto, GameSchema);
+    this.gameRoom.onStateChange.once((state) => {
       console.info('state change', state.toJSON());
       runInAction(() => {
         this.game = new GameStore(state);
-        this.sessionId = this.room!.sessionId;
+        this.sessionId = this.gameRoom!.sessionId;
         this.viewedPlayerId = this.sessionId;
       });
     });
+  }
+
+  get currentRoom() {
+    return (this.gameRoom && this.allRooms.get(this.gameRoom.roomId)) || null;
   }
 
   get isViewingMe() {
@@ -126,6 +139,10 @@ export class TftStore {
 
   get me() {
     return (this.sessionId && this.game?.players.get(this.sessionId)) || null;
+  }
+
+  get isRoomOwner() {
+    return !!(this.me && this.game?.ownerSessionId === this.me.sessionId);
   }
 
   get viewedPlayer() {
@@ -156,33 +173,39 @@ export class TftStore {
     this.viewedPlayerId = playerIds[(index + 1) % playerIds.length];
   };
 
+  start = () => {
+    if (!this.isRoomOwner) return;
+    console.info(GameMessageType.Start);
+    this.gameRoom!.send(GameMessageType.Start);
+  };
+
   buyExperience = () => {
     if (!this.isViewingMe) return;
     console.info(GameMessageType.BuyExperience);
-    this.room!.send(GameMessageType.BuyExperience);
+    this.gameRoom!.send(GameMessageType.BuyExperience);
   };
 
   buyChampion = (index: number) => {
     if (!this.isViewingMe) return;
     console.info(GameMessageType.BuyChampion, index);
-    this.room!.send(GameMessageType.BuyChampion, { index });
+    this.gameRoom!.send(GameMessageType.BuyChampion, { index });
   };
 
   sellUnit = (unit: UnitContext) => {
     if (!this.isViewingMe) return;
     console.info(GameMessageType.SellUnit, unit);
-    this.room!.send(GameMessageType.SellUnit, unit);
+    this.gameRoom!.send(GameMessageType.SellUnit, unit);
   };
 
   moveUnit = (source: UnitContext, dest: UnitContext) => {
     if (!this.isViewingMe) return;
     console.info(GameMessageType.MoveUnit, source, dest);
-    this.room!.send(GameMessageType.MoveUnit, { source, dest });
+    this.gameRoom!.send(GameMessageType.MoveUnit, { source, dest });
   };
 
   reroll = () => {
     if (!this.isViewingMe) return;
     console.info(GameMessageType.Reroll);
-    this.room!.send(GameMessageType.Reroll);
+    this.gameRoom!.send(GameMessageType.Reroll);
   };
 }

@@ -45,7 +45,7 @@ export const RoomsTable = observer(() => {
             <td>{room.roomId}</td>
             <td>{room.metadata?.name}</td>
             <td>
-              {room.clients}/{room.maxClients}
+              {room.clients} / {room.maxClients}
             </td>
             <td>{room.metadata?.protected ? 'Yes' : 'No'}</td>
             <td>
