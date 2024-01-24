@@ -23,3 +23,4 @@ build-ssr
 *.njsproj
 *.sln
 *.sw?
+vite.config.ts.timestamp-*

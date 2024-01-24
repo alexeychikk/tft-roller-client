@@ -1,0 +1,28 @@
+@use 'src/assets/styles/theme';
+
+.rootLobby {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  padding: 2%;
+  gap: 1%;
+}
+
+.leftSection {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.createRoomForm {
+}
+.joinRoomForm {
+}
+
+.roomsForm {
+  flex: 1;
+}
+
+.roomsTable {
+  font-size: 1rem;
+}

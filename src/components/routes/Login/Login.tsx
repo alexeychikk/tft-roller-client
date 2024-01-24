@@ -6,14 +6,14 @@ import { useNavigate } from 'react-router-dom';
 import { useAsyncFn } from 'react-use';
 import { SignInAnonymouslyDto } from '@tft-roller';
 
-import { Button, Input } from '@src/components/dumb/Form';
+import { Button, Form, Input } from '@src/components/dumb/Form';
 import { tftStore } from '@src/state';
 
 import styles from './Login.module.scss';
 
 const resolver = classValidatorResolver(SignInAnonymouslyDto);
 
-export const Login: React.FC = observer(() => {
+export const Login = observer(() => {
   const { control, handleSubmit } = useForm<SignInAnonymouslyDto>({
     resolver,
     defaultValues: { nickname: '' },
@@ -32,24 +32,20 @@ export const Login: React.FC = observer(() => {
   const onSubmit = handleSubmit(joinLobby);
 
   return (
-    <form className={styles.rootLogin} onSubmit={onSubmit}>
-      <h1 className={styles.title}>Enter the Lobby</h1>
+    <Form className={styles.rootLogin} onSubmit={onSubmit}>
+      <h1>Enter the Lobby</h1>
 
       <Input
         control={control}
         name="nickname"
         label="Nickname"
-        className={styles.input}
         disabled={joinState.loading}
+        required
       />
 
-      <Button
-        className={styles.button}
-        type="submit"
-        disabled={joinState.loading}
-      >
+      <Button type="submit" disabled={joinState.loading}>
         Play
       </Button>
-    </form>
+    </Form>
   );
 });

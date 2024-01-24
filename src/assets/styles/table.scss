@@ -1,0 +1,34 @@
+@use 'src/assets/styles/theme';
+
+table {
+  text-align: left;
+  @include theme.textMain;
+
+  thead {
+    border-bottom: 0.2em ridge theme.$colorUiOuterBorder;
+
+    th {
+      font-style: italic;
+    }
+  }
+
+  tbody {
+    overflow-y: scroll;
+  }
+
+  tr {
+    border-bottom: 0.1em ridge theme.$colorUiInnerBorder;
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  th,
+  td {
+    padding: 0.4em;
+
+    &:last-child {
+      text-align: right;
+    }
+  }
+}

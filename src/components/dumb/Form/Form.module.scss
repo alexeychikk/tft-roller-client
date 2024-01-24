@@ -1,8 +1,28 @@
 @use 'src/assets/styles/theme';
 
+.form {
+  display: flex;
+  flex-direction: column;
+  font-size: 2rem;
+  padding: 1em;
+  gap: 0.5em;
+
+  @include theme.uiBackground;
+  @include theme.uiBorderOuterBold(1, 1, 1, 1, 0.25em);
+
+  & h1,
+  & h2,
+  & h3,
+  & h4,
+  & h5,
+  & h6 {
+    text-align: center;
+    @include theme.textMain;
+  }
+}
+
 .formItem {
   position: relative;
-  overflow: hidden;
 }
 
 .formControl {
@@ -10,45 +30,57 @@
   border-radius: 0.2em;
   outline: none;
   @include theme.textMain;
-  transition: all 0.2s ease-in-out;
 
   .formItem & {
     font-size: 100%;
     width: 100%;
-    height: 100%;
   }
 }
 
-input.formControl {
-  border: 0.1em solid theme.$colorGlow;
-  background-color: theme.$colorUiInnerBorder;
-  box-shadow: inset 0 0 0.15em 0.15em theme.$colorUiInnerBorder,
-    0 0 0.15em 0.1em rgba(theme.$colorGlow, 0.15);
+.formItemInput {
+  font-size: 0.75em;
 
-  &:disabled {
-    border-color: desaturate(theme.$colorGlow, 75%);
-    color: theme.$colorTextDisabled;
-    background-color: theme.$colorControlBackgroundDisabled;
-    box-shadow: none;
+  & .formControl {
+    border: 0.1em solid theme.$colorGlow;
+    background-color: theme.$colorUiInnerBorder;
+    box-shadow: inset 0 0 0.15em 0.15em theme.$colorUiInnerBorder,
+      0 0 0.15em 0.1em rgba(theme.$colorGlow, 0.15);
+
+    &:disabled {
+      border-color: desaturate(theme.$colorGlow, 75%);
+      color: theme.$colorTextDisabled;
+      background-color: theme.$colorControlBackgroundDisabled;
+      box-shadow: none;
+    }
+  }
+
+  & .asterisk {
+    color: theme.$colorError;
   }
 }
 
 // TODO: custom button styles
-button.formControl {
-  border: 0.1em solid theme.$colorGlow;
-  background-color: theme.$colorUiInnerBorder;
-  box-shadow: inset 0 0 0.15em 0.15em theme.$colorUiInnerBorder,
-    0 0 0.15em 0.1em rgba(theme.$colorGlow, 0.15);
+.formItemButton {
+  font-size: 1em;
+  transition: transform 0.2s ease-in-out;
 
-  &:disabled {
-    border-color: desaturate(theme.$colorGlow, 75%);
-    color: theme.$colorTextDisabled;
-    background-color: theme.$colorControlBackgroundDisabled;
-    box-shadow: none;
-  }
+  &.formControl {
+    margin: auto;
+    border: 0.1em solid theme.$colorGlow;
+    background-color: theme.$colorUiInnerBorder;
+    box-shadow: inset 0 0 0.15em 0.15em theme.$colorUiInnerBorder,
+      0 0 0.15em 0.1em rgba(theme.$colorGlow, 0.15);
 
-  &:hover {
-    transform: scale(1.05);
+    &:disabled {
+      border-color: desaturate(theme.$colorGlow, 75%);
+      color: theme.$colorTextDisabled;
+      background-color: theme.$colorControlBackgroundDisabled;
+      box-shadow: none;
+    }
+
+    &:hover {
+      transform: scale(1.05);
+    }
   }
 }
 

@@ -9,9 +9,9 @@ import {
 } from 'mobx';
 import type {
   CreateGameDto,
-  GameOptions,
+  GameMeta,
   GameRoomEntity,
-  JoinGameDto,
+  JoinGameRoomDto,
   SignInAnonymouslyDto,
   UnitContext,
 } from '@tft-roller';
@@ -29,7 +29,7 @@ import { GameStore } from './GameStore';
 export class TftStore {
   client: Client | null = null;
   lobby: Room | null = null;
-  allRooms: Map<string, RoomAvailable<GameOptions>> = new Map();
+  allRooms: Map<string, RoomAvailable<GameMeta>> = new Map();
   room: Room<GameSchema> | null = null;
   game: GameStore | null = null;
   sessionId: string | null = null;
@@ -72,18 +72,24 @@ export class TftStore {
     const lobby = await this.client.join(RoomType.Lobby);
 
     lobby.onMessage(LobbyEventType.Rooms, (rooms: RoomAvailable[]) => {
-      console.info('rooms', rooms);
-      this.allRooms = new Map(rooms.map((room) => [room.roomId, room]));
+      runInAction(() => {
+        console.info('rooms', rooms);
+        this.allRooms = new Map(rooms.map((room) => [room.roomId, room]));
+      });
     });
 
     lobby.onMessage(LobbyEventType.Add, ([roomId, room]) => {
-      console.info('room added', roomId, room);
-      this.allRooms.set(roomId, room);
+      runInAction(() => {
+        console.info('room added', roomId, room);
+        this.allRooms.set(roomId, room);
+      });
     });
 
     lobby.onMessage(LobbyEventType.Remove, (roomId) => {
-      console.info('room removed', roomId);
-      this.allRooms.delete(roomId);
+      runInAction(() => {
+        console.info('room removed', roomId);
+        this.allRooms.delete(roomId);
+      });
     });
 
     this.lobby = lobby;
@@ -97,9 +103,9 @@ export class TftStore {
     return data;
   }
 
-  async joinGame(roomId: string, dto: JoinGameDto) {
+  async joinGame(dto: JoinGameRoomDto) {
     if (!this.client) return;
-    this.room = await this.client.joinById(roomId, dto, GameSchema);
+    this.room = await this.client.joinById(dto.roomId, dto, GameSchema);
     this.room.onStateChange.once((state) => {
       console.info('state change', state.toJSON());
       runInAction(() => {
