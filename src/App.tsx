@@ -26,6 +26,7 @@ export function App() {
             }
           />
           <Route path="/login" element={<Login />} />
+          <Route path="/loginAsAdmin" element={<Login />} />
           <Route
             path="/"
             element={

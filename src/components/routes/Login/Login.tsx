@@ -1,8 +1,7 @@
 import { classValidatorResolver } from '@hookform/resolvers/class-validator';
 import { observer } from 'mobx-react-lite';
-import React from 'react';
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useAsyncFn } from 'react-use';
 import { SignInAnonymouslyDto } from '@tft-roller';
 
@@ -14,11 +13,17 @@ import styles from './Login.module.scss';
 const resolver = classValidatorResolver(SignInAnonymouslyDto);
 
 export const Login = observer(() => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const isAdminRoute = location.pathname === '/loginAsAdmin';
+
   const { control, handleSubmit } = useForm<SignInAnonymouslyDto>({
     resolver,
-    defaultValues: { nickname: '' },
+    defaultValues: {
+      nickname: isAdminRoute ? 'admin' : '',
+      password: isAdminRoute ? '' : undefined,
+    },
   });
-  const navigate = useNavigate();
 
   const [joinState, joinLobby] = useAsyncFn(
     async (data: SignInAnonymouslyDto) => {
@@ -42,6 +47,17 @@ export const Login = observer(() => {
         disabled={joinState.loading}
         required
       />
+
+      {isAdminRoute && (
+        <Input
+          control={control}
+          name="password"
+          label="Password"
+          disabled={joinState.loading}
+          required
+          type="password"
+        />
+      )}
 
       <Button type="submit" disabled={joinState.loading}>
         Play
