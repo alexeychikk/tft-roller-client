@@ -1,4 +1,4 @@
-import type { Room, RoomAvailable } from 'colyseus.js';
+import type { Room } from 'colyseus.js';
 import { Client } from 'colyseus.js';
 import {
   action,
@@ -12,6 +12,7 @@ import type {
   GameMeta,
   GameRoomEntity,
   JoinGameRoomDto,
+  RoomListingData,
   SignInAnonymouslyDto,
   UnitContext,
 } from '@tft-roller';
@@ -29,7 +30,7 @@ import { GameStore } from './GameStore';
 export class TftStore {
   client: Client | null = null;
   lobby: Room | null = null;
-  allRooms: Map<string, RoomAvailable<GameMeta>> = new Map();
+  allRooms: Map<string, RoomListingData<GameMeta>> = new Map();
   gameRoom: Room<GameSchema> | null = null;
   game: GameStore | null = null;
   sessionId: string | null = null;
@@ -80,21 +81,32 @@ export class TftStore {
     if (!this.client) return;
     const lobby = await this.client.join(RoomType.Lobby);
 
-    lobby.onMessage(LobbyEventType.Rooms, (rooms: RoomAvailable[]) => {
+    lobby.onMessage(LobbyEventType.Rooms, (rooms: RoomListingData[]) => {
       runInAction(() => {
         console.info('rooms', rooms);
-        this.allRooms = new Map(rooms.map((room) => [room.roomId, room]));
+        this.allRooms = new Map(
+          rooms
+            .filter((room) => !room.locked)
+            .map((room) => [room.roomId, room]),
+        );
       });
     });
 
-    lobby.onMessage(LobbyEventType.Add, ([roomId, room]) => {
-      runInAction(() => {
-        console.info('room added', roomId, room);
-        this.allRooms.set(roomId, room);
-      });
-    });
+    lobby.onMessage(
+      LobbyEventType.Add,
+      ([roomId, room]: [string, RoomListingData]) => {
+        runInAction(() => {
+          console.info('room added/changed', roomId, room);
+          if (room.locked) {
+            this.allRooms.delete(roomId);
+          } else {
+            this.allRooms.set(roomId, room);
+          }
+        });
+      },
+    );
 
-    lobby.onMessage(LobbyEventType.Remove, (roomId) => {
+    lobby.onMessage(LobbyEventType.Remove, (roomId: string) => {
       runInAction(() => {
         console.info('room removed', roomId);
         this.allRooms.delete(roomId);

@@ -1,8 +1,7 @@
-import type { RoomAvailable } from 'colyseus.js';
 import { observer } from 'mobx-react-lite';
 import { useNavigate } from 'react-router-dom';
 import { useAsyncFn } from 'react-use';
-import type { GameMeta } from '@tft-roller';
+import type { GameMeta, RoomListingData } from '@tft-roller';
 
 import { Button } from '@src/components/dumb/Form';
 import { tftStore } from '@src/state';
@@ -13,7 +12,7 @@ export const RoomsTable = observer(() => {
   const navigate = useNavigate();
 
   const [joinState, joinGame] = useAsyncFn(
-    async (room: RoomAvailable<GameMeta>) => {
+    async (room: RoomListingData<GameMeta>) => {
       const password =
         (room.metadata?.protected && prompt('Password')) || undefined;
       try {
