@@ -18,7 +18,8 @@ export const RoomsTable = observer(() => {
       try {
         await tftStore.joinGame({ roomId: room.roomId, password });
         navigate('/game');
-      } catch {
+      } catch (error) {
+        console.error(error);
         alert(
           `Couldn't join the room, please check the password or try again later`,
         );

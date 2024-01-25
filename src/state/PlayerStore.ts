@@ -20,6 +20,7 @@ export class PlayerStore extends Player {
       sessionId: observable,
       gold: observable,
       experience: observable,
+      health: observable,
       shopChampionNames: observable,
       bench: observable,
       table: observable,
@@ -27,6 +28,7 @@ export class PlayerStore extends Player {
 
     listenPrimitive(player, this, 'gold');
     listenPrimitive(player, this, 'experience');
+    listenPrimitive(player, this, 'health');
     listenArray(player, this, 'shopChampionNames');
   }
 }

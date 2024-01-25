@@ -34,7 +34,8 @@ export const CreateRoomForm = observer(() => {
       });
       await tftStore.joinGame({ roomId: game.roomId, password: data.password });
       navigate('/game');
-    } catch {
+    } catch (error) {
+      console.error(error);
       alert(`Couldn't create the room, please try again later`);
     }
   }, []);

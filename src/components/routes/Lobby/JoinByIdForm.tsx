@@ -23,7 +23,8 @@ export const JoinByIdForm = observer(() => {
     try {
       await tftStore.joinGame(data);
       navigate('/game');
-    } catch {
+    } catch (error) {
+      console.error(error);
       alert(
         `Couldn't join the room, please check the password or try again later`,
       );
