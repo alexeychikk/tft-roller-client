@@ -9,15 +9,19 @@ $colorsByTier: (
 );
 
 $colorCoin: #ffe082;
-$colorUiBackground: darken(#004d40, 10%);
+$colorBackgroundBase: #004d40;
+$colorUiBackground: darken($colorBackgroundBase, 10%);
 $colorUiBackgroundDark: darken($colorUiBackground, 3%);
-$colorUiInnerBorder: rgba(lighten(#004d40, 15%), 0.3);
+$colorUiInnerBorder: rgba(lighten($colorBackgroundBase, 15%), 0.3);
 $colorUiOuterBorder: darken($colorCoin, 40%);
 $colorBackgroundTransparent: rgba($colorUiBackground, 0.5);
+$colorBackgroundLight: #006064;
 $colorTextMain: #fff;
 $colorTextDisabled: #9e9e9e;
-$colorControlBackground: #006064;
+$colorControlBackground: #004d40;
 $colorControlBackgroundDisabled: desaturate($colorControlBackground, 75%);
+$colorControlBackgroundFocused: #00695c;
+$colorControlBorder: #009688;
 $colorGlow: #84ffff;
 $colorError: #f44336;
 

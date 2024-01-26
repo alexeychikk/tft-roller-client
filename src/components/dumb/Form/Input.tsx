@@ -28,7 +28,14 @@ export const Input = <T extends object>(props: InputProps<T>) => {
   const error = fieldState.error?.message;
 
   return (
-    <div className={clsx(styles.formItem, styles.formItemInput, className)}>
+    <div
+      className={clsx(
+        styles.formItem,
+        styles.formItemInput,
+        field.disabled && styles.disabled,
+        className,
+      )}
+    >
       {label && (
         <label className={styles.label} htmlFor={id}>
           {inputProps.required && <span className={styles.asterisk}>*</span>}

@@ -8,7 +8,7 @@
 
 .segment {
   flex: 1;
-  background-color: theme.$colorControlBackground;
+  background-color: theme.$colorBackgroundLight;
   border-radius: 0.2em;
   transition: width 0.3s ease-in-out;
 }
@@ -19,7 +19,7 @@
 }
 
 .segmentMax {
-  background-color: theme.$colorControlBackground;
+  background-color: theme.$colorBackgroundLight;
   background-image: repeating-linear-gradient(
     -45deg,
     transparent,
@@ -39,7 +39,7 @@
     to right,
     theme.$colorGlow 0%,
     theme.$colorGlow 50%,
-    theme.$colorControlBackground 50%,
-    theme.$colorControlBackground 100%
+    theme.$colorBackgroundLight 50%,
+    theme.$colorBackgroundLight 100%
   );
 }

@@ -29,7 +29,30 @@
   padding: 0.2em 0.4em;
   border-radius: 0.2em;
   outline: none;
+  border: 0.1em solid theme.$colorControlBorder;
+  background-color: theme.$colorControlBackground;
+  box-shadow: inset 0 0 0.15em 0.15em theme.$colorUiInnerBorder;
+  transition: color 0.2s ease-in-out, border-color 0.2s ease-in-out,
+    background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
   @include theme.textMain;
+
+  &:focus,
+  &:hover {
+    border-color: theme.$colorGlow;
+    box-shadow: inset 0 0 0.15em 0.15em theme.$colorUiInnerBorder,
+      0 0 0.15em 0.1em rgba(theme.$colorGlow, 0.15);
+  }
+
+  &:focus {
+    background-color: theme.$colorControlBackgroundFocused;
+  }
+
+  &:disabled {
+    border-color: desaturate(theme.$colorGlow, 75%);
+    color: theme.$colorTextDisabled;
+    background-color: theme.$colorControlBackgroundDisabled;
+    box-shadow: none;
+  }
 
   .formItem & {
     font-size: 100%;
@@ -39,48 +62,14 @@
 
 .formItemInput {
   font-size: 0.75em;
-
-  & .formControl {
-    border: 0.1em solid theme.$colorGlow;
-    background-color: theme.$colorUiInnerBorder;
-    box-shadow: inset 0 0 0.15em 0.15em theme.$colorUiInnerBorder,
-      0 0 0.15em 0.1em rgba(theme.$colorGlow, 0.15);
-
-    &:disabled {
-      border-color: desaturate(theme.$colorGlow, 75%);
-      color: theme.$colorTextDisabled;
-      background-color: theme.$colorControlBackgroundDisabled;
-      box-shadow: none;
-    }
-  }
-
-  & .asterisk {
-    color: theme.$colorError;
-  }
 }
 
 // TODO: custom button styles
 .formItemButton {
   font-size: 1em;
-  transition: transform 0.2s ease-in-out;
 
   &.formControl {
     margin: auto;
-    border: 0.1em solid theme.$colorGlow;
-    background-color: theme.$colorUiInnerBorder;
-    box-shadow: inset 0 0 0.15em 0.15em theme.$colorUiInnerBorder,
-      0 0 0.15em 0.1em rgba(theme.$colorGlow, 0.15);
-
-    &:disabled {
-      border-color: desaturate(theme.$colorGlow, 75%);
-      color: theme.$colorTextDisabled;
-      background-color: theme.$colorControlBackgroundDisabled;
-      box-shadow: none;
-    }
-
-    &:hover {
-      transform: scale(1.05);
-    }
   }
 }
 
@@ -88,6 +77,14 @@
   font-size: 0.75em;
   font-style: italic;
   @include theme.textMain;
+
+  .disabled & {
+    color: theme.$colorTextDisabled;
+  }
+}
+
+.asterisk {
+  color: theme.$colorError;
 }
 
 .error {
