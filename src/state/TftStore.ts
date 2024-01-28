@@ -34,7 +34,7 @@ export class TftStore {
   gameRoom: Room<GameSchema> | null = null;
   game: GameStore | null = null;
   sessionId: string | null = null;
-  viewedPlayerId: string | null = null;
+  viewedSessionId: string | null = null;
 
   constructor() {
     makeObservable(this, {
@@ -44,7 +44,7 @@ export class TftStore {
       gameRoom: observable,
       game: observable,
       sessionId: observable,
-      viewedPlayerId: observable,
+      viewedSessionId: observable,
 
       currentRoom: computed,
       me: computed,
@@ -132,7 +132,7 @@ export class TftStore {
       runInAction(() => {
         this.game = new GameStore(state);
         this.sessionId = this.gameRoom!.sessionId;
-        this.viewedPlayerId = this.sessionId;
+        this.viewedSessionId = this.sessionId;
       });
     });
   }
@@ -142,11 +142,11 @@ export class TftStore {
   }
 
   get isViewingMe() {
-    return !!(this.sessionId && this.viewedPlayerId === this.sessionId);
+    return !!(this.sessionId && this.viewedSessionId === this.sessionId);
   }
 
   get isViewingEnemy() {
-    return !!(this.viewedPlayerId && this.viewedPlayerId !== this.sessionId);
+    return !!(this.viewedSessionId && this.viewedSessionId !== this.sessionId);
   }
 
   get me() {
@@ -159,30 +159,30 @@ export class TftStore {
 
   get viewedPlayer() {
     return (
-      (this.viewedPlayerId && this.game?.players.get(this.viewedPlayerId)) ||
+      (this.viewedSessionId && this.game?.players.get(this.viewedSessionId)) ||
       null
     );
   }
 
-  setViewedPlayer = (playerId: string) => {
-    this.viewedPlayerId = playerId;
+  setViewedPlayer = (sessionId: string) => {
+    this.viewedSessionId = sessionId;
   };
 
   viewPrevPlayer = () => {
     if (!this.game?.players.size) return;
-    const playerIds = Array.from(this.game.players.keys());
-    const index = playerIds.indexOf(this.viewedPlayerId!);
+    const sessionIds = Array.from(this.game.players.keys());
+    const index = sessionIds.indexOf(this.viewedSessionId!);
     if (index === -1) return console.error('Player not found');
-    this.viewedPlayerId =
-      playerIds[(index - 1 + playerIds.length) % playerIds.length];
+    this.viewedSessionId =
+      sessionIds[(index - 1 + sessionIds.length) % sessionIds.length];
   };
 
   viewNextPlayer = () => {
     if (!this.game?.players.size) return;
-    const playerIds = Array.from(this.game.players.keys());
-    const index = playerIds.indexOf(this.viewedPlayerId!);
+    const sessionIds = Array.from(this.game.players.keys());
+    const index = sessionIds.indexOf(this.viewedSessionId!);
     if (index === -1) return console.error('Player not found');
-    this.viewedPlayerId = playerIds[(index + 1) % playerIds.length];
+    this.viewedSessionId = sessionIds[(index + 1) % sessionIds.length];
   };
 
   start = () => {

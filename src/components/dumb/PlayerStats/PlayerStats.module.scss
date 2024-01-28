@@ -1,0 +1,45 @@
+@use 'src/assets/styles/theme';
+
+.rootPlayerStats {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  font-size: 1rem;
+  padding: 0.5em 0 0.5em 1.5em;
+  border-radius: 0.25em;
+  background-color: theme.$colorBackgroundTransparent;
+  max-width: 100%;
+  @include theme.textMain;
+  color: theme.$colorTextSecondary;
+  cursor: pointer;
+
+  &.isActive {
+    color: theme.$colorTextMain;
+    font-size: 1.25rem;
+  }
+
+  &.isDead {
+    color: theme.$colorTextDisabled;
+  }
+}
+
+.nickname {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  line-height: 1.5em;
+}
+
+.health {
+  padding: 0.2em 0.4em;
+  margin-left: 0.5em;
+  @include theme.uiBorderOuterBold(1, 1, 1, 1);
+  border-color: theme.$colorTextDisabled;
+
+  .isActive:not(.isDead) & {
+    border-color: theme.$colorUiOuterBorder;
+  }
+}
+
+.avatar {
+  font-size: 2em;
+}
