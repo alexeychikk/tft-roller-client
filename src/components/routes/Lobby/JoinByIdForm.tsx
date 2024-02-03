@@ -1,7 +1,7 @@
 import { classValidatorResolver } from '@hookform/resolvers/class-validator';
 import { observer } from 'mobx-react-lite';
+import { useLocation } from 'preact-iso';
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
 import { useAsyncFn } from 'react-use';
 import { JoinGameRoomDto } from '@tft-roller';
 
@@ -17,12 +17,12 @@ export const JoinByIdForm = observer(() => {
     resolver,
     defaultValues: { roomId: '', password: '' },
   });
-  const navigate = useNavigate();
+  const { route } = useLocation();
 
   const [joinState, joinGame] = useAsyncFn(async (data: JoinGameRoomDto) => {
     try {
       await tftStore.joinGame(data);
-      navigate('/game');
+      route('/game');
     } catch (error) {
       console.error(error);
       alert(

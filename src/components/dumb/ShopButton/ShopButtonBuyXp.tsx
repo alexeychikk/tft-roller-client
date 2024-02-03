@@ -2,7 +2,7 @@ import clsx from 'clsx';
 import React from 'react';
 import { GOLD_PER_EXPERIENCE_BUY } from '@tft-roller';
 
-import { ReactComponent as IconBuyXp } from '@src/assets/icons/common/buy_xp.svg';
+import IconBuyXp from '@src/assets/icons/common/buy_xp.svg?react';
 
 import type { ShopButtonExtendedProps } from './ShopButton';
 import { ShopButton } from './ShopButton';

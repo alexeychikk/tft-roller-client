@@ -2,7 +2,7 @@ import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useDrop } from 'react-dnd';
 
-import { ReactComponent as IconCoin } from '@src/assets/icons/common/coin.svg';
+import IconCoin from '@src/assets/icons/common/coin.svg?react';
 import type { DndItemUnit } from '@src/state';
 import { DndItemType, tftStore } from '@src/state';
 

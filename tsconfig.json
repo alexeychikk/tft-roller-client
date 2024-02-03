@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
+    "target": "ES2020",
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "typeRoots": ["./node_modules/@types", "./@types"],
     "module": "ESNext",
@@ -14,6 +14,7 @@
     "useDefineForClassFields": false,
     "noEmit": true,
     "jsx": "react-jsx",
+    "jsxImportSource": "preact",
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
@@ -21,10 +22,16 @@
     "strictPropertyInitialization": false,
     "baseUrl": ".",
     "paths": {
+      "react": ["./node_modules/preact/compat/"],
+      "react-dom": ["./node_modules/preact/compat/"],
       "@src/*": ["src/*"],
       "@tft-roller": ["../tft-roller-shared/src/index.ts"]
     }
   },
-  "include": ["src"],
+  "include": [
+    "node_modules/vite/client.d.ts",
+    "node_modules/vite-plugin-svgr/client.d.ts",
+    "src"
+  ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

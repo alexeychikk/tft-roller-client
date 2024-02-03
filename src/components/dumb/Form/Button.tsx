@@ -1,8 +1,9 @@
 import clsx from 'clsx';
+import React from 'react';
 
 import styles from './Form.module.scss';
 
-export type ButtonProps = JSX.IntrinsicElements['button'];
+export type ButtonProps = React.JSX.IntrinsicElements['button'];
 
 export const Button = (props: ButtonProps) => {
   const { className, ...buttonProps } = props;

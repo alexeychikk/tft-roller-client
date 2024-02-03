@@ -1,12 +1,12 @@
 import clsx from 'clsx';
-import { useId } from 'react';
+import React, { useId } from 'react';
 import type { UseControllerProps } from 'react-hook-form';
 import { useController } from 'react-hook-form';
 
 import styles from './Form.module.scss';
 
 export type InputProps<T extends object = any> = UseControllerProps<T> &
-  JSX.IntrinsicElements['input'] & {
+  React.JSX.IntrinsicElements['input'] & {
     label?: React.ReactNode;
   };
 

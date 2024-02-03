@@ -1,6 +1,6 @@
+import { LocationProvider, Route, Router } from 'preact-iso';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 
 import './App.scss';
 import { useHtmlFontSize } from './components/hooks/useHtmlFontSize';
@@ -8,36 +8,37 @@ import { Game } from './components/routes/Game';
 import { Lobby } from './components/routes/Lobby';
 import { Login } from './components/routes/Login';
 import { AuthGuard } from './components/smart/AuthGuard';
+import { Redirect } from './components/smart/Redirect';
 
 export function App() {
   const isFontSizeReady = useHtmlFontSize();
   if (!isFontSizeReady) return null;
 
   return (
-    <BrowserRouter>
+    <LocationProvider>
       <DndProvider backend={HTML5Backend}>
-        <Routes>
+        <Router>
           <Route
             path="/game"
-            element={
+            component={() => (
               <AuthGuard>
                 <Game />
               </AuthGuard>
-            }
+            )}
           />
-          <Route path="/login" element={<Login />} />
-          <Route path="/loginAsAdmin" element={<Login />} />
+          <Route path="/login" component={Login} />
+          <Route path="/loginAsAdmin" component={Login} />
           <Route
             path="/"
-            element={
+            component={() => (
               <AuthGuard>
                 <Lobby />
               </AuthGuard>
-            }
+            )}
           />
-          <Route path="*" element={<Navigate to="/" />} />
-        </Routes>
+          <Route default component={Redirect} />
+        </Router>
       </DndProvider>
-    </BrowserRouter>
+    </LocationProvider>
   );
 }

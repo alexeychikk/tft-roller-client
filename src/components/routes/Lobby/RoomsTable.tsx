@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react-lite';
-import { useNavigate } from 'react-router-dom';
+import { useLocation } from 'preact-iso';
 import { useAsyncFn } from 'react-use';
 import type { GameMeta, RoomListingData } from '@tft-roller';
 
@@ -9,7 +9,7 @@ import { tftStore } from '@src/state';
 import styles from './Lobby.module.scss';
 
 export const RoomsTable = observer(() => {
-  const navigate = useNavigate();
+  const { route } = useLocation();
 
   const [joinState, joinGame] = useAsyncFn(
     async (room: RoomListingData<GameMeta>) => {
@@ -17,7 +17,7 @@ export const RoomsTable = observer(() => {
         (room.metadata?.protected && prompt('Password')) || undefined;
       try {
         await tftStore.joinGame({ roomId: room.roomId, password });
-        navigate('/game');
+        route('/game');
       } catch (error) {
         console.error(error);
         alert(

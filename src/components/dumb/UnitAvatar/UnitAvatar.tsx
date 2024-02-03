@@ -5,7 +5,7 @@ import { times } from 'remeda';
 import type { GridType } from '@tft-roller';
 import { CHAMPIONS_MAP } from '@tft-roller';
 
-import { ReactComponent as IconStar } from '@src/assets/icons/common/star.svg';
+import IconStar from '@src/assets/icons/common/star.svg?react';
 import { DndItemType } from '@src/state';
 import type { DndItemUnit } from '@src/state';
 import { ChampionSplash } from '../ChampionSplash';

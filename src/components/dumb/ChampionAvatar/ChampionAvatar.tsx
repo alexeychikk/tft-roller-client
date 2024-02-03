@@ -3,7 +3,7 @@ import React, { useCallback } from 'react';
 import { useDrag } from 'react-dnd';
 import { CHAMPIONS_MAP } from '@tft-roller';
 
-import { ReactComponent as IconCoin } from '@src/assets/icons/common/coin.svg';
+import IconCoin from '@src/assets/icons/common/coin.svg?react';
 import { DndItemType } from '@src/state';
 import type { DndItemChampion } from '@src/state';
 import { ChampionSplash } from '../ChampionSplash';

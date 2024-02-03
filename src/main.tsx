@@ -1,9 +1,7 @@
 import 'reflect-metadata';
 import './utils/transpilerCheck';
-import ReactDOM from 'react-dom/client';
+import { render } from 'react-dom';
 
 import { App } from './App';
 
-ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  <App />,
-);
+render(<App />, document.getElementById('root') as HTMLElement);

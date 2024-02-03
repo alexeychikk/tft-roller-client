@@ -2,7 +2,7 @@ import clsx from 'clsx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 
-import { ReactComponent as IconCoin } from '@src/assets/icons/common/coin.svg';
+import IconCoin from '@src/assets/icons/common/coin.svg?react';
 import { tftStore } from '@src/state';
 
 import styles from './GoldView.module.scss';
