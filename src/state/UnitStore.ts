@@ -1,12 +1,13 @@
 import { makeObservable, observable } from 'mobx';
-import type { UnitSchema } from '@tft-roller';
+import type { SchemaOf } from '@tft-roller';
 import { Unit } from '@tft-roller';
 
 import { listenPrimitive } from '@src/utils';
 
 export class UnitStore extends Unit {
-  constructor(unit: UnitSchema) {
-    super({ ...unit });
+  constructor(unit: SchemaOf<Unit>) {
+    super();
+    Object.assign(this, unit);
     makeObservable(this, {
       name: observable,
       stars: observable,

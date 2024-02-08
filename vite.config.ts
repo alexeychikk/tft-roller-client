@@ -19,7 +19,6 @@ export default defineConfig({
     },
     dedupe: [
       'remeda',
-      '@colyseus/schema',
       'reflect-metadata',
       'class-validator',
       'class-transformer',

@@ -1,19 +1,21 @@
 import { makeObservable, observable } from 'mobx';
-import type { GameSchema } from '@tft-roller';
-import { GamePhase, GameStatus } from '@tft-roller';
+import type { SchemaOf } from '@tft-roller';
+import { Game, GamePhase, GameStatus } from '@tft-roller';
 
 import { listenMap, listenPrimitive } from '@src/utils';
 
 import { PlayerStore } from './PlayerStore';
 
-export class GameStore {
+export class GameStore extends Game {
   ownerSessionId = '';
   status = GameStatus.InLobby;
   stage = 0;
   phase = GamePhase.Preparation;
   players = new Map<string, PlayerStore>();
 
-  constructor(game: GameSchema) {
+  constructor(game: SchemaOf<Game>) {
+    super();
+
     makeObservable(this, {
       ownerSessionId: observable,
       status: observable,

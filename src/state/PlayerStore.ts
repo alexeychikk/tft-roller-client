@@ -1,5 +1,5 @@
 import { makeObservable, observable } from 'mobx';
-import type { PlayerSchema } from '@tft-roller';
+import type { SchemaOf } from '@tft-roller';
 import { Player } from '@tft-roller';
 
 import { listenArray, listenPrimitive } from '@src/utils';
@@ -7,9 +7,9 @@ import { listenArray, listenPrimitive } from '@src/utils';
 import { UnitsGridStore } from './UnitsGridStore';
 
 export class PlayerStore extends Player {
-  constructor(player: PlayerSchema) {
-    super({
-      ...player,
+  constructor(player: SchemaOf<Player>) {
+    super();
+    Object.assign(this, player, {
       shopChampionNames: player.shopChampionNames
         ? Array.from(player.shopChampionNames)
         : [],

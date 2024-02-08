@@ -7,20 +7,17 @@ import {
   observable,
   runInAction,
 } from 'mobx';
+import { RoomType, LobbyEventType, GameMessageType } from '@tft-roller';
 import type {
   CreateGameDto,
   GameMeta,
   GameRoomEntity,
   JoinGameRoomDto,
   RoomListingData,
+  SchemaOf,
   SignInAnonymouslyDto,
   UnitContext,
-} from '@tft-roller';
-import {
-  RoomType,
-  GameSchema,
-  LobbyEventType,
-  GameMessageType,
+  Game,
 } from '@tft-roller';
 
 import { HOSTNAME, IS_SECURE, PORT } from '@src/constants';
@@ -31,7 +28,7 @@ export class TftStore {
   client: Client | null = null;
   lobby: Room | null = null;
   allRooms: Map<string, RoomListingData<GameMeta>> = new Map();
-  gameRoom: Room<GameSchema> | null = null;
+  gameRoom: Room<SchemaOf<Game>> | null = null;
   game: GameStore | null = null;
   sessionId: string | null = null;
   viewedSessionId: string | null = null;
@@ -126,7 +123,7 @@ export class TftStore {
 
   async joinGame(dto: JoinGameRoomDto) {
     if (!this.client) return;
-    this.gameRoom = await this.client.joinById(dto.roomId, dto, GameSchema);
+    this.gameRoom = await this.client.joinById(dto.roomId, dto);
     this.gameRoom.onStateChange.once((state) => {
       console.info('state change', state.toJSON());
       runInAction(() => {
