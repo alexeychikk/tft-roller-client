@@ -1,3 +1,5 @@
+@use 'src/assets/styles/theme';
+
 html,
 body {
   width: 100%;
@@ -5,7 +7,7 @@ body {
 }
 
 body {
-  background-color: #000;
+  background-color: theme.$colorUiBackgroundDark;
 }
 
 html * {

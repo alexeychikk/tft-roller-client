@@ -1,3 +1,4 @@
+@use 'src/assets/styles/theme';
 @use 'src/assets/styles/reset';
 @use 'src/assets/styles/common';
 @use 'src/assets/styles/table';
@@ -8,6 +9,7 @@
   margin: 0 auto;
   position: relative;
   aspect-ratio: 16 / 9;
+  box-shadow: 0 0 0.5em 0.5em rgba(theme.$colorGlow, 0.15);
   background: radial-gradient(ellipse at 50% 50%, #ff6b6b 0%, transparent 40%),
     radial-gradient(ellipse at 60% 70%, #ff95ad 0%, transparent 80%),
     radial-gradient(ellipse at 70% 80%, #fdcbf1 0%, transparent 90%),
