@@ -1,12 +1,14 @@
 import { observer } from 'mobx-react-lite';
 import { GameStatus } from '@tft-roller';
 
-import { tftStore } from '@src/state';
+import { useTftStore } from '@src/state';
 
 import { GameLobby } from './GameLobby';
 import { GamePlay } from './GamePlay';
 
 export const Game = observer(() => {
+  const tftStore = useTftStore();
+
   switch (tftStore.game?.status) {
     case GameStatus.InLobby:
       return <GameLobby />;

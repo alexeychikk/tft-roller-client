@@ -2,7 +2,7 @@ import { observer } from 'mobx-react-lite';
 import React from 'react';
 
 import { PlayerStats } from '@src/components/dumb/PlayerStats';
-import { tftStore } from '@src/state';
+import { useTftStore } from '@src/state';
 
 import styles from './PlayersList.module.scss';
 
@@ -11,6 +11,7 @@ export type PlayersListProps = {
 };
 
 const PlayersListBase: React.FC<PlayersListProps> = () => {
+  const tftStore = useTftStore();
   if (!tftStore.game?.players.size) return null;
 
   return (

@@ -3,7 +3,7 @@ import { observer } from 'mobx-react-lite';
 import React, { useEffect } from 'react';
 import { useDrop } from 'react-dnd';
 
-import { DndItemType, tftStore } from '@src/state';
+import { DndItemType, useTftStore } from '@src/state';
 import type { DndItemChampion } from '@src/state';
 
 import './DragLayer.scss';
@@ -15,6 +15,7 @@ export type DragLayerProps = {
 const rootElement = document.getElementById('root')!;
 
 const DragLayerBase: React.FC<DragLayerProps> = () => {
+  const tftStore = useTftStore();
   const [{ itemType }, dropRef] = useDrop(
     {
       accept: DndItemType.Champion,

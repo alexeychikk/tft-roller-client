@@ -6,13 +6,14 @@ import { useAsyncFn } from 'react-use';
 import { JoinGameRoomDto } from '@tft-roller';
 
 import { Button, Form, Input } from '@src/components/dumb/Form';
-import { tftStore } from '@src/state';
+import { useTftStore } from '@src/state';
 
 import styles from './Lobby.module.scss';
 
 const resolver = classValidatorResolver(JoinGameRoomDto);
 
 export const JoinByIdForm = observer(() => {
+  const tftStore = useTftStore();
   const { control, handleSubmit } = useForm<JoinGameRoomDto>({
     resolver,
     defaultValues: { roomId: '', password: '' },

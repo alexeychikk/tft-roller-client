@@ -1,11 +1,12 @@
 import { observer } from 'mobx-react-lite';
 
 import { Button, Form } from '@src/components/dumb/Form';
-import { tftStore } from '@src/state';
+import { useTftStore } from '@src/state';
 
 import styles from './Game.module.scss';
 
 export const GameLobby = observer(() => {
+  const tftStore = useTftStore();
   if (!tftStore.game || !tftStore.currentRoom) return null;
 
   const canStart = tftStore.game.players.size > 1;

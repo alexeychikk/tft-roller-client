@@ -2,7 +2,7 @@ import clsx from 'clsx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 
-import { tftStore } from '@src/state';
+import { useTftStore } from '@src/state';
 
 import styles from './RerollChances.module.scss';
 
@@ -11,6 +11,7 @@ export type RerollChancesProps = {
 };
 
 const RerollChancesBase: React.FC<RerollChancesProps> = (props) => {
+  const tftStore = useTftStore();
   return (
     <div className={clsx(styles.rootRerollChances, props.className)}>
       {tftStore.viewedPlayer?.rerollChances.map((percent, index) => (

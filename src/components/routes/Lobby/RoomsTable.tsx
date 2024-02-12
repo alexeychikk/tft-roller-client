@@ -4,11 +4,12 @@ import { useAsyncFn } from 'react-use';
 import type { GameMeta, RoomListingData } from '@tft-roller';
 
 import { Button } from '@src/components/dumb/Form';
-import { tftStore } from '@src/state';
+import { useTftStore } from '@src/state';
 
 import styles from './Lobby.module.scss';
 
 export const RoomsTable = observer(() => {
+  const tftStore = useTftStore();
   const { route } = useLocation();
 
   const [joinState, joinGame] = useAsyncFn(

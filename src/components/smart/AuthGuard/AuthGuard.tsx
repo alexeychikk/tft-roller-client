@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 
-import { tftStore } from '@src/state';
+import { useTftStore } from '@src/state';
 import { Redirect } from '../Redirect';
 
 export type AuthGuardProps = {
@@ -9,6 +9,7 @@ export type AuthGuardProps = {
 };
 
 export const AuthGuard = observer((props: AuthGuardProps) => {
+  const tftStore = useTftStore();
   const authenticated = !!tftStore.lobby;
   return authenticated ? <>{props.children}</> : <Redirect to="/login" />;
 });

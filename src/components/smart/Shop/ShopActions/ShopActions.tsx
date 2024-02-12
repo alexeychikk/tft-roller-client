@@ -6,7 +6,7 @@ import {
   ShopButtonBuyXp,
   ShopButtonReroll,
 } from '@src/components/dumb/ShopButton';
-import { tftStore } from '@src/state';
+import { useTftStore } from '@src/state';
 
 import styles from './ShopActions.module.scss';
 
@@ -15,6 +15,7 @@ export type ShopActionsProps = {
 };
 
 const ShopActionsBase: React.FC<ShopActionsProps> = (props) => {
+  const tftStore = useTftStore();
   return (
     <div className={clsx(styles.rootShopActions, props.className)}>
       <ShopButtonBuyXp

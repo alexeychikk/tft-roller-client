@@ -2,7 +2,7 @@ import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { times } from 'remeda';
 
-import { tftStore } from '@src/state';
+import { useTftStore } from '@src/state';
 
 import { BenchSlot } from './BenchSlot';
 import styles from './Bench.module.scss';
@@ -12,6 +12,7 @@ export type BenchProps = {
 };
 
 const BenchBase: React.FC<BenchProps> = () => {
+  const tftStore = useTftStore();
   if (!tftStore.viewedPlayer) return null;
   return (
     <div className={styles.rootBench}>

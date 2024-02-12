@@ -9,6 +9,7 @@ import { Lobby } from './components/routes/Lobby';
 import { Login } from './components/routes/Login';
 import { AuthGuard } from './components/smart/AuthGuard';
 import { Redirect } from './components/smart/Redirect';
+import { TftProvider } from './state';
 
 export function App() {
   const isFontSizeReady = useHtmlFontSize();
@@ -17,27 +18,29 @@ export function App() {
   return (
     <LocationProvider>
       <DndProvider backend={HTML5Backend}>
-        <Router>
-          <Route
-            path="/game"
-            component={() => (
-              <AuthGuard>
-                <Game />
-              </AuthGuard>
-            )}
-          />
-          <Route path="/login" component={Login} />
-          <Route path="/loginAsAdmin" component={Login} />
-          <Route
-            path="/"
-            component={() => (
-              <AuthGuard>
-                <Lobby />
-              </AuthGuard>
-            )}
-          />
-          <Route default component={Redirect} />
-        </Router>
+        <TftProvider>
+          <Router>
+            <Route
+              path="/game"
+              component={() => (
+                <AuthGuard>
+                  <Game />
+                </AuthGuard>
+              )}
+            />
+            <Route path="/login" component={Login} />
+            <Route path="/loginAsAdmin" component={Login} />
+            <Route
+              path="/"
+              component={() => (
+                <AuthGuard>
+                  <Lobby />
+                </AuthGuard>
+              )}
+            />
+            <Route default component={Redirect} />
+          </Router>
+        </TftProvider>
       </DndProvider>
     </LocationProvider>
   );

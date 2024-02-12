@@ -4,7 +4,7 @@ import React from 'react';
 import { EXPERIENCE_PER_BUY, EXPERIENCE_PER_LEVEL } from '@tft-roller';
 
 import { SegmentedProgressBar } from '@src/components/dumb/SegmentedProgressBar';
-import { tftStore } from '@src/state';
+import { useTftStore } from '@src/state';
 
 import styles from './LevelView.module.scss';
 
@@ -13,6 +13,7 @@ export type LevelViewProps = {
 };
 
 const LevelViewBase: React.FC<LevelViewProps> = (props) => {
+  const tftStore = useTftStore();
   const level = tftStore.viewedPlayer?.level || 0;
   const levelExperience = EXPERIENCE_PER_LEVEL[level] || 0;
   const experienceToLevelUp =

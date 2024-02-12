@@ -4,7 +4,7 @@ import { useEffect, useRef } from 'react';
 import { useKeyPressEvent } from 'react-use';
 import type { GridType } from '@tft-roller';
 
-import { tftStore } from '@src/state';
+import { useTftStore } from '@src/state';
 import { findParentElement } from '@src/utils';
 
 export type InputListenerProps = {
@@ -12,6 +12,8 @@ export type InputListenerProps = {
 };
 
 const InputListenerBase: React.FC<InputListenerProps> = () => {
+  const tftStore = useTftStore();
+
   useKeyPressEvent((e) => e.code === 'KeyD', null, tftStore.reroll);
   useKeyPressEvent((e) => e.code === 'KeyF', null, tftStore.buyExperience);
   useKeyPressEvent((e) => e.code === 'Digit1', null, tftStore.viewPrevPlayer);

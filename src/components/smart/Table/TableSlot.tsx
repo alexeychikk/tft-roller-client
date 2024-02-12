@@ -4,7 +4,7 @@ import { GridType } from '@tft-roller';
 
 import { UnitAvatar } from '@src/components/dumb/UnitAvatar';
 import { useUnitSlot } from '@src/components/hooks/useUnitSlot';
-import { tftStore } from '@src/state';
+import { useTftStore } from '@src/state';
 
 export type TableSlotProps = {
   className?: string;
@@ -13,6 +13,7 @@ export type TableSlotProps = {
 };
 
 const TableSlotBase: React.FC<TableSlotProps> = ({ className, x, y }) => {
+  const tftStore = useTftStore();
   const unit = tftStore.viewedPlayer?.table.getUnit({ x, y });
   const [, dropRef] = useUnitSlot(GridType.Table, x, y);
 

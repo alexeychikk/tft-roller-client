@@ -4,7 +4,7 @@ import { useDrop } from 'react-dnd';
 
 import IconCoin from '@src/assets/icons/common/coin.svg?react';
 import type { DndItemUnit } from '@src/state';
-import { DndItemType, tftStore } from '@src/state';
+import { DndItemType, useTftStore } from '@src/state';
 
 import styles from './SellOverlay.module.scss';
 
@@ -13,6 +13,7 @@ export type SellOverlayProps = {
 };
 
 const SellOverlayBase: React.FC<SellOverlayProps> = () => {
+  const tftStore = useTftStore();
   const [{ item }, dropRef] = useDrop({
     accept: DndItemType.Unit,
     drop: (item: DndItemUnit) => tftStore.sellUnit(item),

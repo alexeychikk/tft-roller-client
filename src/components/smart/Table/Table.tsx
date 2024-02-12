@@ -2,7 +2,7 @@ import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { times } from 'remeda';
 
-import { tftStore } from '@src/state';
+import { useTftStore } from '@src/state';
 
 import { TableSlot } from './TableSlot';
 import styles from './Table.module.scss';
@@ -12,6 +12,7 @@ export type TableProps = {
 };
 
 const TableBase: React.FC<TableProps> = () => {
+  const tftStore = useTftStore();
   if (!tftStore.viewedPlayer) return null;
   return (
     <div className={styles.rootTable}>

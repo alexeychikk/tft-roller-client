@@ -6,13 +6,14 @@ import { useAsyncFn } from 'react-use';
 import { SignInAnonymouslyDto } from '@tft-roller';
 
 import { Button, Form, Input } from '@src/components/dumb/Form';
-import { tftStore } from '@src/state';
+import { useTftStore } from '@src/state';
 
 import styles from './Login.module.scss';
 
 const resolver = classValidatorResolver(SignInAnonymouslyDto);
 
 export const Login = observer(() => {
+  const tftStore = useTftStore();
   const { path, route } = useLocation();
   const isAdminRoute = path === '/loginAsAdmin';
 

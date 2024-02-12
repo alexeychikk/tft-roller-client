@@ -3,7 +3,7 @@ import { observer } from 'mobx-react-lite';
 import React from 'react';
 
 import IconCoin from '@src/assets/icons/common/coin.svg?react';
-import { tftStore } from '@src/state';
+import { useTftStore } from '@src/state';
 
 import styles from './GoldView.module.scss';
 
@@ -12,6 +12,7 @@ export type GoldViewProps = {
 };
 
 const GoldViewBase: React.FC<GoldViewProps> = (props) => {
+  const tftStore = useTftStore();
   return (
     <div className={clsx(styles.rootGoldView, props.className)}>
       <IconCoin className={styles.iconCoin} />{' '}

@@ -3,7 +3,7 @@ import { observer } from 'mobx-react-lite';
 import React from 'react';
 
 import { ChampionAvatar } from '@src/components/dumb/ChampionAvatar';
-import { tftStore } from '@src/state';
+import { useTftStore } from '@src/state';
 
 import { SellOverlay } from './SellOverlay';
 import styles from './ShopChampions.module.scss';
@@ -13,6 +13,7 @@ export type ShopChampionsProps = {
 };
 
 const ShopChampionsBase: React.FC<ShopChampionsProps> = (props) => {
+  const tftStore = useTftStore();
   return (
     <div className={clsx(styles.rootShopChampions, props.className)}>
       <div className={styles.slotsWrapper}>
