@@ -1,11 +1,17 @@
+import prefresh from '@prefresh/vite';
 import { defineConfig } from 'vite';
 import { analyzer } from 'vite-bundle-analyzer';
 import svgr from 'vite-plugin-svgr';
 import tsconfigPaths from 'vite-tsconfig-paths';
 
 // https://vitejs.dev/config/
-export default defineConfig({
-  plugins: [tsconfigPaths(), svgr(), analyzer({ analyzerMode: 'static' })],
+export default defineConfig(({ command }) => ({
+  plugins: [
+    tsconfigPaths(),
+    svgr(),
+    command === 'build' && analyzer({ analyzerMode: 'static' }),
+    command === 'serve' && prefresh(),
+  ].filter(Boolean),
   base: '',
   build: {
     outDir: 'build',
@@ -24,4 +30,4 @@ export default defineConfig({
       'class-transformer',
     ],
   },
-});
+}));

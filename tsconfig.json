@@ -31,7 +31,8 @@
   "include": [
     "node_modules/vite/client.d.ts",
     "node_modules/vite-plugin-svgr/client.d.ts",
-    "src"
+    "src/**/*",
+    ".storybook/**/*"
   ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
