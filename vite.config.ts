@@ -1,4 +1,4 @@
-import prefresh from '@prefresh/vite';
+import preact from '@preact/preset-vite';
 import { defineConfig } from 'vite';
 import { analyzer } from 'vite-bundle-analyzer';
 import svgr from 'vite-plugin-svgr';
@@ -9,20 +9,24 @@ export default defineConfig(({ command }) => ({
   plugins: [
     tsconfigPaths(),
     svgr(),
+    preact({
+      babel: {
+        plugins: [
+          [
+            '@babel/plugin-proposal-decorators',
+            { decoratorsBeforeExport: true },
+          ],
+          '@babel/plugin-transform-class-properties',
+        ],
+      },
+    }),
     command === 'build' && analyzer({ analyzerMode: 'static' }),
-    command === 'serve' && prefresh(),
   ].filter(Boolean),
   base: '',
   build: {
     outDir: 'build',
   },
   resolve: {
-    alias: {
-      react: 'preact/compat',
-      'react-dom/test-utils': 'preact/test-utils',
-      'react-dom': 'preact/compat', // Must be below test-utils
-      'react/jsx-runtime': 'preact/jsx-runtime',
-    },
     dedupe: [
       'remeda',
       'reflect-metadata',
