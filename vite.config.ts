@@ -1,4 +1,5 @@
 import react from '@vitejs/plugin-react';
+import million from 'million/compiler';
 import { defineConfig } from 'vite';
 import { analyzer } from 'vite-bundle-analyzer';
 import svgr from 'vite-plugin-svgr';
@@ -9,6 +10,7 @@ export default defineConfig(({ command }) => ({
   plugins: [
     tsconfigPaths(),
     svgr(),
+    million.vite({ auto: true }),
     react(),
     command === 'build' && analyzer({ analyzerMode: 'static' }),
   ].filter(Boolean),
