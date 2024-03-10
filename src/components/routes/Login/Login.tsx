@@ -1,8 +1,8 @@
 import { classValidatorResolver } from '@hookform/resolvers/class-validator';
 import { observer } from 'mobx-react-lite';
-import { useLocation } from 'preact-iso';
 import { useForm } from 'react-hook-form';
 import { useAsyncFn } from 'react-use';
+import { useLocation } from 'wouter';
 import { SignInAnonymouslyDto } from '@tft-roller';
 
 import { Button, Form, Input } from '@src/components/dumb/Form';
@@ -14,8 +14,8 @@ const resolver = classValidatorResolver(SignInAnonymouslyDto);
 
 export const Login = observer(() => {
   const tftStore = useTftStore();
-  const { path, route } = useLocation();
-  const isAdminRoute = path === '/loginAsAdmin';
+  const [location, navigate] = useLocation();
+  const isAdminRoute = location === '/loginAsAdmin';
 
   const { control, handleSubmit } = useForm<SignInAnonymouslyDto>({
     resolver,
@@ -29,9 +29,9 @@ export const Login = observer(() => {
     async (data: SignInAnonymouslyDto) => {
       await tftStore.signInAnonymously(data);
       await tftStore.joinLobby();
-      route('/');
+      navigate('/');
     },
-    [route],
+    [navigate],
   );
 
   const onSubmit = handleSubmit(joinLobby);

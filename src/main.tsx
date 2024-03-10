@@ -1,7 +1,9 @@
 import 'reflect-metadata';
 import './utils/transpilerCheck';
-import { render } from 'react-dom';
+import { createRoot } from 'react-dom/client';
 
 import { App } from './App';
 
-render(<App />, document.getElementById('root') as HTMLElement);
+const container = document.getElementById('root')!;
+const root = createRoot(container);
+root.render(<App />);

@@ -4,7 +4,9 @@ import { TftStore } from '../stores/TftStore';
 
 import { TftContext } from './context';
 
-export const TftProvider: React.FC = (props) => {
+export const TftProvider: React.FC<{ children?: React.ReactNode }> = (
+  props,
+) => {
   const [store] = useState<TftStore>(new TftStore());
 
   return (

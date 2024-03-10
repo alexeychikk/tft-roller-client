@@ -1,7 +1,6 @@
-import { LocationProvider } from 'preact-iso';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import { Decorator } from '@storybook/preact';
+import { Decorator } from '@storybook/react';
 
 import '@src/App.scss';
 import { useHtmlFontSize } from '@src/components/hooks/useHtmlFontSize';
@@ -12,11 +11,9 @@ export const WithTftStore: Decorator = (Story) => {
 
   return (
     <div id="root">
-      <LocationProvider>
-        <DndProvider backend={HTML5Backend}>
-          <TftProvider>{Story()}</TftProvider>
-        </DndProvider>
-      </LocationProvider>
+      <DndProvider backend={HTML5Backend}>
+        <TftProvider>{Story()}</TftProvider>
+      </DndProvider>
     </div>
   );
 };

@@ -1,8 +1,8 @@
 import { observer } from 'mobx-react-lite';
 import React from 'react';
+import { Redirect } from 'wouter';
 
 import { useTftStore } from '@src/state';
-import { Redirect } from '../Redirect';
 
 export type AuthGuardProps = {
   children: React.ReactNode;

@@ -14,7 +14,6 @@
     "useDefineForClassFields": false,
     "noEmit": true,
     "jsx": "react-jsx",
-    "jsxImportSource": "preact",
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
@@ -22,8 +21,6 @@
     "strictPropertyInitialization": false,
     "baseUrl": ".",
     "paths": {
-      "react": ["./node_modules/preact/compat/"],
-      "react-dom": ["./node_modules/preact/compat/"],
       "@src/*": ["src/*"],
       "@tft-roller": ["../tft-roller-shared/src/index.ts"]
     }

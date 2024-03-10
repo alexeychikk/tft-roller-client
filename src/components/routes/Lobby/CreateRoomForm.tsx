@@ -1,10 +1,10 @@
 import { classValidatorResolver } from '@hookform/resolvers/class-validator';
 import { observer } from 'mobx-react-lite';
 import { nanoid } from 'nanoid';
-import { useLocation } from 'preact-iso';
 import { useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import { useAsyncFn } from 'react-use';
+import { useLocation } from 'wouter';
 import { CreateGameDto } from '@tft-roller';
 
 import { Button, Form, Input } from '@src/components/dumb/Form';
@@ -20,7 +20,7 @@ export const CreateRoomForm = observer(() => {
     resolver,
     defaultValues: { name: '', password: '' },
   });
-  const { route } = useLocation();
+  const [, navigate] = useLocation();
 
   const placeholderName = useMemo(
     () => nanoid(11).replace(/[^a-zA-Z0-9]/g, ''),
@@ -34,7 +34,7 @@ export const CreateRoomForm = observer(() => {
         name: data.name?.trim() || placeholderName,
       });
       await tftStore.joinGame({ roomId: game.roomId, password: data.password });
-      route('/game');
+      navigate('/game');
     } catch (error) {
       console.error(error);
       alert(`Couldn't create the room, please try again later`);

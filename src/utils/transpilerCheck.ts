@@ -5,8 +5,9 @@ if (
   })().hasOwnProperty('x')
 ) {
   // throw new Error('Transpiler is not configured correctly');
-  console.warn('mobx fields cannot be made observable before initialization');
-  console.warn(
-    'https://mobx.js.org/installation.html#use-spec-compliant-transpilation-for-class-properties',
-  );
+  // THIS IS INTENTIONAL
+  // console.warn('mobx fields cannot be made observable before initialization');
+  // console.warn(
+  //   'https://mobx.js.org/installation.html#use-spec-compliant-transpilation-for-class-properties',
+  // );
 }

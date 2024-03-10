@@ -1,4 +1,4 @@
-import preact from '@preact/preset-vite';
+import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
 import { analyzer } from 'vite-bundle-analyzer';
 import svgr from 'vite-plugin-svgr';
@@ -9,17 +9,7 @@ export default defineConfig(({ command }) => ({
   plugins: [
     tsconfigPaths(),
     svgr(),
-    preact({
-      babel: {
-        plugins: [
-          [
-            '@babel/plugin-proposal-decorators',
-            { decoratorsBeforeExport: true },
-          ],
-          '@babel/plugin-transform-class-properties',
-        ],
-      },
-    }),
+    react(),
     command === 'build' && analyzer({ analyzerMode: 'static' }),
   ].filter(Boolean),
   base: '',
@@ -32,6 +22,9 @@ export default defineConfig(({ command }) => ({
       'reflect-metadata',
       'class-validator',
       'class-transformer',
+      // these 2 just in case:
+      'react',
+      'react-dom',
     ],
   },
 }));
