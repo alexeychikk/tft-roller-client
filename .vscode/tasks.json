@@ -11,11 +11,11 @@
       "isBackground": true,
       "problemMatcher": [
         {
-          "pattern": { "regexp": "^$" },
+          "pattern": { "regexp": "." },
           "background": {
             "activeOnStart": true,
             "beginsPattern": "^.*VITE",
-            "endsPattern": "^.*press h to show help"
+            "endsPattern": "^.*press.+?to show help"
           }
         }
       ]
